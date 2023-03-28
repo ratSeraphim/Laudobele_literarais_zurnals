@@ -1,4 +1,4 @@
-import { createTheme, Theme } from "@mui/material";
+import { createTheme } from "@mui/material";
 
 export const siteTheme = createTheme({
 	palette: {
@@ -8,6 +8,10 @@ export const siteTheme = createTheme({
 		},
 		secondary: {
 			main: "#854343",
+		},
+		tertiary: {
+			main: "#9A8248",
+			contrastText: "#fff",
 		},
 		text: {
 			primary: "#65647c",
@@ -38,6 +42,10 @@ export const siteTheme = createTheme({
 		fontWeightMedium: 1000,
 		fontWeightBold: 1000,
 		htmlFontSize: "10em",
+		h1: {
+			fontSize: "2.3em",
+			fontWeight: 1000,
+		},
 	},
 });
 

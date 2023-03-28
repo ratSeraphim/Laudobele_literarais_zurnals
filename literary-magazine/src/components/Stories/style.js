@@ -1,3 +1,4 @@
+import { Skeleton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Content = styled("div")`
@@ -5,5 +6,8 @@ export const Content = styled("div")`
 	display: grid;
 	grid-template-columns: 4fr 1fr;
 	gap: 1rem;
-	text-align: justify;
+`;
+
+export const PlaceHolder = styled(Skeleton)`
+	margin: 1rem;
 `;

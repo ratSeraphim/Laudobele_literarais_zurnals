@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import Stories from "./components/Stories/Stories";
+import Posts from "./components/News/Posts";
 
 function App() {
 	return (
@@ -18,6 +20,8 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Home />}>
 								<Route path="/" element={<Landing />}></Route>
+								<Route path="/stories" element={<Stories />}></Route>
+								<Route path="/posts" element={<Posts />}></Route>
 							</Route>
 
 							<Route path="/login" element={<Login />} />

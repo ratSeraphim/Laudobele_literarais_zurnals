@@ -19,3 +19,7 @@ export const LogButton = styled(Button)`
 export const NavigateSite = styled(ButtonGroup)`
 	color: #c7bca1;
 `;
+
+export const Icon = styled("img")`
+	height: 50px;
+`;
