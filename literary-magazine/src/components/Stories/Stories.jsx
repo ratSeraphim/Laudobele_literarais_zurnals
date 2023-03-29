@@ -1,4 +1,4 @@
-import { Paper, Skeleton } from "@mui/material";
+import { Paper } from "@mui/material";
 import Side from "../Side/Side";
 import * as S from "./style";
 

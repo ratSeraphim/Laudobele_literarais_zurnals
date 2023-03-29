@@ -16,7 +16,6 @@ const Login = () => {
 				<S.LoginForm>
 					<TextField
 						required
-						helperText="Enter your username or e-mail"
 						id="outlined-basic"
 						label="Username/E-mail"
 						variant="outlined"
@@ -31,7 +30,7 @@ const Login = () => {
 					<Link to="/signup">Sign up</Link>
 				</S.LoginForm>
 			</S.Content>
-			<img src="placeholder.png" alt="tentacles coming out of an open book" />
+			<img src="logo.png" alt="tentacles coming out of an open book" />
 		</>
 	);
 };

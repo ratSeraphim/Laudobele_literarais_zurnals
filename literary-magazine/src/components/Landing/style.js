@@ -5,5 +5,5 @@ export const Content = styled("div")`
 	display: grid;
 	grid-template-columns: 4fr 1fr;
 	gap: 1rem;
-	text-align: justify;
+	min-height: 200px;
 `;

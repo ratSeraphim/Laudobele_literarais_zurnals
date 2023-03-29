@@ -37,9 +37,9 @@ export const siteTheme = createTheme({
 	},
 	typography: {
 		fontFamily: "EB Garamond",
-		fontWeightLight: 600,
-		fontWeightRegular: 600,
-		fontWeightMedium: 1000,
+		fontWeightLight: 400,
+		fontWeightRegular: 500,
+		fontWeightMedium: 700,
 		fontWeightBold: 1000,
 		htmlFontSize: "10em",
 		h1: {

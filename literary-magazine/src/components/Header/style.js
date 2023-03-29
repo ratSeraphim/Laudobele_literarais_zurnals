@@ -8,6 +8,12 @@ export const Navbar = styled("nav")`
 	justify-content: space-around;
 `;
 
+export const Branding = styled("div")`
+	display: flex;
+	gap: 2rem;
+	flex-direction: row;
+`;
+
 export const NavButton = styled(Button)`
 	color: #65647c;
 `;

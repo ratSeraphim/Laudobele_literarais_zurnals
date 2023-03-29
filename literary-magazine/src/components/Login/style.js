@@ -13,6 +13,7 @@ export const LoginForm = styled("form")`
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
+	gap: 10px;
 `;
 
 export const Submit = styled("input")`

@@ -1,9 +1,54 @@
-import { Paper } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
+import React from "react";
+import * as S from "./style";
 
 const Register = () => {
+	const navigate = useNavigate();
+	const handleSubmit = (e) => {
+		/* process data and figure out if login is valid or not*/
+		navigate("/");
+	};
 	return (
 		<>
-			<Paper>Register</Paper>
+			<S.Content>
+				<h1>Log in</h1>
+				<S.RegisterForm>
+					<TextField
+						required
+						id="outlined-basic"
+						label="E-mail"
+						variant="outlined"
+					/>
+					<TextField
+						required
+						id="outlined-basic"
+						label="Display name"
+						variant="outlined"
+					/>
+					<TextField
+						required
+						id="outlined-basic"
+						label="Username"
+						variant="outlined"
+					/>
+					<TextField
+						required
+						id="outlined-basic"
+						label="Password"
+						variant="outlined"
+					/>
+					<TextField
+						required
+						id="outlined-basic"
+						label="Confirm Password"
+						variant="outlined"
+					/>
+					<S.Submit type="submit" onClick={handleSubmit} />
+					<Link to="/login">Log in</Link>
+				</S.RegisterForm>
+			</S.Content>
+			<img src="logo.png" alt="tentacles coming out of an open book" />
 		</>
 	);
 };
