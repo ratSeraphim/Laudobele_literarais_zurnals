@@ -41,10 +41,16 @@ export const siteTheme = createTheme({
 		fontWeightRegular: 500,
 		fontWeightMedium: 700,
 		fontWeightBold: 1000,
-		htmlFontSize: "10em",
+		fontSize: "15em",
 		h1: {
 			fontSize: "2.3em",
 			fontWeight: 1000,
+		},
+		title: {
+			fontSize: "2.5em",
+			fontWeight: 1000,
+			padding: "0 1rem",
+			color: "#854343",
 		},
 	},
 });

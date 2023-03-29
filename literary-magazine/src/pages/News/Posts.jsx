@@ -1,5 +1,5 @@
-import { Grid, Paper } from "@mui/material";
-import Side from "../Side/Side";
+import { Grid, Paper, Typography } from "@mui/material";
+import Side from "../../components/Side/Side";
 import * as S from "./style";
 
 const Posts = () => {
@@ -7,6 +7,9 @@ const Posts = () => {
 		<>
 			<S.Content>
 				<Paper>
+					<Typography sx={{ typography: "title", textAlign: "left" }}>
+						Recent Posts
+					</Typography>
 					<Grid container spacing={2}>
 						<Grid item xs={4}>
 							{" "}

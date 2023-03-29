@@ -21,4 +21,10 @@ export const Submit = styled("input")`
 	margin: 10px;
 	padding: 10px;
 	background-color: #ffa726;
+	&:hover {
+		background-color: #9a8248;
+		color: #fff;
+		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+			0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
 `;

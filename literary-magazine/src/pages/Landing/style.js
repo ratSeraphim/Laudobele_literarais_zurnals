@@ -1,3 +1,4 @@
+import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Content = styled("div")`
@@ -6,4 +7,11 @@ export const Content = styled("div")`
 	grid-template-columns: 4fr 1fr;
 	gap: 1rem;
 	min-height: 200px;
+`;
+
+export const Writing = styled(Paper)`
+	padding: 1rem;
+	&:a {
+		color: #fff;
+	}
 `;

@@ -1,5 +1,5 @@
-import { Paper } from "@mui/material";
-import Side from "../Side/Side";
+import { Paper, Typography } from "@mui/material";
+import Side from "../../components/Side/Side";
 import * as S from "./style";
 
 const Stories = () => {
@@ -7,6 +7,7 @@ const Stories = () => {
 		<>
 			<S.Content>
 				<Paper>
+					<Typography variant="title">Recent Stories</Typography>
 					<S.PlaceHolder variant="rectangular" height={100}></S.PlaceHolder>
 					<S.PlaceHolder variant="rectangular" height={100}></S.PlaceHolder>
 					<S.PlaceHolder variant="rectangular" height={100}></S.PlaceHolder>

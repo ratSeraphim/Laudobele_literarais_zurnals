@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import { TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Button, TextField } from "@mui/material";
 import React from "react";
 import * as S from "./style";
 
@@ -27,7 +27,9 @@ const Login = () => {
 						variant="outlined"
 					/>
 					<S.Submit type="submit" onClick={handleSubmit} />
-					<Link to="/signup">Sign up</Link>
+					<Button color="tertiary" href="/signup">
+						Sign up
+					</Button>
 				</S.LoginForm>
 			</S.Content>
 			<img src="logo.png" alt="tentacles coming out of an open book" />

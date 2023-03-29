@@ -1,15 +1,16 @@
 import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Landing from "./components/Landing/Landing";
+import Landing from "./pages/Landing/Landing";
 import { siteTheme } from "./components/siteTheme";
 import Admin from "./pages/Admin";
 import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import Stories from "./components/Stories/Stories";
-import Posts from "./components/News/Posts";
+import Stories from "./pages/Stories/Stories";
+import Posts from "./pages/News/Posts";
+import Profile from "./pages/Profile";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 								<Route path="/" element={<Landing />}></Route>
 								<Route path="/stories" element={<Stories />}></Route>
 								<Route path="/posts" element={<Posts />}></Route>
+								<Route path="/profile" element={<Profile />}></Route>
 							</Route>
 
 							<Route path="/login" element={<Login />} />
