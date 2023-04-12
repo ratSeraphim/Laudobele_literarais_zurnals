@@ -20,7 +20,6 @@ USE `sothothpress` ;
 CREATE TABLE IF NOT EXISTS `sothothpress`.`accounts` (
   `account_id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(20) NOT NULL UNIQUE,
-  `displayname` VARCHAR(45) NOT NULL UNIQUE,
   `email` VARCHAR(45) NOT NULL UNIQUE,
   `password` VARCHAR(128) NOT NULL,
   `role` ENUM('user', 'admin', 'owner') NOT NULL DEFAULT 'user',
@@ -30,20 +29,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sothothpress`.`collection`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sothothpress`.`collection` (
-  `collection_id` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`collection_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `sothothpress`.`stories`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sothothpress`.`stories` (
-  `story_id` INT NOT NULL,
+  `story_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(50) NOT NULL,
   `content` TEXT NOT NULL,
   `date` DATE NOT NULL,
@@ -51,30 +40,36 @@ CREATE TABLE IF NOT EXISTS `sothothpress`.`stories` (
   `summary` TEXT NULL,
   `public` TINYINT NOT NULL DEFAULT 0,
   `account_id` INT NOT NULL,
-  `collection_id` INT NULL,
   PRIMARY KEY (`story_id`, `account_id`),
   CONSTRAINT `fk_stories_accounts`
     FOREIGN KEY (`account_id`)
     REFERENCES `sothothpress`.`accounts` (`account_id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stories_connectedstories1`
-    FOREIGN KEY (`collection_id`)
-    REFERENCES `sothothpress`.`collection` (`collection_id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `sothothpress`.`collections`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sothothpress`.`collections` (
+  `collection_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
+  `description` VARCHAR(130) NULL,
+  PRIMARY KEY (`collection_id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `sothothpress`.`post`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sothothpress`.`post` (
-  `post_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `sothothpress`.`posts` (
+  `post_id` INT NOT NULL AUTO_INCREMENT,
   `content` TEXT NOT NULL,
   `date` DATE NOT NULL,
   `account_id` INT NOT NULL,
-  `story_id` INT NOT NULL,
+  `story_id` INT NULL,
+  `collection_id` INT NULL,
   PRIMARY KEY (`post_id`, `account_id`),
   CONSTRAINT `fk_post_accounts1`
     FOREIGN KEY (`account_id`)
@@ -84,7 +79,12 @@ CREATE TABLE IF NOT EXISTS `sothothpress`.`post` (
   CONSTRAINT `fk_post_stories1`
     FOREIGN KEY (`story_id`)
     REFERENCES `sothothpress`.`stories` (`story_id`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_post_collection1`
+    FOREIGN KEY (`collection_id`)
+    REFERENCES `sothothpress`.`collections` (`collection_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -93,7 +93,7 @@ ENGINE = InnoDB;
 -- Table `sothothpress`.`comments`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sothothpress`.`comments` (
-  `comment_id` INT NOT NULL,
+  `comment_id` INT NOT NULL AUTO_INCREMENT,
   `content` TEXT NOT NULL,
   `account_id` INT NULL,
   `story_id` INT NOT NULL,
@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `sothothpress`.`comments` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `sothothpress`.`account_collection`
 -- -----------------------------------------------------
@@ -121,16 +122,54 @@ CREATE TABLE IF NOT EXISTS `sothothpress`.`account_collection` (
   CONSTRAINT `fk_accounts_has_collection_accounts1`
     FOREIGN KEY (`account_id`)
     REFERENCES `sothothpress`.`accounts` (`account_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_accounts_has_collection_collection1`
     FOREIGN KEY (`collection_id`)
-    REFERENCES `sothothpress`.`collection` (`collection_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `sothothpress`.`collections` (`collection_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `sothothpress`.`story_collection`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sothothpress`.`story_collection` (
+  `story_id` INT NOT NULL,
+  `collection_id` INT NOT NULL,
+  PRIMARY KEY (`story_id`, `collection_id`),
+  CONSTRAINT `fk_stories_has_collection_stories1`
+    FOREIGN KEY (`story_id`)
+    REFERENCES `sothothpress`.`stories` (`story_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_stories_has_collection_collection1`
+    FOREIGN KEY (`collection_id`)
+    REFERENCES `sothothpress`.`collections` (`collection_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `sothothpress`.`userinfo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sothothpress`.`userinfo` (
+  `account_id` INT NOT NULL,
+  `number` VARCHAR(20) NULL,
+  `display_email` VARCHAR(45) NULL,
+  `display_name` VARCHAR(50) NOT NULL,
+  `description` TEXT NULL,
+  PRIMARY KEY (`account_id`),
+  CONSTRAINT `fk_userinfo_accounts1`
+    FOREIGN KEY (`account_id`)
+    REFERENCES `sothothpress`.`accounts` (`account_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
