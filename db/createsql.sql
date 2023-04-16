@@ -118,6 +118,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sothothpress`.`account_collection` (
   `account_id` INT NOT NULL,
   `collection_id` INT NOT NULL,
+  `role` ENUM('owner', 'member') NOT NULL DEFAULT 'member',
   PRIMARY KEY (`account_id`, `collection_id`),
   CONSTRAINT `fk_accounts_has_collection_accounts1`
     FOREIGN KEY (`account_id`)
