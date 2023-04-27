@@ -21,13 +21,22 @@ async function create(accounts) {
 		`INSERT INTO accounts 
       (username, email, password) 
       VALUES 
-      ("${accounts.username}", "${accounts.email}", "${accounts.password}")`
+      ("${accounts.username}", "${accounts.email}", "${accounts.password}");`
 	);
+	//const createdid = await db.query(
+	//	`SELECT account_id FROM accounts WHERE username = "${accounts.username}"`
+	//);
+	//console.log({ createdid } + " is the created id");
+	//const inforesult = await db.query(
+	//	`INSERT INTO userinfo (account_id, display_name) VALUES (${createdid}, "${accounts.displayname}`
+	//);
 
 	let message = "Error in creating account";
 
 	if (result.affectedRows) {
+		//if (inforesult.affectedRows) {
 		message = "Account created successfully";
+		//}
 	}
 
 	return { message };
