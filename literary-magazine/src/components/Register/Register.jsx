@@ -15,7 +15,8 @@ const Register = () => {
 		passwordconfirm: "",
 		displayname: "",
 	});
-	const [message, setMessage] = useState({ messagetext: "" });
+	const [message, setMessage] = useState("");
+	const [error, setError] = useState();
 	//Kad tekstā notiek izmaiņas,
 	const handleChange = (event) => {
 		//Saņem izmainītās vērtības
@@ -38,16 +39,21 @@ const Register = () => {
 				//Saņem ziņu no API puses
 				.then((response) => {
 					console.log(response.data);
-					setMessage({ messagetext: "Passwords do not match!" });
+					setMessage(response.data.message);
+					if (response.data.message === "Account created successfully") {
+						navigate("/");
+					}
 				})
 				//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
 				.catch((error) => {
-					console.log(error);
+					setError(error);
+					console.log(error.message);
+					setMessage("");
 				});
 			//Aizved lietotāju uz mājaslapu
-			navigate("/");
+			// navigate("/");
 		} else {
-			setMessage({ messagetext: "Passwords do not match!" });
+			setMessage("Passwords do not match!");
 		}
 	};
 
@@ -57,7 +63,7 @@ const Register = () => {
 				<h1>Sign up</h1>
 				<S.RegisterForm>
 					<TextField
-						required
+						required={true}
 						id="outlined-basic"
 						label="E-mail"
 						name="email"
@@ -65,7 +71,7 @@ const Register = () => {
 						onChange={handleChange}
 					/>
 					<TextField
-						required
+						required={true}
 						id="outlined-basic"
 						label="Display name"
 						name="displayname"
@@ -100,7 +106,7 @@ const Register = () => {
 					<Button color="tertiary" href="/login">
 						Log in
 					</Button>
-					<h3>{message.messagetext}</h3>
+					<h3>{message}</h3>
 				</S.RegisterForm>
 			</S.Content>
 			<img src="logo.png" alt="tentacles coming out of an open book" />

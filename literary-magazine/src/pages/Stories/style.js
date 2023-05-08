@@ -10,4 +10,12 @@ export const Content = styled("div")`
 
 export const PlaceHolder = styled(Skeleton)`
 	margin: 1rem;
+	height: 3rem;
+`;
+
+export const StoryItem = styled("");
+
+export const Title = styled("div")`
+	font-weight: bold;
+	border-bottom: thick double #1b5e20;
 `;
