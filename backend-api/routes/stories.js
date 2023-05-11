@@ -11,6 +11,15 @@ router.get("/", async function (req, res) {
 	}
 });
 
+/*GET story*/
+router.get("/:id", async function (req, res) {
+	try {
+		res.json(await stories.getOne(req.params.id));
+	} catch (err) {
+		console.error(`Error while getting stories `, err.message);
+	}
+});
+
 /* POST account */
 router.post("/", async function (req, res) {
 	console.log(req.body);

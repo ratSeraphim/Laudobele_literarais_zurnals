@@ -1,4 +1,6 @@
-import { Paper, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Side from "../../components/Side/Side";
 import * as S from "./style";
 import axios from "axios";
@@ -12,7 +14,6 @@ const Stories = () => {
 		axios.get(fetchURL).then((response) => {
 			setPost(response.data);
 		});
-		console.log({ post });
 	}, [fetchURL]);
 
 	return (
@@ -29,15 +30,31 @@ const Stories = () => {
 						</>
 					)}
 					{post && (
-						<>
-							{post.data.map((NewsFeed, i) => {
+						<S.Holder>
+							{post.data.map((Story) => {
 								return (
-									<div key={i}>
-										<S.Title>{NewsFeed.title}</S.Title>
-									</div>
+									<>
+										<S.CustomAccordion>
+											<S.CustomAccordionSummary
+												expandIcon={<ExpandMoreIcon color="primary" />}
+												key={Story.story_id}
+											>
+												<S.Summary>
+													<S.Title>{Story.title}</S.Title>
+													<S.Author>by: {Story.display_name}</S.Author>
+												</S.Summary>
+											</S.CustomAccordionSummary>
+											<S.CustomAccordionDetails>
+												<Typography>{Story.summary}</Typography>
+												<Button href={"/stories/" + Story.story_id}>
+													Read more...
+												</Button>
+											</S.CustomAccordionDetails>
+										</S.CustomAccordion>
+									</>
 								);
 							})}
-						</>
+						</S.Holder>
 					)}
 				</Paper>
 				<Side></Side>

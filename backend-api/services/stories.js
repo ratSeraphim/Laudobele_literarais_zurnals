@@ -5,7 +5,7 @@ const config = require("../config");
 async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
-		`SELECT title FROM stories LIMIT ${offset},${config.listPerPage}`
+		`SELECT title, story_id, summary, display_name FROM stories INNER JOIN userinfo ON stories.account_id = userinfo.account_id WHERE public=1 ORDER BY stories.date DESC LIMIT ${offset},${config.listPerPage}`
 	);
 	const data = helper.emptyOrRows(rows);
 	const meta = { page };
@@ -16,6 +16,21 @@ async function getMultiple(page = 1) {
 	};
 }
 
+async function getOne(id, stories) {
+	const rows = await db.query(
+		`SELECT title, story_id, summary, display_name, date, content 
+		FROM stories 
+		INNER JOIN userinfo 
+		ON stories.account_id = userinfo.account_id 
+		WHERE story_id=${id}`
+	);
+	const data = rows[0];
+
+	return {
+		data,
+	};
+}
+
 async function create(stories) {
 	const result = await db.query(
 		`INSERT INTO stories 
@@ -23,13 +38,6 @@ async function create(stories) {
       VALUES 
       ("${stories.username}", "${stories.email}", "${stories.password}");`
 	);
-	//const createdid = await db.query(
-	//	`SELECT story_id FROM stories WHERE username = "${stories.username}"`
-	//);
-	//console.log({ createdid } + " is the created id");
-	//const inforesult = await db.query(
-	//	`INSERT INTO userinfo (story_id, display_name) VALUES (${createdid}, "${stories.displayname}`
-	//);
 
 	let message = "Error in creating story";
 
@@ -45,7 +53,7 @@ async function create(stories) {
 async function update(id, stories) {
 	const result = await db.query(
 		`UPDATE stories
-      SET username="${stories.username}", released_year=${stories.password}, githut_rank=${stories.email}
+      SET summary="${stories.summary}", date=${stories.password}, content=${stories.email}
       WHERE id=${id}`
 	);
 
@@ -71,6 +79,7 @@ async function remove(id) {
 }
 
 module.exports = {
+	getOne,
 	getMultiple,
 	create,
 	update,

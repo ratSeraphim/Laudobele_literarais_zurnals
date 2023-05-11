@@ -11,6 +11,7 @@ import Register from "./components/Register/Register";
 import Stories from "./pages/Stories/Stories";
 import Posts from "./pages/News/Posts";
 import Profile from "./pages/Profile";
+import Story from "./components/Story/Story";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 							<Route path="/" element={<Home />}>
 								<Route path="/" element={<Landing />}></Route>
 								<Route path="/stories" element={<Stories />}></Route>
+								<Route path="/stories/:id" element={<Story />}></Route>
 								<Route path="/posts" element={<Posts />}></Route>
 								<Route path="/profile" element={<Profile />}></Route>
 							</Route>

@@ -52,6 +52,13 @@ export const siteTheme = createTheme({
 			padding: "0 1rem",
 			color: "#854343",
 		},
+		subtitle: {
+			fontSize: "1.5em",
+			fontWeight: 500,
+			padding: "1rem",
+			color: "#854343",
+			textDecoration: "underline dotted rgba(0,0,0,0.2)",
+		},
 	},
 });
 
