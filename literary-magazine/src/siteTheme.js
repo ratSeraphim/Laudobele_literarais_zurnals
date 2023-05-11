@@ -38,10 +38,11 @@ export const siteTheme = createTheme({
 	typography: {
 		fontFamily: "EB Garamond",
 		fontWeightLight: 400,
-		fontWeightRegular: 500,
+		fontWeightRegular: 400,
 		fontWeightMedium: 700,
 		fontWeightBold: 1000,
-		fontSize: "15em",
+		fontWeightStrong: 1000,
+		fontSize: 15,
 		h1: {
 			fontSize: "2.3em",
 			fontWeight: 1000,

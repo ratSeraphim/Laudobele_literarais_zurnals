@@ -7,7 +7,7 @@ const Navbar = () => {
 		<>
 			<S.Navbar>
 				<S.Branding>
-					<S.Icon src="logo.png"></S.Icon>
+					<S.Icon src="/logo.png"></S.Icon>
 					<Typography variant="h1" color="secondary">
 						Sothoth Press
 					</Typography>

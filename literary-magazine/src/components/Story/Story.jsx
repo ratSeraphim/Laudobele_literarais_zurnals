@@ -1,12 +1,14 @@
 import { Paper, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
+import Markdown from "markdown-to-jsx";
 import { useParams } from "react-router-dom";
 import * as S from "./style";
+import "./story.css";
+
 import Side from "../Side/Side";
 
 const Story = () => {
-	const parse = require("html-react-parser");
 	const { id } = useParams();
 	const fetchURL = "http://localhost:3001/stories/" + id;
 
@@ -18,7 +20,6 @@ const Story = () => {
 			setPost(response.data);
 		});
 	}, [fetchURL]);
-
 	return (
 		<>
 			<S.Content>
@@ -37,7 +38,8 @@ const Story = () => {
 									written by {post.data.display_name}
 								</Typography>
 							</S.Info>
-							<S.StoryContent>{parse(post.data.content)}</S.StoryContent>
+							<Markdown children={post.data.content}></Markdown>
+							<S.StoryContent></S.StoryContent>
 						</S.Story>
 					)}
 				</Paper>

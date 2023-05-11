@@ -23,3 +23,7 @@ export const Info = styled("div")`
 	display: flex;
 	flex-direction: column;
 `;
+
+export const b = styled("b")`
+	font-weight: bold;
+`;
