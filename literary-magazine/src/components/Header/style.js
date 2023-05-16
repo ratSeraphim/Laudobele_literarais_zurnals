@@ -6,6 +6,7 @@ export const Navbar = styled("nav")`
 	padding: 1rem;
 	display: flex;
 	justify-content: space-around;
+	box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5), 0 0 125px #8f5922 inset;
 `;
 
 export const Branding = styled("div")`
@@ -24,6 +25,7 @@ export const LogButton = styled(Button)`
 
 export const NavigateSite = styled(ButtonGroup)`
 	color: #c7bca1;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 export const Icon = styled("img")`

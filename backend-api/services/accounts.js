@@ -16,6 +16,14 @@ async function getMultiple(page = 1) {
 	};
 }
 
+//const createdid = await db.query(
+//	`SELECT account_id FROM accounts WHERE username = "${accounts.username}"`
+//);
+//console.log({ createdid } + " is the created id");
+//const inforesult = await db.query(
+//	`INSERT INTO userinfo (account_id, display_name) VALUES (${createdid}, "${accounts.displayname}`
+//);
+
 async function create(accounts) {
 	const result = await db.query(
 		`INSERT INTO accounts 
@@ -23,13 +31,6 @@ async function create(accounts) {
       VALUES 
       ("${accounts.username}", "${accounts.email}", "${accounts.password}");`
 	);
-	//const createdid = await db.query(
-	//	`SELECT account_id FROM accounts WHERE username = "${accounts.username}"`
-	//);
-	//console.log({ createdid } + " is the created id");
-	//const inforesult = await db.query(
-	//	`INSERT INTO userinfo (account_id, display_name) VALUES (${createdid}, "${accounts.displayname}`
-	//);
 
 	let message = "Error in creating account";
 

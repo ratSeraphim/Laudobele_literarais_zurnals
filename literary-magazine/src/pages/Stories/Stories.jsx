@@ -8,11 +8,11 @@ import React from "react";
 
 const Stories = () => {
 	const fetchURL = "http://localhost:3001/stories";
-	const [post, setPost] = React.useState(null);
+	const [stories, setStories] = React.useState(null);
 
 	React.useEffect(() => {
 		axios.get(fetchURL).then((response) => {
-			setPost(response.data);
+			setStories(response.data);
 		});
 	}, [fetchURL]);
 
@@ -21,7 +21,7 @@ const Stories = () => {
 			<S.Content>
 				<Paper>
 					<Typography variant="title">Recent Stories</Typography>
-					{!post && (
+					{!stories && (
 						<>
 							<S.PlaceHolder variant="rectangular"></S.PlaceHolder>
 							<S.PlaceHolder variant="rectangular"></S.PlaceHolder>
@@ -29,15 +29,14 @@ const Stories = () => {
 							<S.PlaceHolder variant="rectangular"></S.PlaceHolder>
 						</>
 					)}
-					{post && (
+					{stories && (
 						<S.Holder>
-							{post.data.map((Story) => {
+							{stories.data.map((Story) => {
 								return (
 									<>
-										<S.CustomAccordion>
+										<S.CustomAccordion key={Story.story_id}>
 											<S.CustomAccordionSummary
 												expandIcon={<ExpandMoreIcon color="primary" />}
-												key={Story.story_id}
 											>
 												<S.Summary>
 													<S.Title>{Story.title}</S.Title>

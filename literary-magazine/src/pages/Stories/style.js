@@ -29,14 +29,22 @@ export const Author = styled("div")`
 export const Title = styled("div")`
 	text-align: left;
 	font-weight: bold;
-	border-bottom: thick double #1b5e20;
 	padding-right: 4rem;
 	padding-left: 4rem;
 `;
 
 export const CustomAccordionSummary = styled(AccordionSummary)`
-	background-color: #1b5e20;
+	background: #3c5222;
+
+	background: url(https://i.ibb.co/ZLHFwxW/img-noise-361x370-1.png);
 	color: white;
+	&:hover {
+		background: -webkit-linear-gradient(
+				rgba(29, 38, 113, 0.1),
+				rgba(195, 55, 100, 0.2)
+			),
+			url(https://i.ibb.co/ZLHFwxW/img-noise-361x370-1.png);
+	}
 `;
 
 export const CustomAccordion = styled(Accordion)`

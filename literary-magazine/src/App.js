@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import "react-quill/dist/quill.snow.css";
 import Landing from "./pages/Landing/Landing";
 import { siteTheme } from "./siteTheme";
 import Admin from "./pages/Admin";
@@ -11,7 +12,8 @@ import Register from "./components/Register/Register";
 import Stories from "./pages/Stories/Stories";
 import Posts from "./pages/News/Posts";
 import Profile from "./pages/Profile";
-import Story from "./components/Story/Story";
+import Story from "./pages/Story/Story";
+import StoryEdit from "./pages/StoryEdit/StoryEdit";
 
 function App() {
 	return (
@@ -24,6 +26,7 @@ function App() {
 								<Route path="/" element={<Landing />}></Route>
 								<Route path="/stories" element={<Stories />}></Route>
 								<Route path="/stories/:id" element={<Story />}></Route>
+								<Route path="/stories/edit" element={<StoryEdit />}></Route>
 								<Route path="/posts" element={<Posts />}></Route>
 								<Route path="/profile" element={<Profile />}></Route>
 							</Route>

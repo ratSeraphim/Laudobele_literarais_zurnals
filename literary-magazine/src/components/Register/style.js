@@ -5,7 +5,7 @@ export const Content = styled(Paper)`
 	padding: 1rem;
 	display: block;
 	width: 25rem;
-	height: 33rem;
+	height: 36rem;
 	margin: 10rem auto auto auto;
 `;
 

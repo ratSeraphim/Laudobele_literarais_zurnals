@@ -5,6 +5,7 @@ import * as S from "./style";
 import axios from "axios";
 
 const Register = () => {
+	//Definē router-dom navigācijas rīku
 	const navigate = useNavigate();
 
 	//Definē mainīgās vērtības, kuras saņem un padod API
@@ -48,7 +49,7 @@ const Register = () => {
 				.catch((error) => {
 					setError(error);
 					console.log(error.message);
-					setMessage("");
+					setMessage(error);
 				});
 			//Aizved lietotāju uz mājaslapu
 			// navigate("/");

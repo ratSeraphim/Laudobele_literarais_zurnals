@@ -1,12 +1,13 @@
 import { Typography } from "@mui/material";
 import Side from "../../components/Side/Side";
 import * as S from "./style";
+import Parchment from "../../components/Parchment/Parchment";
 
 const Landing = () => {
 	return (
 		<>
 			<S.Content>
-				<S.Writing>
+				<Parchment>
 					<Typography variant="h1">The Sothoth Press</Typography>
 					<Typography>
 						The Sothoth Press is a literary magazine being created in
@@ -31,7 +32,7 @@ const Landing = () => {
 						You can get in touch with the site's creator on their github page{" "}
 						<a href="https://github.com/ratSeraphim">here</a>
 					</Typography>
-				</S.Writing>
+				</Parchment>
 				<Side />
 			</S.Content>
 		</>

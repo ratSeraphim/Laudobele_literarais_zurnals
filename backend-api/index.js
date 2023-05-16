@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
-const port = 3001;
+const port = process.env.port || 3001;
 const accountsRouter = require("./routes/accounts");
 const storiesRouter = require("./routes/stories");
+const postsRouter = require("./routes/posts");
 const cors = require("cors");
 
 app.use(cors());
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 app.use("/accounts", accountsRouter);
 app.use("/stories", storiesRouter);
+app.use("/posts", postsRouter);
 /* Error handler middleware */
 app.use((err, req, res, next) => {
 	const statusCode = err.statusCode || 500;
@@ -25,5 +27,5 @@ app.use((err, req, res, next) => {
 	return;
 });
 app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`);
+	console.log(`server started on port ${port}`);
 });

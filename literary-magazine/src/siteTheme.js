@@ -42,7 +42,7 @@ export const siteTheme = createTheme({
 		fontWeightMedium: 700,
 		fontWeightBold: 1000,
 		fontWeightStrong: 1000,
-		fontSize: 15,
+		fontSize: 17,
 		h1: {
 			fontSize: "2.3em",
 			fontWeight: 1000,

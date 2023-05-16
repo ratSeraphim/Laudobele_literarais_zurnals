@@ -6,7 +6,7 @@ const Side = () => {
 	return (
 		<S.Aside>
 			<Typography>Create content</Typography>
-			<Button variant="contained" color="success">
+			<Button variant="contained" color="success" href="/stories/edit">
 				New story
 			</Button>
 			<Button color="success">New post</Button>

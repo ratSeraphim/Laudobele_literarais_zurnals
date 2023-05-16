@@ -1,48 +1,50 @@
-import { Paper, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import Markdown from "markdown-to-jsx";
 import { useParams } from "react-router-dom";
 import * as S from "./style";
-import "./story.css";
 
-import Side from "../Side/Side";
+import Side from "../../components/Side/Side";
+import Parchment from "../../components/Parchment/Parchment";
 
 const Story = () => {
 	const { id } = useParams();
 	const fetchURL = "http://localhost:3001/stories/" + id;
 
-	const [post, setPost] = React.useState(null);
+	const [story, setStory] = React.useState(null);
 
 	React.useEffect(() => {
 		console.log(fetchURL);
 		axios.get(fetchURL).then((response) => {
-			setPost(response.data);
+			setStory(response.data);
 		});
 	}, [fetchURL]);
 	return (
 		<>
 			<S.Content>
-				<Paper>
-					{!post && (
+				<S.BgPaper>
+					{!story && (
 						<>
 							<S.PlaceHolder variant="text"></S.PlaceHolder>
 							<S.PlaceHolder variant="rectangular"></S.PlaceHolder>
 						</>
 					)}
-					{post && (
-						<S.Story>
+					{story && (
+						<Parchment>
 							<S.Info>
-								<Typography variant="title">{post.data.title}</Typography>
+								<Typography variant="title">{story.data.title}</Typography>
 								<Typography variant="subtitle">
-									written by {post.data.display_name}
+									written by {story.data.display_name}
 								</Typography>
 							</S.Info>
-							<Markdown children={post.data.content}></Markdown>
+							<Markdown children={story.data.content}></Markdown>
 							<S.StoryContent></S.StoryContent>
-						</S.Story>
-					)}
-				</Paper>
+						</Parchment>
+					)}{" "}
+					<Button>Edit</Button>
+				</S.BgPaper>
+
 				<Side></Side>
 			</S.Content>
 		</>
