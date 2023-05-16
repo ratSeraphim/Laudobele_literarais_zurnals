@@ -1,7 +1,6 @@
 import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import "react-quill/dist/quill.snow.css";
 import Landing from "./pages/Landing/Landing";
 import { siteTheme } from "./siteTheme";
 import Admin from "./pages/Admin";

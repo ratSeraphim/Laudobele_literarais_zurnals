@@ -33,6 +33,7 @@ export const Letter = styled("div")`
 
 export const ItemContent = styled("div")`
 	display: flex;
+	justify-content: space-between;
 	padding: 1rem;
 `;
 
