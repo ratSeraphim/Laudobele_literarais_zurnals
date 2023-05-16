@@ -29,3 +29,9 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
 	console.log(`server started on port ${port}`);
 });
+let crypto;
+try {
+	crypto = require("node:crypto");
+} catch (err) {
+	console.error("crypto support is disabled!");
+}

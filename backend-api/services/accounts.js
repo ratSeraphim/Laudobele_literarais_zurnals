@@ -1,6 +1,7 @@
 const db = require("./db");
 const helper = require("../helper");
 const config = require("../config");
+const { encryptPassword, generateSalt } = require("../encrypt");
 
 async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage);
@@ -27,21 +28,24 @@ async function getMultiple(page = 1) {
 //("${accounts.username}", "${accounts.email}", "${accounts.password}");
 
 async function create(accounts) {
-	console.log("first create phase " + accounts.displayname);
+	const salt = generateSalt();
+	const hashedPassword = encryptPassword(accounts.password, salt);
+	console.log("first create phase " + accounts.password + " " + hashedPassword);
 	const account = await db.query(
 		`INSERT INTO accounts 
-      (username, email, password) 
+      (username, email, password, salt) 
       VALUES 
-      (?, ?, ?);`,
-		[accounts.username, accounts.email, accounts.password]
+      (?, ?, ?, ?);`,
+		[accounts.username, accounts.email, hashedPassword, salt]
 		//  parameterise your query ^^^
 	);
 
 	let message = "Error in creating account";
 
 	if (account.affectedRows) {
-		grabId(accounts);
+		message = grabId(accounts);
 	}
+	return message;
 }
 async function grabId(accounts) {
 	const createdid = await db.query(
@@ -50,11 +54,12 @@ async function grabId(accounts) {
 	);
 
 	const userid = createdid[0];
-
+	let message = "Error in creating account";
 	console.log(userid.account_id + " is the created id");
 	if (userid.account_id) {
-		createUser(userid.account_id, accounts);
+		message = createUser(userid.account_id, accounts);
 	}
+	return message;
 }
 
 async function createUser(id, accounts) {
@@ -67,7 +72,7 @@ async function createUser(id, accounts) {
 	if (user.affectedRows) {
 		message = "Account created successfully";
 	}
-	return { message };
+	return message;
 }
 
 async function update(id, accounts) {
