@@ -25,7 +25,7 @@ export const LogButton = styled(Button)`
 
 export const NavigateSite = styled(ButtonGroup)`
 	color: #c7bca1;
-	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	box-shadow: none;
 `;
 
 export const Icon = styled("img")`

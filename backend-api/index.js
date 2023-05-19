@@ -5,9 +5,17 @@ const accountsRouter = require("./routes/accounts");
 const storiesRouter = require("./routes/stories");
 const postsRouter = require("./routes/posts");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+	cors({
+		origin: "http://localhost:3000", // Update with your frontend URL
+		credentials: true,
+	})
+);
+
 app.use(
 	express.urlencoded({
 		extended: true,
@@ -17,6 +25,7 @@ app.get("/", (req, res) => {
 	res.json({ message: "ok" });
 });
 app.use("/accounts", accountsRouter);
+
 app.use("/stories", storiesRouter);
 app.use("/posts", postsRouter);
 /* Error handler middleware */
@@ -29,9 +38,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
 	console.log(`server started on port ${port}`);
 });
-let crypto;
-try {
-	crypto = require("node:crypto");
-} catch (err) {
-	console.error("crypto support is disabled!");
-}

@@ -1,8 +1,24 @@
 import * as S from "./style";
 import React from "react";
 import { Typography } from "@mui/material";
+import NavButton from "../NavButton/NavButton";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+	const navigate = useNavigate();
+	const handleLogButton = () => {
+		// Remove the JWT cookie
+		if (jwtCookie) {
+			Cookies.remove("jwt");
+		}
+		navigate("/login");
+
+		// Perform other sign-out logic, such as redirecting the user
+		// or resetting the application state
+	};
+
+	const jwtCookie = Cookies.get("jwt");
 	return (
 		<>
 			<S.Navbar>
@@ -13,13 +29,18 @@ const Navbar = () => {
 					</Typography>
 				</S.Branding>
 				<S.NavigateSite variant="contained" size="large" color="primary">
-					<S.NavButton href="/">Home</S.NavButton>
-					<S.NavButton href="/posts">News</S.NavButton>
-					<S.NavButton href="/stories">Stories</S.NavButton>
-					<S.NavButton href="/profile">Profile</S.NavButton>
+					<NavButton link="" name="Home" />
+					<NavButton link="posts" name="Posts" />
+					<NavButton link="stories" name="Stories" />
+					<NavButton link="profile" name="Profile" />
 				</S.NavigateSite>
-				<S.LogButton variant="contained" color="secondary" href="/login">
-					Sign Out
+				<S.LogButton
+					variant="contained"
+					color="secondary"
+					onClick={handleLogButton}
+				>
+					{!jwtCookie && <>Log in</>}
+					{jwtCookie && <>Sign Out</>}
 				</S.LogButton>
 			</S.Navbar>
 		</>

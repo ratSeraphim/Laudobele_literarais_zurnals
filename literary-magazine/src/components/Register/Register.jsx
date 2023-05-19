@@ -17,8 +17,11 @@ const Register = () => {
 		displayname: "",
 	});
 	const [message, setMessage] = useState("");
+
 	const [error, setError] = useState();
+
 	//Kad tekstā notiek izmaiņas,
+
 	const handleChange = (event) => {
 		//Saņem izmainītās vērtības
 		const { name, value } = event.target;
@@ -28,11 +31,13 @@ const Register = () => {
 			[name]: value,
 		});
 	};
+
 	const handleSubmit = (event) => {
 		//Apstādina lapu no sevis atjaunošanas
 		event.preventDefault();
 
 		console.log(inputs);
+
 		if (inputs.password === inputs.passwordconfirm) {
 			//Nosūta mainīgos uz API
 			axios
@@ -40,9 +45,9 @@ const Register = () => {
 				//Saņem ziņu no API puses
 				.then((response) => {
 					console.log(response.data);
-					setMessage(response.data.message);
-					if (response.data.message === "Account created successfully") {
-						navigate("/");
+					setMessage(response.data);
+					if (response.data === "Account created successfully") {
+						navigate("/login");
 					}
 				})
 				//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
@@ -65,7 +70,6 @@ const Register = () => {
 				<S.RegisterForm>
 					<TextField
 						required={true}
-						id="outlined-basic"
 						label="E-mail"
 						name="email"
 						variant="outlined"
@@ -73,7 +77,6 @@ const Register = () => {
 					/>
 					<TextField
 						required={true}
-						id="outlined-basic"
 						label="Display name"
 						name="displayname"
 						variant="outlined"
@@ -81,7 +84,6 @@ const Register = () => {
 					/>
 					<TextField
 						required
-						id="outlined-basic"
 						label="Username"
 						name="username"
 						variant="outlined"
@@ -89,7 +91,7 @@ const Register = () => {
 					/>
 					<TextField
 						required
-						id="outlined-basic"
+						type="password"
 						label="Password"
 						name="password"
 						variant="outlined"
@@ -97,7 +99,7 @@ const Register = () => {
 					/>
 					<TextField
 						required
-						id="outlined-basic"
+						type="password"
 						label="Confirm Password"
 						variant="outlined"
 						name="passwordconfirm"

@@ -26,7 +26,6 @@ export const Letter = styled("div")`
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3),
 		0 0 100px 30px rgba(222, 198, 122, 0.7) inset;
 	width: 100%;
-	height: 120px;
 	margin: 1.5% auto;
 	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 `;

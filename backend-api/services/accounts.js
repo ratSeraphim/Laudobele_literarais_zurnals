@@ -1,7 +1,12 @@
 const db = require("./db");
 const helper = require("../helper");
 const config = require("../config");
-const { encryptPassword, generateSalt } = require("../encrypt");
+const {
+	encryptPassword,
+	generateSalt,
+	comparePasswords,
+} = require("../encrypt");
+const { generateJWT } = require("./verify");
 
 async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage);
@@ -17,20 +22,11 @@ async function getMultiple(page = 1) {
 	};
 }
 
-//const createdid = await db.query(
-//	`SELECT account_id FROM accounts WHERE username = "${accounts.username}"`
-//);
-//console.log({ createdid } + " is the created id");
-//const inforesult = await db.query(
-//	`INSERT INTO userinfo (account_id, display_name) VALUES (${createdid}, "${accounts.displayname}`
-//);
-
-//("${accounts.username}", "${accounts.email}", "${accounts.password}");
-
+// creating an account begins //
 async function create(accounts) {
 	const salt = generateSalt();
 	const hashedPassword = encryptPassword(accounts.password, salt);
-	console.log("first create phase " + accounts.password + " " + hashedPassword);
+	console.log("first create phase ...");
 	const account = await db.query(
 		`INSERT INTO accounts 
       (username, email, password, salt) 
@@ -63,7 +59,7 @@ async function grabId(accounts) {
 }
 
 async function createUser(id, accounts) {
-	console.log("entered second create phase " + accounts.displayname);
+	console.log("entered second create phase ");
 	const user = await db.query(
 		`INSERT INTO userinfo (account_id, display_name) VALUES (?, ?);`,
 		[id, accounts.displayname]
@@ -73,6 +69,35 @@ async function createUser(id, accounts) {
 		message = "Account created successfully";
 	}
 	return message;
+}
+//creating account ends
+
+async function login(accounts) {
+	console.log(accounts);
+	const rows = await db.query(
+		`SELECT password, salt, role, accounts.account_id, display_name
+		FROM accounts INNER JOIN userinfo ON accounts.account_id = userinfo.account_id
+		WHERE (username=?) OR (email=?)`,
+		[accounts.name, accounts.name]
+	);
+
+	if (rows[0]) {
+		if (comparePasswords(accounts.password, rows[0].password, rows[0].salt)) {
+			const payload = {
+				id: rows[0].account_id,
+				displayName: rows[0].display_name,
+				role: rows[0].role,
+			};
+			JWT = generateJWT(payload, "1d");
+
+			message = "Login successful";
+		} else {
+			message = "E-mail/username or Password incorrect";
+		}
+	} else {
+		message = "E-mail/username or Password incorrect";
+	}
+	return { message, JWT };
 }
 
 async function update(id, accounts) {
@@ -108,4 +133,5 @@ module.exports = {
 	create,
 	update,
 	remove,
+	login,
 };

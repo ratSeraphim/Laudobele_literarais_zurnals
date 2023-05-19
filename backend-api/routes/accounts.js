@@ -1,6 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const accounts = require("../services/accounts");
+const { verifyJWT } = require("../services/verify");
+
+/* VERIFY the JWT holder */
+router.get("/verify", async function (req, res) {
+	try {
+		console.log(req.headers.authorization);
+		res.json(await verifyJWT(req.headers.authorization));
+	} catch (err) {
+		console.error(`Error while getting accounts `, err.message);
+	}
+});
 
 /* GET accounts. */
 router.get("/", async function (req, res) {
@@ -22,7 +33,22 @@ router.post("/", async function (req, res) {
 	}
 });
 
-/* PUT programming language */
+router.get("/login", async function (req, res) {
+	try {
+		const response = await accounts.login(req.query.inputs);
+		if (response) {
+			console.log(response);
+			res.cookie("jwt", response.JWT, {
+				httpOnly: false,
+			});
+			res.json(response.message);
+		}
+	} catch (err) {
+		console.error(`Error while updating account`, err.message);
+	}
+});
+
+/* PUT (update) account */
 router.put("/:id", async function (req, res, next) {
 	try {
 		res.json(await accounts.update(req.params.id, req.body));
