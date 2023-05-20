@@ -6,5 +6,5 @@ export const Aside = styled(Paper)`
 	background-color: #c7bca1;
 	display: flex;
 	flex-direction: column;
-	height: 300px;
+	min-height: 300px;
 `;

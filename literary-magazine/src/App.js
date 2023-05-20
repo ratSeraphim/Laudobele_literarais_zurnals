@@ -10,9 +10,9 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Stories from "./pages/Stories/Stories";
 import Posts from "./pages/News/Posts";
-import Profile from "./pages/Profile";
 import Story from "./pages/Story/Story";
 import StoryEdit from "./pages/StoryEdit/StoryEdit";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
 	return (

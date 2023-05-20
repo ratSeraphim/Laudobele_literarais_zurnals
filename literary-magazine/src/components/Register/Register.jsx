@@ -65,11 +65,13 @@ const Register = () => {
 
 	return (
 		<>
+			<S.Return to="/">Return to the sea</S.Return>
 			<S.Content>
 				<h1>Sign up</h1>
-				<S.RegisterForm>
+				<S.RegisterForm onSubmit={handleSubmit}>
 					<TextField
 						required={true}
+						type="email"
 						label="E-mail"
 						name="email"
 						variant="outlined"
@@ -105,7 +107,7 @@ const Register = () => {
 						name="passwordconfirm"
 						onChange={handleChange}
 					/>
-					<S.Submit type="submit" onClick={handleSubmit} />
+					<S.Submit type="submit" />
 					<Button color="tertiary" href="/login">
 						Log in
 					</Button>

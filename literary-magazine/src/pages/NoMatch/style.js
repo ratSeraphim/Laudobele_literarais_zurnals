@@ -8,7 +8,6 @@ export const NomatchPaper = styled(Paper)`
 	margin: 10rem auto;
 	padding: 2rem;
 	width: 20%;
-	height: 10rem;
 `;
 
 export const Return = styled(Link)`

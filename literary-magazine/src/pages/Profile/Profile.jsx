@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { NavButton } from "../components/Header/style";
+import * as S from "./style";
 
 const Profile = () => {
 	const [data, setData] = useState();
@@ -31,14 +31,16 @@ const Profile = () => {
 	return (
 		<>
 			<Paper>
-				<Typography variant="h1">Profile</Typography>
-				{!data && (
-					<Button href="/login" variant="contained">
-						Log in
-					</Button>
-				)}
-				{data && <>currently logged in as: {data.displayName}</>}
-				<Outlet />
+				<S.Content>
+					<Typography variant="h1">Profile</Typography>
+					{!data && (
+						<Button href="/login" variant="contained">
+							Log in
+						</Button>
+					)}
+					{data && <>currently logged in as: {data.displayName}</>}
+					<Outlet />
+				</S.Content>
 			</Paper>
 		</>
 	);

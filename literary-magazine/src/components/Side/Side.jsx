@@ -10,9 +10,11 @@ const Side = () => {
 				New story
 			</Button>
 			<Button color="success">New post</Button>
+			<Button color="success">New collection</Button>
 			<Typography>Manage data</Typography>
 			<ButtonGroup orientation="vertical" variant="contained" color="tertiary">
 				<Button>Settings</Button>
+
 				<Button>Stories</Button>
 			</ButtonGroup>
 		</S.Aside>
