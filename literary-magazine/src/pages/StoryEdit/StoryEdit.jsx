@@ -14,6 +14,9 @@ const StoryEdit = () => {
 					<div>New story</div>
 
 					<form onSubmit={handleSubmit}>
+						<label>Title</label>
+						<input type="text" name="title" />
+						<label>Content</label>
 						<textarea />
 						<button type="submit">Submit</button>
 					</form>

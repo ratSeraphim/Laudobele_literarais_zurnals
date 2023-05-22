@@ -1,10 +1,11 @@
+require("dotenv").config();
 const config = {
 	db: {
 		/* don't expose password or any sensitive info, done only for demo */
-		host: "127.0.0.1",
-		user: "sitemin",
-		password: "The3Cooliest1",
-		database: "sothothpress",
+		host: process.env.DB_HOST,
+		user: process.env.DB_USER,
+		password: process.env.DB_PASSWORD,
+		database: process.env.DB_DATABASE,
 	},
 	listPerPage: 10,
 };

@@ -6,7 +6,6 @@ const { verifyJWT } = require("../services/verify");
 /* VERIFY the JWT holder */
 router.get("/verify", async function (req, res) {
 	try {
-		console.log(req.headers.authorization);
 		res.json(await verifyJWT(req.headers.authorization));
 	} catch (err) {
 		console.error(`Error while getting accounts `, err.message);
@@ -38,9 +37,11 @@ router.get("/login", async function (req, res) {
 		const response = await accounts.login(req.query.inputs);
 		if (response) {
 			console.log(response);
-			res.cookie("jwt", response.JWT, {
-				httpOnly: false,
-			});
+			if (response.JWT != undefined) {
+				res.cookie("jwt", response.JWT, {
+					httpOnly: false,
+				});
+			}
 			res.json(response.message);
 		}
 	} catch (err) {

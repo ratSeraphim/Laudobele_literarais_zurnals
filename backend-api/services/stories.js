@@ -34,9 +34,16 @@ async function getOne(id, stories) {
 async function create(stories) {
 	const result = await db.query(
 		`INSERT INTO stories 
-      (username, email, password) 
+      (title, content, summary, account_id, public) 
       VALUES 
-      ("${stories.username}", "${stories.email}", "${stories.password}");`
+      (?, ?, ?, ?, ?);`,
+		[
+			stories.title,
+			stories.content,
+			stories.summary,
+			stories.account_id,
+			stories.public,
+		]
 	);
 
 	let message = "Error in creating story";

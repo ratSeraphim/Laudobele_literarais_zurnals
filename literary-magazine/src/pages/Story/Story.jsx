@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Markdown from "markdown-to-jsx";
 import { useParams } from "react-router-dom";
 import * as S from "./style";
@@ -12,9 +12,9 @@ const Story = () => {
 	const { id } = useParams();
 	const fetchURL = "http://localhost:3001/stories/" + id;
 
-	const [story, setStory] = React.useState(null);
+	const [story, setStory] = useState(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		console.log(fetchURL);
 		axios.get(fetchURL).then((response) => {
 			setStory(response.data);

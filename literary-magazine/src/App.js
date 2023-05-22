@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Landing from "./pages/Landing/Landing";
 import { siteTheme } from "./siteTheme";
-import Admin from "./pages/Admin";
+
 import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch/NoMatch";
 import Login from "./components/Login/Login";
@@ -13,6 +13,7 @@ import Posts from "./pages/News/Posts";
 import Story from "./pages/Story/Story";
 import StoryEdit from "./pages/StoryEdit/StoryEdit";
 import Profile from "./pages/Profile/Profile";
+import Admin from "./pages/Admin/Admin";
 
 function App() {
 	return (

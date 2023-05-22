@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Button, ButtonGroup } from "@mui/material";
+import NavButton from "../NavButton/NavButton";
 
 export const Navbar = styled("nav")`
 	background-color: #f1d3b3;
@@ -15,10 +16,6 @@ export const Branding = styled("div")`
 	flex-direction: row;
 `;
 
-export const NavButton = styled(Button)`
-	color: #65647c;
-`;
-
 export const LogButton = styled(Button)`
 	color: #f1d3b3;
 `;
@@ -30,4 +27,11 @@ export const NavigateSite = styled(ButtonGroup)`
 
 export const Icon = styled("img")`
 	height: 50px;
+`;
+
+export const CustomNavButton = styled(NavButton)`
+	background-color: indigo;
+	&:hover {
+		background-color: indigo;
+	}
 `;

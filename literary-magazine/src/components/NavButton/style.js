@@ -9,6 +9,6 @@ export const CustomNavLink = styled(NavLink)`
 	vertical-align: middle;
 	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 	&:hover {
-		color: rgba(0, 0, 0, 0.5);
+		background-color: rgba(0, 0, 0, 0.5);
 	}
 `;

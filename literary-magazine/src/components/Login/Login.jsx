@@ -73,7 +73,7 @@ const Login = () => {
 			<S.Return to="/">Return to the sea</S.Return>
 			<S.Content>
 				<h1>Log in</h1>
-				<S.LoginForm>
+				<S.LoginForm onSubmit={handleSubmit}>
 					<TextField
 						required
 						name="name"
@@ -89,7 +89,7 @@ const Login = () => {
 						variant="outlined"
 						onChange={handleChange}
 					/>
-					<S.Submit type="submit" onClick={handleSubmit} />
+					<S.Submit type="submit" />
 					<Button color="tertiary" href="/signup">
 						Sign up
 					</Button>

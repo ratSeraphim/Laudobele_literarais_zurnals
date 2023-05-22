@@ -4,13 +4,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Side from "../../components/Side/Side";
 import * as S from "./style";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Stories = () => {
 	const fetchURL = "http://localhost:3001/stories";
-	const [stories, setStories] = React.useState(null);
+	const [stories, setStories] = useState(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		axios.get(fetchURL).then((response) => {
 			setStories(response.data);
 		});

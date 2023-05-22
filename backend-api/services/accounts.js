@@ -92,9 +92,11 @@ async function login(accounts) {
 
 			message = "Login successful";
 		} else {
+			JWT = undefined;
 			message = "E-mail/Username or Password incorrect";
 		}
 	} else {
+		JWT = undefined;
 		message = "E-mail/Username or Password incorrect";
 	}
 	return { message, JWT };
