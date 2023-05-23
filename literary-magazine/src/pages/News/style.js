@@ -35,6 +35,7 @@ export const ItemContent = styled("div")`
 	display: flex;
 	justify-content: space-between;
 	padding: 1rem;
+	white-space: pre-line;
 `;
 
 export const Author = styled("div")`

@@ -1,23 +1,25 @@
 import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Markdown from "markdown-to-jsx";
 import { useParams } from "react-router-dom";
 import * as S from "./style";
 
 import Side from "../../components/Side/Side";
 import Parchment from "../../components/Parchment/Parchment";
+import dayjs from "dayjs";
 
 const Story = () => {
 	const { id } = useParams();
 	const fetchURL = "http://localhost:3001/stories/" + id;
 
+	const [shortDateFormat, setShortDateFormat] = useState(null);
 	const [story, setStory] = useState(null);
 
 	useEffect(() => {
 		console.log(fetchURL);
 		axios.get(fetchURL).then((response) => {
 			setStory(response.data);
+			setShortDateFormat(dayjs(response.data.date).format("MM/DD/YYYY"));
 		});
 	}, [fetchURL]);
 	return (
@@ -38,8 +40,9 @@ const Story = () => {
 									written by {story.data.display_name}
 								</Typography>
 							</S.Info>
-							<Markdown children={story.data.content}></Markdown>
-							<S.StoryContent></S.StoryContent>
+
+							<S.Text>{story.data.content}</S.Text>
+							<S.StoryDate>written on {shortDateFormat}</S.StoryDate>
 						</Parchment>
 					)}{" "}
 					<Button>Edit</Button>

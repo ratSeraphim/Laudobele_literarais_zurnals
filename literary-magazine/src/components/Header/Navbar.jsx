@@ -37,7 +37,6 @@ const Navbar = () => {
 				// Handle the response from the backend
 				console.log("Verification response:", response.data);
 				setRole(response.data.role);
-				console.log(role, role.role);
 			})
 			.catch((error) => {
 				// Handle errors

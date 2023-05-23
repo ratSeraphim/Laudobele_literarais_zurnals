@@ -49,12 +49,10 @@ async function create(stories) {
 	let message = "Error in creating story";
 
 	if (result.affectedRows) {
-		//if (inforesult.affectedRows) {
-		message = "story created successfully";
-		//}
+		message = "Story created successfully";
 	}
 
-	return { message };
+	return message;
 }
 
 async function update(id, stories) {
@@ -67,7 +65,7 @@ async function update(id, stories) {
 	let message = "Error in updating story";
 
 	if (result.affectedRows) {
-		message = "story updated successfully";
+		message = "Story updated successfully";
 	}
 
 	return { message };
@@ -79,7 +77,7 @@ async function remove(id) {
 	let message = "Error in deleting story";
 
 	if (result.affectedRows) {
-		message = "story deleted successfully";
+		message = "Story deleted successfully";
 	}
 
 	return { message };

@@ -1,7 +1,7 @@
 import { Paper, Typography } from "@mui/material";
 import Side from "../../components/Side/Side";
 import * as S from "./style";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 // extend dayjs
@@ -10,8 +10,8 @@ dayjs.extend(relativeTime);
 
 const Posts = () => {
 	const fetchURL = "http://localhost:3001/posts";
-	const [post, setPost] = React.useState(null);
-	React.useEffect(() => {
+	const [post, setPost] = useState(null);
+	useEffect(() => {
 		axios.get(fetchURL).then((response) => {
 			setPost(response.data);
 		});

@@ -10,11 +10,15 @@ const Side = () => {
 			{jwtCookie && (
 				<>
 					<Typography>Create content</Typography>
-					<Button variant="contained" color="success" href="/stories/edit">
+					<S.SideButton variant="contained" color="success" href="/stories/new">
 						New story
+					</S.SideButton>
+					<Button color="success" href="/posts/new">
+						New post
 					</Button>
-					<Button color="success">New post</Button>
-					<Button color="success">New collection</Button>
+					<Button color="success" href="/collections/new">
+						New collection
+					</Button>
 					<Typography>Manage data</Typography>
 					<ButtonGroup
 						orientation="vertical"
@@ -31,13 +35,13 @@ const Side = () => {
 				<>
 					{" "}
 					<Typography>You should create an account!</Typography>
-					<Button color="success" variant="contained" href="/register">
+					<S.SideButton color="success" variant="contained" href="/register">
 						Sign up
-					</Button>
+					</S.SideButton>
 					<p>If you already have an account:</p>
-					<Button color="success" variant="contained" href="/login">
+					<S.SideButton color="success" variant="contained" href="/login">
 						Log in
-					</Button>
+					</S.SideButton>
 					<p>
 						When you log in you can:
 						<br /> Create stories,
@@ -46,9 +50,9 @@ const Side = () => {
 					</p>
 				</>
 			)}
-			<Button variant="contained" color="tertiary">
+			<S.SideButton variant="contained" color="secondary">
 				11's Collections
-			</Button>
+			</S.SideButton>
 		</S.Aside>
 	);
 };

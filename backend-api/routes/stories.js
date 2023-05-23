@@ -20,7 +20,7 @@ router.get("/:id", async function (req, res) {
 	}
 });
 
-/* POST account */
+/* POST story */
 router.post("/", async function (req, res) {
 	console.log(req.body);
 	try {

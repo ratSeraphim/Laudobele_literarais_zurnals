@@ -11,9 +11,10 @@ import Register from "./components/Register/Register";
 import Stories from "./pages/Stories/Stories";
 import Posts from "./pages/News/Posts";
 import Story from "./pages/Story/Story";
-import StoryEdit from "./pages/StoryEdit/StoryEdit";
 import Profile from "./pages/Profile/Profile";
 import Admin from "./pages/Admin/Admin";
+import CreateStory from "./pages/Create/CreateStory";
+import CreatePost from "./pages/Create/CreatePost";
 
 function App() {
 	return (
@@ -26,8 +27,9 @@ function App() {
 								<Route path="/" element={<Landing />}></Route>
 								<Route path="/stories" element={<Stories />}></Route>
 								<Route path="/stories/:id" element={<Story />}></Route>
-								<Route path="/stories/edit" element={<StoryEdit />}></Route>
+								<Route path="/stories/new" element={<CreateStory />}></Route>
 								<Route path="/posts" element={<Posts />}></Route>
+								<Route path="/posts/new" element={<CreatePost />}></Route>
 								<Route path="/profile" element={<Profile />}></Route>
 							</Route>
 

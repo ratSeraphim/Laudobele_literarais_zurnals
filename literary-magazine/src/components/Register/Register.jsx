@@ -18,8 +18,6 @@ const Register = () => {
 	});
 	const [message, setMessage] = useState("");
 
-	const [error, setError] = useState();
-
 	//Kad tekstā notiek izmaiņas,
 
 	const handleChange = (event) => {
@@ -52,7 +50,6 @@ const Register = () => {
 				})
 				//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
 				.catch((error) => {
-					setError(error);
 					console.log(error.message);
 					setMessage(error);
 				});

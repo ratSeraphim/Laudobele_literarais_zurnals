@@ -1,4 +1,4 @@
-import { Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Aside = styled(Paper)`
@@ -6,5 +6,10 @@ export const Aside = styled(Paper)`
 	background-color: #c7bca1;
 	display: flex;
 	flex-direction: column;
-	min-height: 300px;
+	height: 25rem;
+`;
+
+export const SideButton = styled(Button)`
+	margin-top: 10px;
+	margin-bottom: 10px;
 `;
