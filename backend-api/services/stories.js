@@ -16,7 +16,7 @@ async function getMultiple(page = 1) {
 	};
 }
 
-async function getOne(id, stories) {
+async function getOne(id) {
 	const rows = await db.query(
 		`SELECT title, story_id, summary, display_name, date, content 
 		FROM stories 

@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `sothothpress`.`stories` (
   `story_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(50) NOT NULL,
   `content` TEXT NOT NULL,
-  `date` DATE NOT NULL,
+  `date` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_edited` DATE NULL,
   `summary` TEXT NULL,
   `public` TINYINT NOT NULL DEFAULT 0,
@@ -66,7 +66,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sothothpress`.`posts` (
   `post_id` INT NOT NULL AUTO_INCREMENT,
   `content` TEXT NOT NULL,
-  `date` DATE NOT NULL,
+  `date` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `account_id` INT NOT NULL,
   `story_id` INT NULL,
   `collection_id` INT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `sothothpress`.`comments` (
   `content` TEXT NOT NULL,
   `account_id` INT NULL,
   `story_id` INT NOT NULL,
-  `date` DATE NOT NULL,
+  `date` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`, `story_id`),
   CONSTRAINT `fk_comments_accounts1`
     FOREIGN KEY (`account_id`)

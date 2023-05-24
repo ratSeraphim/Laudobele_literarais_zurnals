@@ -17,9 +17,6 @@ const Navbar = () => {
 		} else if (!jwtCookie) {
 			navigate("/login");
 		}
-
-		// Perform other sign-out logic, such as redirecting the user
-		// or resetting the application state
 	};
 
 	const [role, setRole] = useState(null);

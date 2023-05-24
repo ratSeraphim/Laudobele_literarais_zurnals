@@ -35,20 +35,19 @@ async function getOne(id, posts) {
 async function create(posts) {
 	const result = await db.query(
 		`INSERT INTO posts 
-      (username, email, password) 
+      (account_id, content, story_id, collection_id) 
       VALUES 
-      ("${posts.username}", "${posts.email}", "${posts.password}");`
+      (?, ?, ?, ?) ;`,
+		[posts.account_id, posts.content, posts.story, posts.collection]
 	);
 
 	let message = "Error in creating post";
 
 	if (result.affectedRows) {
-		//if (inforesult.affectedRows) {
-		message = "post created successfully";
-		//}
+		message = "Post created successfully";
 	}
 
-	return { message };
+	return message;
 }
 
 async function update(id, posts) {
@@ -61,7 +60,7 @@ async function update(id, posts) {
 	let message = "Error in updating post";
 
 	if (result.affectedRows) {
-		message = "post updated successfully";
+		message = "Post updated successfully";
 	}
 
 	return { message };
@@ -73,7 +72,7 @@ async function remove(id) {
 	let message = "Error in deleting post";
 
 	if (result.affectedRows) {
-		message = "post deleted successfully";
+		message = "Post deleted successfully";
 	}
 
 	return { message };

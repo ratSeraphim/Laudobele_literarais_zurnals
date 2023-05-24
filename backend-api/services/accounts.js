@@ -22,6 +22,18 @@ async function getMultiple(page = 1) {
 	};
 }
 
+async function getCreations(id) {
+	const rows = await db.query(`CALL accountCreations(?);`, [id]);
+	const data = {
+		stories: rows[0],
+		collections: rows[1],
+		posts: rows[2],
+		comments: rows[3],
+	};
+
+	return data;
+}
+
 // creating an account begins //
 async function create(accounts) {
 	const salt = generateSalt();
@@ -136,4 +148,5 @@ module.exports = {
 	update,
 	remove,
 	login,
+	getCreations,
 };

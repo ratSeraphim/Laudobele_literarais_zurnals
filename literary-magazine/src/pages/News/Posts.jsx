@@ -38,23 +38,19 @@ const Posts = () => {
 									<>
 										<S.Letter key={Post.post_id}>
 											<S.ItemContent>
-												{Post.content}{" "}
+												{Post.content}
 												<S.Author>
 													- {Post.display_name}, {postDate}
 												</S.Author>
 											</S.ItemContent>
 											{shortDateFormat}
 											{Post.story_id && (
-												<S.LinkButton
-													key={Post.story_id}
-													href={"/stories/" + Post.story_id}
-												>
+												<S.LinkButton href={"/stories/" + Post.story_id}>
 													Story here...
 												</S.LinkButton>
 											)}
 											{Post.collection_id && (
 												<S.LinkButton
-													key={Post.collection_id}
 													href={"/collections/" + Post.collection_id}
 												>
 													Collection here....

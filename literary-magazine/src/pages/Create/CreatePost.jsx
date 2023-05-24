@@ -15,11 +15,10 @@ import {
 
 const CreatePost = () => {
 	const navigate = useNavigate();
-	const [story, setStory] = useState("");
-	const [stories, setStories] = useState(null);
-	const [collection, setCollection] = useState("");
-	const [storiesAuthored, setStoriesAuthored] = useState("");
+	const [authored, setAuthored] = useState(null);
 	const [accData, setAccData] = useState();
+	const [story, setStory] = useState();
+	const [collection, setCollection] = useState();
 	const [inputs, setInputs] = useState({
 		account_id: "",
 		content: "",
@@ -27,25 +26,7 @@ const CreatePost = () => {
 		collection: null,
 	});
 	const [message, setMessage] = useState("");
-
-	//Define all the URLs we need for this
-	const fetchUserData = () => {
-		// Saņem saglabāto sīkdatni
-		const jwt = Cookies.get("jwt");
-		return axios.get("http://localhost:3001/accounts/verify", {
-			headers: {
-				Authorization: `${jwt}`,
-			},
-		});
-	};
-
-	const fetchStories = () => {
-		return axios.get("http://localhost:3001/stories/");
-	};
-
-	const fetchCollections = () => {
-		return axios.get("http://localhost:3001/accounts/");
-	};
+	const jwt = Cookies.get("jwt");
 
 	const handleSubmit = (event) => {
 		//Apstādina lapu no sevis atjaunošanas
@@ -60,7 +41,7 @@ const CreatePost = () => {
 			.then((response) => {
 				console.log(response.data);
 				setMessage(response.data);
-				if (response.data === "post created successfully") {
+				if (response.data === "Post created successfully") {
 					navigate("/posts");
 				}
 			})
@@ -83,28 +64,9 @@ const CreatePost = () => {
 			[name]: value,
 			account_id: accData.id,
 		});
-		setStoriesAuthored(
-			stories.filter(function isAuthoredBy(data) {
-				return data.display_name === accData.displayName;
-			})
-		);
-		console.log(storiesAuthored);
 	};
 
-	Promise.all([fetchUserData(), fetchStories(), fetchCollections()])
-		.then((responses) => {
-			const userData = responses[0].data;
-			const storyData = responses[1].data;
-			const collectionData = responses[2].data;
-			console.log("User: ", userData);
-			console.log("Story: ", storyData);
-			console.log("Collection: ", collectionData);
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
 	useEffect(() => {
-		/*// Nosūta verifikāciju uz API lai apstiprinātu un dekriptētu datus
 		axios
 			.get("http://localhost:3001/accounts/verify", {
 				headers: {
@@ -112,28 +74,29 @@ const CreatePost = () => {
 				},
 			})
 			.then((response) => {
-				// Ja API apstrādā datus un pretī saņem saglabāto "payload", tad saņem konta identifikatoru. Savādāk, lietotāju nosūta
-				//atpakaļ uz tuvāko publiski pieejamo saiti
-				response.data == null ? navigate("/posts") : setAccData(response.data);
+				setAccData(response.data);
+				axios
+					.get("http://localhost:3001/accounts/" + response.data.id)
+					.then((response) => {
+						const createdData = response.data;
+						console.log(createdData);
+
+						setAuthored(createdData);
+					})
+					.catch((error) => {
+						console.error("Error:", error);
+					});
 			})
 			.catch((error) => {
-				// Handle errors
-				console.error("Verification error:", error);
+				console.error("Error: ", error);
 			});
-
-		stories.then((response) => {
-			console.log(response.data.data);
-
-			setStories(response.data.data);
-		});*/
 	}, []);
+
 	return (
 		<>
 			<S.Content>
-				{accData === undefined && (
-					<Typography color="warning">Go back!!!</Typography>
-				)}
-				{accData !== undefined && (
+				{!accData && <Typography color="warning">Go back!!!</Typography>}
+				{accData && (
 					<S.CusPaper>
 						<div>New post</div>
 						<h3>{message}</h3>
@@ -148,36 +111,57 @@ const CreatePost = () => {
 								helperText="The story itself! Go wild."
 								onChange={handleChange}
 							/>
-							{storiesAuthored && (
-								<FormControl fullWidth>
-									<InputLabel>Story</InputLabel>
-									<Select label="Story" value={story}>
-										{storiesAuthored.map((Story) => {
-											return (
-												<MenuItem key={Story.story_id} value={Story.story_id}>
-													{Story.title} by {Story.display_name}
-												</MenuItem>
-											);
-										})}
-									</Select>
-									<FormHelperText>
-										Related story, if there is one
-									</FormHelperText>
-								</FormControl>
+							{authored && (
+								<>
+									<FormControl autoWidth>
+										<InputLabel>Story</InputLabel>
+										<Select
+											label="Story"
+											defaultValue=""
+											name="story"
+											onChange={handleChange}
+										>
+											<MenuItem value={null}>-</MenuItem>
+											{authored.stories.map((Story) => {
+												return (
+													<MenuItem key={Story.story_id} value={Story.story_id}>
+														{Story.title}
+													</MenuItem>
+												);
+											})}
+										</Select>
+										<FormHelperText>
+											Related story, if there is one
+										</FormHelperText>
+									</FormControl>
+
+									<FormControl autoWidth>
+										<InputLabel>Collection</InputLabel>
+										<Select
+											label="Collection"
+											defaultValue=""
+											name="collection"
+											onChange={handleChange}
+										>
+											<MenuItem value={null}>-</MenuItem>
+											{authored.collections.map((Collection) => {
+												return (
+													<MenuItem
+														key={Collection.story_id}
+														value={Collection.story_id}
+													>
+														{Collection.name}
+													</MenuItem>
+												);
+											})}
+										</Select>
+										<FormHelperText>
+											Related collection, if there is one
+										</FormHelperText>
+									</FormControl>
+								</>
 							)}
-							<FormControl fullWidth>
-								<InputLabel>Collection</InputLabel>
-								<Select
-									labelId="collection-label"
-									label="Collection"
-									value={collection}
-								>
-									<MenuItem>Item one</MenuItem>
-								</Select>
-								<FormHelperText>
-									Related collection, if there is one
-								</FormHelperText>
-							</FormControl>
+
 							<S.Submit type="submit" />
 						</S.Form>
 					</S.CusPaper>

@@ -25,9 +25,7 @@ const Side = () => {
 						variant="contained"
 						color="tertiary"
 					>
-						<Button>Settings</Button>
-
-						<Button>Stories</Button>
+						<Button>Content</Button>
 					</ButtonGroup>{" "}
 				</>
 			)}

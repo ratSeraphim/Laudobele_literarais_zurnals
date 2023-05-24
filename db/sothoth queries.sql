@@ -20,3 +20,51 @@ INSERT INTO stories (title, content, date, summary, public, account_id) VALUES (
  INSERT INTO account_collection VALUES (1, 1);
  
  INSERT INTO comments (content, account_id, story_id, date) VALUES ("I hope you guys like this i worked very hard on it", 1, 1, "2023-04-12");
+ 
+ DELIMITER $$
+ CREATE PROCEDURE collectionInfo (IN colid INT)
+BEGIN
+	SELECT title, display_name
+	FROM stories
+	INNER JOIN story_collection
+	ON stories.story_id = story_collection.story_id
+	INNER JOIN userinfo
+	ON userinfo.account_id = stories.account_id
+	WHERE story_collection.collection_id =  colid;
+
+
+	SELECT display_name
+	FROM userinfo
+	INNER JOIN account_collection
+	ON userinfo.account_id = account_collection.account_id
+	WHERE account_collection.collection_id =  colid;
+END $$ 
+ DELIMITER ;
+
+CALL collectionInfo(1);
+
+ DELIMITER $$
+ CREATE PROCEDURE accountCreations (IN acc_id INT)
+BEGIN
+	SELECT title, summary, date, story_id
+	FROM stories
+	WHERE stories.account_id =  acc_id;
+
+
+	SELECT collections.collection_id, name, description
+	FROM collections
+	INNER JOIN account_collection
+	ON collections.collection_id = account_collection.collection_id
+	WHERE account_collection.account_id =  acc_id;
+    
+	SELECT content, date, post_id, story_id, collection_id
+	FROM posts
+	WHERE account_id =  acc_id;
+    
+    SELECT content, comment_id, story_id, date
+    FROM comments
+    WHERE account_id = acc_id;
+END $$ 
+ DELIMITER ;
+
+CALL accountCreations(152);
