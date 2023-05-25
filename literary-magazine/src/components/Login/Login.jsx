@@ -47,12 +47,13 @@ const Login = () => {
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
-				setMessage(response.data);
+				setMessage(response.data.message);
 				if (response.data === "Login successful") {
 					const jwtCookie = Cookies.get("jwt");
 
 					if (jwtCookie) {
 						navigate("/");
+						window.location.reload(false);
 					} else {
 						// JWT cookie does not exist
 						// Handle unauthorized access or redirect to login

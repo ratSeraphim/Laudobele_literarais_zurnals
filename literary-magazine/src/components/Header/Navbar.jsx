@@ -4,9 +4,8 @@ import { Typography } from "@mui/material";
 import NavButton from "../NavButton/NavButton";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-const Navbar = () => {
+const Navbar = ({ accData }) => {
 	const navigate = useNavigate();
 	const jwtCookie = Cookies.get("jwt");
 	const handleLogButton = () => {
@@ -14,32 +13,11 @@ const Navbar = () => {
 		if (jwtCookie) {
 			Cookies.remove("jwt");
 			navigate("/login");
+			window.location.reload(false);
 		} else if (!jwtCookie) {
 			navigate("/login");
 		}
 	};
-
-	const [role, setRole] = useState(null);
-	useEffect(() => {
-		// Retrieve the JWT from the stored cookie or any other source
-		const jwt = Cookies.get("jwt");
-		// Send the verification request to the backend
-		axios
-			.get("http://localhost:3001/accounts/verify", {
-				headers: {
-					Authorization: `${jwt}`,
-				},
-			})
-			.then((response) => {
-				// Handle the response from the backend
-				console.log("Verification response:", response.data);
-				setRole(response.data.role);
-			})
-			.catch((error) => {
-				// Handle errors
-				console.error("Verification error:", error);
-			});
-	}, []);
 
 	return (
 		<>
@@ -55,8 +33,11 @@ const Navbar = () => {
 					<NavButton link="posts" name="Posts" />
 					<NavButton link="stories" name="Stories" />
 					<NavButton link="profile" name="Profile" />
-					{role === "owner" ||
-						(role === "admin" && <NavButton link="admin" name="Admin" />)}
+					{accData &&
+						(accData.role === "owner" ||
+							(accData.role === "admin" && (
+								<NavButton link="admin" name="Admin" />
+							)))}
 				</S.NavigateSite>
 				<S.LogButton
 					variant="contained"

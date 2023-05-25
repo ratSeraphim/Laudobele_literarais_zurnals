@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Header/Navbar";
 
-const Home = () => {
+const Home = ({ accData }) => {
 	return (
 		<>
-			<Navbar />
+			<Navbar {...(accData ? (accData = { accData }) : (accData = null))} />
 			<Outlet />
 		</>
 	);

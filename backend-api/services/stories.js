@@ -59,7 +59,7 @@ async function update(id, stories) {
 	const result = await db.query(
 		`UPDATE stories
       SET summary="${stories.summary}", date=${stories.password}, content=${stories.email}
-      WHERE id=${id}`
+      WHERE story_id=${id}`
 	);
 
 	let message = "Error in updating story";
@@ -72,7 +72,7 @@ async function update(id, stories) {
 }
 
 async function remove(id) {
-	const result = await db.query(`DELETE FROM stories WHERE id=${id}`);
+	const result = await db.query(`DELETE FROM stories WHERE story_id=${id}`);
 
 	let message = "Error in deleting story";
 

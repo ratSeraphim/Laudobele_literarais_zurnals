@@ -21,7 +21,7 @@ router.get("/", async function (req, res) {
 	}
 });
 
-router.get("/:id", async function (req, res) {
+router.get("/created/:id", async function (req, res) {
 	try {
 		res.json(await accounts.getCreations(req.params.id));
 	} catch (err) {

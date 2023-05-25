@@ -15,22 +15,64 @@ import Profile from "./pages/Profile/Profile";
 import Admin from "./pages/Admin/Admin";
 import CreateStory from "./pages/Create/CreateStory";
 import CreatePost from "./pages/Create/CreatePost";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 function App() {
+	const [accData, setAccData] = useState();
+	useEffect(() => {
+		// Retrieve the JWT from the stored cookie or any other source
+		const jwt = Cookies.get("jwt");
+
+		// Send the verification request to the backend
+		axios
+			.get("http://localhost:3001/accounts/verify", {
+				headers: {
+					Authorization: `${jwt}`,
+				},
+			})
+			.then((response) => {
+				// Handle the response from the backend
+				setAccData(response.data);
+			})
+			.catch((error) => {
+				// Handle errors
+				console.error("Verification error:", error);
+			});
+	}, []);
 	return (
 		<div className="App">
 			<ThemeProvider theme={siteTheme}>
 				<div className="content">
 					<BrowserRouter>
 						<Routes>
-							<Route path="/" element={<Home />}>
-								<Route path="/" element={<Landing />}></Route>
-								<Route path="/stories" element={<Stories />}></Route>
-								<Route path="/stories/:id" element={<Story />}></Route>
-								<Route path="/stories/new" element={<CreateStory />}></Route>
-								<Route path="/posts" element={<Posts />}></Route>
-								<Route path="/posts/new" element={<CreatePost />}></Route>
-								<Route path="/profile" element={<Profile />}></Route>
+							<Route path="/" element={<Home accData={accData} />}>
+								<Route path="/" element={<Landing accData={accData} />}></Route>
+								<Route
+									path="/stories"
+									element={<Stories accData={accData} />}
+								></Route>
+								<Route
+									path="/stories/:id"
+									element={<Story accData={accData} />}
+								></Route>
+								<Route
+									path="/stories/new"
+									element={<CreateStory accData={accData} />}
+								></Route>
+								<Route
+									path="/posts"
+									element={<Posts accData={accData} />}
+								></Route>
+								<Route
+									path="/posts/new"
+									element={<CreatePost accData={accData} />}
+								></Route>
+								<Route
+									path="/profile"
+									element={<Profile accData={accData} />}
+								></Route>
 							</Route>
 
 							<Route path="/login" element={<Login />} />

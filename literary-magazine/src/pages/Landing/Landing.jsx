@@ -23,9 +23,9 @@ const Landing = () => {
 						<br />
 					</Typography>
 					<Typography sx={{ fontWeight: "bold" }}>
-						At the moment, the site has no functionality. You cannot log in,
-						register, make posts or stories and all the data supplied is
-						server-side dummy data.
+						At the moment, the site only has functionality if pulled from the
+						github page and started. I'm in the process of trying to figure out
+						database and API hosting.
 					</Typography>
 					<Typography variant="h1">Where to contact us</Typography>
 					<Typography>

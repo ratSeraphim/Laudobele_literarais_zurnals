@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import Side from "../../components/Side/Side";
 import * as S from "./style";
 import React, { useEffect, useState } from "react";
@@ -8,13 +8,15 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-const Posts = () => {
+const Posts = ({ accData }) => {
 	const fetchURL = "http://localhost:3001/posts";
 	const [post, setPost] = useState(null);
 	useEffect(() => {
+		console.log(accData);
 		axios.get(fetchURL).then((response) => {
 			setPost(response.data);
 		});
+		console.log(accData);
 	}, [fetchURL]);
 	return (
 		<>
@@ -43,6 +45,7 @@ const Posts = () => {
 													- {Post.display_name}, {postDate}
 												</S.Author>
 											</S.ItemContent>
+
 											{shortDateFormat}
 											{Post.story_id && (
 												<S.LinkButton href={"/stories/" + Post.story_id}>
@@ -56,6 +59,10 @@ const Posts = () => {
 													Collection here....
 												</S.LinkButton>
 											)}
+											{accData &&
+												(accData.displayName === Post.display_name ? (
+													<Button color="error">Delete</Button>
+												) : null)}
 										</S.Letter>
 									</>
 								);

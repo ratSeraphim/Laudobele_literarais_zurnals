@@ -5,7 +5,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import {
-	Button,
 	FormControl,
 	FormHelperText,
 	InputLabel,
@@ -14,17 +13,19 @@ import {
 	Typography,
 } from "@mui/material";
 
-const CreatePost = ({ accData }) => {
+const CreateCollection = () => {
 	const navigate = useNavigate();
 	const [authored, setAuthored] = useState(null);
-
+	const [accData, setAccData] = useState();
+	const [story, setStory] = useState();
+	const [users, setUsers] = useState();
 	const [inputs, setInputs] = useState({
 		account_id: "",
-		content: "",
-		story: null,
-		collection: null,
+		name: "",
+		description: "",
 	});
 	const [message, setMessage] = useState("");
+	const jwt = Cookies.get("jwt");
 
 	const handleSubmit = (event) => {
 		//Apstādina lapu no sevis atjaunošanas
@@ -65,9 +66,16 @@ const CreatePost = ({ accData }) => {
 	};
 
 	useEffect(() => {
-		accData
-			? axios
-					.get("http://localhost:3001/accounts/created/" + accData.id)
+		axios
+			.get("http://localhost:3001/accounts/verify", {
+				headers: {
+					Authorization: `${jwt}`,
+				},
+			})
+			.then((response) => {
+				setAccData(response.data);
+				axios
+					.get("http://localhost:3001/accounts/" + response.data.id)
 					.then((response) => {
 						const createdData = response.data;
 						console.log(createdData);
@@ -76,9 +84,12 @@ const CreatePost = ({ accData }) => {
 					})
 					.catch((error) => {
 						console.error("Error:", error);
-					})
-			: console.log("no account data");
-	}, [accData]);
+					});
+			})
+			.catch((error) => {
+				console.error("Error: ", error);
+			});
+	}, []);
 
 	return (
 		<>
@@ -101,7 +112,7 @@ const CreatePost = ({ accData }) => {
 							/>
 							{authored && (
 								<>
-									<FormControl>
+									<FormControl autoWidth>
 										<InputLabel>Story</InputLabel>
 										<Select
 											label="Story"
@@ -123,7 +134,7 @@ const CreatePost = ({ accData }) => {
 										</FormHelperText>
 									</FormControl>
 
-									<FormControl>
+									<FormControl autoWidth>
 										<InputLabel>Collection</InputLabel>
 										<Select
 											label="Collection"
@@ -160,4 +171,4 @@ const CreatePost = ({ accData }) => {
 	);
 };
 
-export default CreatePost;
+export default CreateCollection;

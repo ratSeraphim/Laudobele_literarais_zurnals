@@ -8,7 +8,7 @@ import Side from "../../components/Side/Side";
 import Parchment from "../../components/Parchment/Parchment";
 import dayjs from "dayjs";
 
-const Story = () => {
+const Story = ({ accData }) => {
 	const { id } = useParams();
 	const fetchURL = "http://localhost:3001/stories/" + id;
 
@@ -45,7 +45,18 @@ const Story = () => {
 							<S.StoryDate>written on {shortDateFormat}</S.StoryDate>
 						</Parchment>
 					)}{" "}
-					<Button>Edit</Button>
+					{accData
+						? accData.displayName === story.data.display_name && (
+								<>
+									<Button variant="outlined" color="warning">
+										Edit
+									</Button>
+									<Button variant="contained" color="error">
+										Delete
+									</Button>
+								</>
+						  )
+						: null}
 				</S.BgPaper>
 
 				<Side></Side>
