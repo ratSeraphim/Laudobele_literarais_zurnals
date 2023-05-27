@@ -43,34 +43,48 @@ const Collection = ({ accData }) => {
 				{data && (
 					<div>
 						<S.Collection>
-							{data.collection.name} <br />
-							- <br />
-							{data.collection.description}
+							<Typography>{data.collection.name}</Typography>
+							<Typography>{data.collection.description}</Typography>
+
+							{accData &&
+								data.users.some((element) => {
+									return element.account_id === accData.id;
+								}) && (
+									<S.CusButton
+										variant="contained"
+										color="warning"
+										href={"/collections/edit/" + id}
+									>
+										Edit
+									</S.CusButton>
+								)}
 						</S.Collection>
 						<S.BgPaperOne>
 							{data.stories.map((Story) => {
 								return (
 									<S.Collection key={Story.story_id}>
 										<Typography>{Story.title}</Typography>
-										<S.CusButton
-											variant="contained"
-											color="success"
-											href={"/stories/" + Story.story_id}
-										>
-											View
-										</S.CusButton>
-										{accData &&
-											data.users.some((element) => {
-												return element.account_id === accData.id;
-											}) && (
-												<S.CusButton
-													variant="contained"
-													color="error"
-													onClick={handleRemoval(Story.story_id, "story")}
-												>
-													Remove
-												</S.CusButton>
-											)}
+										<div>
+											<S.CusButton
+												variant="contained"
+												color="success"
+												href={"/stories/" + Story.story_id}
+											>
+												View
+											</S.CusButton>
+											{accData &&
+												data.users.some((element) => {
+													return element.account_id === accData.id;
+												}) && (
+													<S.CusButton
+														variant="contained"
+														color="error"
+														onClick={handleRemoval(Story.story_id, "story")}
+													>
+														Remove
+													</S.CusButton>
+												)}
+										</div>
 									</S.Collection>
 								);
 							})}

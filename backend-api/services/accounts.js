@@ -11,7 +11,11 @@ const { generateJWT } = require("./verify");
 async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
-		`SELECT * FROM accounts LIMIT ${offset},${config.listPerPage}`
+		`SELECT account_id, display_name 
+		FROM accounts
+		INNER JOIN userinfo 
+		ON accounts.account_id = userinfo.account_id 
+		LIMIT ${offset},${config.listPerPage}`
 	);
 	const data = helper.emptyOrRows(rows);
 	const meta = { page };
