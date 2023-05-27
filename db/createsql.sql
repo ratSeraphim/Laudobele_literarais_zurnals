@@ -79,12 +79,12 @@ CREATE TABLE IF NOT EXISTS `sothothpress`.`posts` (
   CONSTRAINT `fk_post_stories1`
     FOREIGN KEY (`story_id`)
     REFERENCES `sothothpress`.`stories` (`story_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_post_collection1`
     FOREIGN KEY (`collection_id`)
     REFERENCES `sothothpress`.`collections` (`collection_id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -158,7 +158,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sothothpress`.`userinfo` (
   `account_id` INT NOT NULL,
-  `number` VARCHAR(20) NULL,
   `display_email` VARCHAR(45) NULL,
   `display_name` VARCHAR(50) NOT NULL,
   `description` TEXT NULL,

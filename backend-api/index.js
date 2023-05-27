@@ -5,6 +5,7 @@ const accountsRouter = require("./routes/accounts");
 const storiesRouter = require("./routes/stories");
 const postsRouter = require("./routes/posts");
 const collectionsRouter = require("./routes/collections");
+const commentsRouter = require("./routes/comments");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -26,10 +27,10 @@ app.get("/", (req, res) => {
 	res.json({ message: "ok" });
 });
 app.use("/accounts", accountsRouter);
-
 app.use("/stories", storiesRouter);
 app.use("/posts", postsRouter);
 app.use("/collections", collectionsRouter);
+app.use("/comments", commentsRouter);
 /* Error handler middleware */
 app.use((err, req, res, next) => {
 	const statusCode = err.statusCode || 500;

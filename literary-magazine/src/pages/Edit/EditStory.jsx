@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import Side from "../../components/Side/Side";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 
-const CreateStory = ({ accData }) => {
+const EditStory = ({ accData }) => {
+	const { id } = useParams();
 	const navigate = useNavigate();
+
+	const fetchURL = "http://localhost:3001/stories/" + id;
 	const [checked, setChecked] = useState(false);
 
 	const [inputs, setInputs] = useState({
@@ -26,12 +28,12 @@ const CreateStory = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.post("http://localhost:3001/stories", inputs)
+			.put("http://localhost:3001/stories/" + id, inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
 				setMessage(response.data);
-				if (response.data === "Story created successfully") {
+				if (response.data === "Story edited successfully") {
 					navigate("/stories");
 				}
 			})
@@ -43,6 +45,20 @@ const CreateStory = ({ accData }) => {
 		//Aizved lietotāju uz mājaslapu
 		// navigate("/");
 	};
+
+	useEffect(() => {
+		console.log(fetchURL);
+		axios.get(fetchURL).then((response) => {
+			console.log(response.data);
+			setInputs({
+				...inputs,
+				title: response.data.title,
+				summary: response.data.summary,
+				content: response.data.content,
+			});
+			setChecked(response.data.public);
+		});
+	}, [fetchURL]);
 
 	const handleCheck = (event) => {
 		setChecked(event.target.checked);
@@ -78,20 +94,19 @@ const CreateStory = ({ accData }) => {
 				{accData ? (
 					accData.id !== undefined && (
 						<S.CusPaper>
-							<div>New story</div>
+							<div>Edit story</div>
 							<h3>{message}</h3>
 							<S.Form onSubmit={handleSubmit}>
-								<S.StoryTitle
-									required
+								<S.Title
+									disabled
 									type="text"
 									label="Title"
 									name="title"
-									helperText="Your story's title"
 									value={inputs.title}
 									onChange={handleChange}
 								/>
 
-								<S.StoryInput
+								<S.Input
 									required
 									multiline
 									label="Summary"
@@ -104,7 +119,7 @@ const CreateStory = ({ accData }) => {
 									onChange={handleChange}
 								/>
 
-								<S.StoryInput
+								<S.Input
 									required
 									multiline
 									label="Content"
@@ -119,7 +134,6 @@ const CreateStory = ({ accData }) => {
 									required
 									control={
 										<Checkbox
-											value={inputs.public}
 											checked={checked}
 											onChange={handleCheck}
 											color="success"
@@ -140,4 +154,4 @@ const CreateStory = ({ accData }) => {
 	);
 };
 
-export default CreateStory;
+export default EditStory;

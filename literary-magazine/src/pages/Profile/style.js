@@ -25,8 +25,9 @@ export const Header = styled("div")`
 
 export const Array = styled("div")`
 	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
+	flex-flow: column;
+	justify-content: center;
+
 	padding: 1rem;
 	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 `;

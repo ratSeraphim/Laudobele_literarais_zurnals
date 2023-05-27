@@ -22,6 +22,20 @@ async function getMultiple(page = 1) {
 	};
 }
 
+async function getOne(id) {
+	const rows = await db.query(
+		`SELECT role, display_email, display_name, description
+		FROM accounts 
+		INNER JOIN userinfo 
+		ON accounts.account_id = userinfo.account_id 
+		WHERE accounts.account_id=?`,
+		[id]
+	);
+	const data = rows[0];
+
+	return data;
+}
+
 async function getCreations(id) {
 	const rows = await db.query(`CALL accountCreations(?);`, [id]);
 	const data = {
@@ -86,6 +100,7 @@ async function createUser(id, accounts) {
 
 async function login(accounts) {
 	console.log(accounts);
+	//Receive all the required data for checking login data
 	const rows = await db.query(
 		`SELECT password, salt, role, accounts.account_id, display_name
 		FROM accounts INNER JOIN userinfo ON accounts.account_id = userinfo.account_id
@@ -93,7 +108,9 @@ async function login(accounts) {
 		[accounts.name, accounts.name]
 	);
 
+	//If there is a matching record for entered email/username
 	if (rows[0]) {
+		//Encrypt entered password with same salt and see if they match
 		if (comparePasswords(accounts.password, rows[0].password, rows[0].salt)) {
 			const payload = {
 				id: rows[0].account_id,
@@ -115,10 +132,23 @@ async function login(accounts) {
 }
 
 async function update(id, accounts) {
+	let description;
+	let display_email;
+	if (accounts.display_email === undefined || !accounts.display_email) {
+		display_email = null;
+	} else {
+		display_email = accounts.display_email;
+	}
+	if (accounts.description === undefined || !accounts.description) {
+		description = null;
+	} else {
+		description = accounts.description;
+	}
 	const result = await db.query(
-		`UPDATE accounts
-      SET username="${accounts.username}", released_year=${accounts.password}, githut_rank=${accounts.email}
-      WHERE id=${id}`
+		`UPDATE userinfo
+      SET display_email=?, description=?
+      WHERE account_id=?`,
+		[display_email, description, id]
 	);
 
 	let message = "Error in updating account";
@@ -127,11 +157,11 @@ async function update(id, accounts) {
 		message = "Account updated successfully";
 	}
 
-	return { message };
+	return message;
 }
 
 async function remove(id) {
-	const result = await db.query(`DELETE FROM accounts WHERE id=${id}`);
+	const result = await db.query(`DELETE FROM accounts WHERE id=?`, [id]);
 
 	let message = "Error in deleting account";
 
@@ -139,11 +169,12 @@ async function remove(id) {
 		message = "Account deleted successfully";
 	}
 
-	return { message };
+	return message;
 }
 
 module.exports = {
 	getMultiple,
+	getOne,
 	create,
 	update,
 	remove,

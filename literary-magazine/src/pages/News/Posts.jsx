@@ -6,17 +6,34 @@ import axios from "axios";
 import dayjs from "dayjs";
 // extend dayjs
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(relativeTime);
 
 const Posts = ({ accData }) => {
+	const navigate = useNavigate();
 	const fetchURL = "http://localhost:3001/posts";
 	const [post, setPost] = useState(null);
+
+	const handleDelete = (id) => () => {
+		//Saņem izmainītās vērtības
+		console.log(id);
+		//Izmainītās vērtības ieliek mainīgajā vērtībā
+		if (window.confirm("Delete the item?")) {
+			axios
+				.delete("http://localhost:3001/posts/" + id)
+				.then((response) => {
+					console.log(`Deleted post with ID ${id}`);
+					window.location.reload(false);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		}
+	};
 	useEffect(() => {
-		console.log(accData);
 		axios.get(fetchURL).then((response) => {
 			setPost(response.data);
 		});
-		console.log(accData);
 	}, [fetchURL]);
 	return (
 		<>
@@ -41,19 +58,23 @@ const Posts = ({ accData }) => {
 										<S.Letter key={Post.post_id}>
 											<S.ItemContent>
 												{Post.content}
-												<S.Author>
+												<S.Author key={Post.displayName}>
 													- {Post.display_name}, {postDate}
 												</S.Author>
 											</S.ItemContent>
 
 											{shortDateFormat}
 											{Post.story_id && (
-												<S.LinkButton href={"/stories/" + Post.story_id}>
+												<S.LinkButton
+													key={Post.story_id}
+													href={"/stories/" + Post.story_id}
+												>
 													Story here...
 												</S.LinkButton>
 											)}
 											{Post.collection_id && (
 												<S.LinkButton
+													key={Post.collection_id}
 													href={"/collections/" + Post.collection_id}
 												>
 													Collection here....
@@ -61,7 +82,12 @@ const Posts = ({ accData }) => {
 											)}
 											{accData &&
 												(accData.displayName === Post.display_name ? (
-													<Button color="error">Delete</Button>
+													<Button
+														color="error"
+														onClick={handleDelete(Post.post_id)}
+													>
+														Delete
+													</Button>
 												) : null)}
 										</S.Letter>
 									</>

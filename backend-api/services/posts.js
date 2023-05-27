@@ -1,12 +1,15 @@
 const db = require("./db");
 const helper = require("../helper");
 const config = require("../config");
-const { comparePasswords } = require("../encrypt");
 
 async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
-		`SELECT post_id, content, date, story_id, collection_id, display_name FROM posts INNER JOIN userinfo ON userinfo.account_id = posts.account_id ORDER BY date DESC LIMIT ${offset},${config.listPerPage}`
+		`SELECT post_id, content, date, story_id, collection_id, display_name 
+		FROM posts 
+		INNER JOIN userinfo 
+		ON userinfo.account_id = posts.account_id 
+		ORDER BY date DESC LIMIT ${offset},${config.listPerPage}`
 	);
 	const data = helper.emptyOrRows(rows);
 	const meta = { page };
@@ -17,19 +20,18 @@ async function getMultiple(page = 1) {
 	};
 }
 
-async function getOne(id, posts) {
+async function getOne(id) {
 	const rows = await db.query(
 		`SELECT title, post_id, summary, display_name, date, content 
 		FROM posts 
 		INNER JOIN userinfo 
 		ON posts.account_id = userinfo.account_id 
-		WHERE post_id=${id}`
+		WHERE post_id=?`,
+		[id]
 	);
 	const data = rows[0];
 
-	return {
-		data,
-	};
+	return data;
 }
 
 async function create(posts) {
@@ -50,24 +52,8 @@ async function create(posts) {
 	return message;
 }
 
-async function update(id, posts) {
-	const result = await db.query(
-		`UPDATE posts
-      SET summary="${posts.summary}", date=${posts.password}, content=${posts.email}
-      WHERE id=${id}`
-	);
-
-	let message = "Error in updating post";
-
-	if (result.affectedRows) {
-		message = "Post updated successfully";
-	}
-
-	return { message };
-}
-
 async function remove(id) {
-	const result = await db.query(`DELETE FROM posts WHERE id=${id}`);
+	const result = await db.query(`DELETE FROM posts WHERE post_id=?`, [id]);
 
 	let message = "Error in deleting post";
 
@@ -75,13 +61,13 @@ async function remove(id) {
 		message = "Post deleted successfully";
 	}
 
-	return { message };
+	return message;
 }
 
 module.exports = {
 	getOne,
 	getMultiple,
 	create,
-	update,
+
 	remove,
 };

@@ -1,5 +1,5 @@
 import * as S from "./style";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Typography } from "@mui/material";
 import NavButton from "../NavButton/NavButton";
 import Cookies from "js-cookie";
@@ -32,7 +32,9 @@ const Navbar = ({ accData }) => {
 					<NavButton link="" name="Home" />
 					<NavButton link="posts" name="Posts" />
 					<NavButton link="stories" name="Stories" />
+					<NavButton link="collections" name="Collections" />
 					<NavButton link="profile" name="Profile" />
+
 					{accData &&
 						(accData.role === "owner" ||
 							(accData.role === "admin" && (

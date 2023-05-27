@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
 
 export const CustomNavLink = styled(NavLink)`
-	width: 5rem;
+	width: 7rem;
 	border-radius: 1rem;
 	padding: 10px;
 	margin: auto 5px;

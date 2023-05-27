@@ -22,63 +22,115 @@ async function getOne(id) {
 	const data = {
 		stories: rows[0],
 		users: rows[1],
+		collection: rows[2][0],
 	};
 
-	return {
-		data,
-	};
+	return data;
 }
 
 async function create(collections) {
 	const result = await db.query(
 		`INSERT INTO collections 
-      (title, content, summary, account_id, public) 
+      (name, description) 
       VALUES 
-      (?, ?, ?, ?, ?);`,
-		[
-			collections.title,
-			collections.content,
-			collections.summary,
-			collections.account_id,
-			collections.public,
-		]
+      (?, ?);`,
+		[collections.name, collections.description]
 	);
 
 	let message = "Error in creating collection";
 
 	if (result.affectedRows) {
-		message = "collection created successfully";
+		message = grabId(collections);
 	}
 
+	return message;
+}
+
+async function grabId(collections) {
+	const createdId = await db.query(
+		`SELECT collection_id FROM collections WHERE name = ?`,
+		[collections.name]
+	);
+
+	const collid = createdId[0];
+	let message = "Error in creating collection";
+	console.log(collid.collection_id + " is the created id");
+	if (collid.collection_id) {
+		message = createCollAcc(collid.collection_id, collections);
+	}
+	return message;
+}
+
+async function createCollAcc(id, collections) {
+	console.log("entered second create phase ");
+	const collAcc = await db.query(
+		`INSERT INTO account_collection (account_id, collection_id, role) 
+		VALUES (?, ?, ?);`,
+		[collections.account_id, id, "owner"]
+	);
+	let message = "Error in creating collection";
+	if (collAcc.affectedRows) {
+		message = "Collection created successfully";
+	}
 	return message;
 }
 
 async function update(id, collections) {
 	const result = await db.query(
 		`UPDATE collections
-      SET summary="${collections.summary}", date=${collections.password}, content=${collections.email}
-      WHERE id=${id}`
+      SET description=?
+      WHERE id=?`,
+		[collections.description, id]
 	);
 
 	let message = "Error in updating collection";
 
 	if (result.affectedRows) {
-		message = "collection updated successfully";
+		message = "Collection updated successfully";
 	}
 
 	return message;
 }
 
 async function remove(id) {
-	const result = await db.query(`DELETE FROM collections WHERE id=${id}`);
+	const result = await db.query(`DELETE FROM collections WHERE id=?`, [id]);
 
 	let message = "Error in deleting collection";
 
 	if (result.affectedRows) {
-		message = "collection deleted successfully";
+		message = "Collection deleted successfully";
 	}
 
-	return { message };
+	return message;
+}
+
+async function removeUser(id) {
+	const result = await db.query(
+		`DELETE FROM account_collection WHERE account_id=?`,
+		[id]
+	);
+
+	let message = "Error in removing user from collection";
+
+	if (result.affectedRows) {
+		message = "User removed successfully";
+	}
+
+	return message;
+}
+async function removeStory(id) {
+	const result = await db.query(
+		`DELETE FROM story_collection WHERE story_id=?`,
+		[id]
+	);
+
+	let message = "Error in removing story from collection";
+
+	if (result.affectedRows) {
+		message = "Story removed successfully";
+	}
+
+	return message;
 }
 
 module.exports = {
@@ -87,4 +139,6 @@ module.exports = {
 	create,
 	update,
 	remove,
+	removeUser,
+	removeStory,
 };

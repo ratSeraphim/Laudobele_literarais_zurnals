@@ -1,6 +1,5 @@
 import { Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import * as S from "./style";
@@ -24,6 +23,23 @@ const Profile = ({ accData }) => {
 			: console.log("no account data");
 	}, [accData]);
 
+	const handleDelete = (id, type) => () => {
+		//Saņem izmainītās vērtības
+		console.log(id);
+		//Izmainītās vērtības ieliek mainīgajā vērtībā
+		if (window.confirm("Delete the item?")) {
+			axios
+				.delete("http://localhost:3001/" + type + "/" + id)
+				.then((response) => {
+					console.log(`Deleted ` + type + ` with ID` + id);
+					window.location.reload(false);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		}
+	};
+
 	return (
 		<>
 			<Paper>
@@ -37,7 +53,13 @@ const Profile = ({ accData }) => {
 					{accData && (
 						<>
 							<S.Header>Profile info:</S.Header>
-							currently logged in as: {accData.displayName}
+							<S.Box>
+								<p>currently logged in as: {accData.displayName}</p>
+								<S.CusButton variant="contained" href="/profile/edit">
+									Edit Profile
+								</S.CusButton>
+							</S.Box>
+
 							<S.ItemContainer>
 								{authored && (
 									<>
@@ -45,13 +67,31 @@ const Profile = ({ accData }) => {
 											<S.Header>Stories </S.Header>
 											{authored.stories.map((Story) => {
 												return (
-													<S.Array>
+													<S.Array key={Story.story_id}>
 														{Story.title}
 														<div>
-															<S.CusButton variant="contained" color="warning">
+															<S.CusButton
+																variant="contained"
+																color="success"
+																href={"/stories/" + Story.story_id}
+															>
+																View
+															</S.CusButton>
+															<S.CusButton
+																variant="contained"
+																color="warning"
+																href={"/stories/edit/" + Story.story_id}
+															>
 																Edit
 															</S.CusButton>
-															<S.CusButton variant="contained" color="error">
+															<S.CusButton
+																variant="contained"
+																color="error"
+																onClick={handleDelete(
+																	Story.story_id,
+																	"stories"
+																)}
+															>
 																Delete
 															</S.CusButton>
 														</div>
@@ -63,14 +103,17 @@ const Profile = ({ accData }) => {
 											<S.Header>Collections </S.Header>
 											{authored.collections.map((Collection) => {
 												return (
-													<S.Array>
+													<S.Array key={Collection.collection_id}>
 														{Collection.name}
 														<div>
-															<S.CusButton variant="contained" color="warning">
-																Edit
-															</S.CusButton>
-															<S.CusButton variant="contained" color="error">
-																Delete
+															<S.CusButton
+																variant="contained"
+																color="warning"
+																href={
+																	"/collections/" + Collection.collection_id
+																}
+															>
+																View
 															</S.CusButton>
 														</div>
 													</S.Array>
@@ -81,10 +124,14 @@ const Profile = ({ accData }) => {
 											<S.Header>Posts </S.Header>
 											{authored.posts.map((Post) => {
 												return (
-													<S.Array>
+													<S.Array key={Post.post_id}>
 														{Post.content}
 
-														<S.CusButton variant="contained" color="error">
+														<S.CusButton
+															variant="contained"
+															color="error"
+															onClick={handleDelete(Post.post_id, "posts")}
+														>
 															Delete
 														</S.CusButton>
 													</S.Array>
@@ -95,12 +142,27 @@ const Profile = ({ accData }) => {
 											<S.Header>Comments </S.Header>
 											{authored.comments.map((Comment) => {
 												return (
-													<S.Array>
-														{Comment.content}
-
-														<S.CusButton variant="contained" color="error">
-															Delete
-														</S.CusButton>
+													<S.Array key={Comment.comment_id}>
+														"{Comment.content}" - on {Comment.title}
+														<div>
+															<S.CusButton
+																variant="contained"
+																color="success"
+																href={"/stories/" + Comment.story_id}
+															>
+																View story
+															</S.CusButton>
+															<S.CusButton
+																variant="contained"
+																color="error"
+																onClick={handleDelete(
+																	Comment.comment_id,
+																	"stories"
+																)}
+															>
+																Delete
+															</S.CusButton>
+														</div>
 													</S.Array>
 												);
 											})}

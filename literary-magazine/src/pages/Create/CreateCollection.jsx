@@ -4,28 +4,19 @@ import Side from "../../components/Side/Side";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import {
-	FormControl,
-	FormHelperText,
-	InputLabel,
-	MenuItem,
-	Select,
-	Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 
-const CreateCollection = () => {
+const CreateCollection = ({ accData }) => {
 	const navigate = useNavigate();
 	const [authored, setAuthored] = useState(null);
-	const [accData, setAccData] = useState();
-	const [story, setStory] = useState();
+
 	const [users, setUsers] = useState();
 	const [inputs, setInputs] = useState({
-		account_id: "",
+		account_id: null,
 		name: "",
 		description: "",
 	});
 	const [message, setMessage] = useState("");
-	const jwt = Cookies.get("jwt");
 
 	const handleSubmit = (event) => {
 		//Apstādina lapu no sevis atjaunošanas
@@ -35,13 +26,13 @@ const CreateCollection = () => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.post("http://localhost:3001/posts", inputs)
+			.post("http://localhost:3001/collections", inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
 				setMessage(response.data);
-				if (response.data === "Post created successfully") {
-					navigate("/posts");
+				if (response.data === "Collection created successfully") {
+					navigate("/collections");
 				}
 			})
 			//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
@@ -60,106 +51,38 @@ const CreateCollection = () => {
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		setInputs({
 			...inputs,
-			[name]: value,
 			account_id: accData.id,
+			[name]: value,
 		});
 	};
-
-	useEffect(() => {
-		axios
-			.get("http://localhost:3001/accounts/verify", {
-				headers: {
-					Authorization: `${jwt}`,
-				},
-			})
-			.then((response) => {
-				setAccData(response.data);
-				axios
-					.get("http://localhost:3001/accounts/" + response.data.id)
-					.then((response) => {
-						const createdData = response.data;
-						console.log(createdData);
-
-						setAuthored(createdData);
-					})
-					.catch((error) => {
-						console.error("Error:", error);
-					});
-			})
-			.catch((error) => {
-				console.error("Error: ", error);
-			});
-	}, []);
 
 	return (
 		<>
 			<S.Content>
-				{!accData && <Typography color="warning">Go back!!!</Typography>}
+				{!accData && <Typography>Go back!!!</Typography>}
 				{accData && (
 					<S.CusPaper>
-						<div>New post</div>
+						<div>New collection</div>
 						<h3>{message}</h3>
 						<S.Form onSubmit={handleSubmit}>
+							<S.StoryTitle
+								required
+								type="text"
+								label="Name"
+								name="name"
+								helperText="Your collection's title"
+								onChange={handleChange}
+							/>
 							<S.StoryInput
 								required
 								multiline
-								label="Content"
-								name="content"
-								minRows={3}
+								label="Description"
+								name="description"
+								minRows={2}
 								variant="filled"
-								helperText="The story itself! Go wild."
+								helperText="Short description about the collection's purpose"
 								onChange={handleChange}
 							/>
-							{authored && (
-								<>
-									<FormControl autoWidth>
-										<InputLabel>Story</InputLabel>
-										<Select
-											label="Story"
-											defaultValue=""
-											name="story"
-											onChange={handleChange}
-										>
-											<MenuItem value={null}>-</MenuItem>
-											{authored.stories.map((Story) => {
-												return (
-													<MenuItem key={Story.story_id} value={Story.story_id}>
-														{Story.title}
-													</MenuItem>
-												);
-											})}
-										</Select>
-										<FormHelperText>
-											Related story, if there is one
-										</FormHelperText>
-									</FormControl>
-
-									<FormControl autoWidth>
-										<InputLabel>Collection</InputLabel>
-										<Select
-											label="Collection"
-											defaultValue=""
-											name="collection"
-											onChange={handleChange}
-										>
-											<MenuItem value={null}>-</MenuItem>
-											{authored.collections.map((Collection) => {
-												return (
-													<MenuItem
-														key={Collection.story_id}
-														value={Collection.story_id}
-													>
-														{Collection.name}
-													</MenuItem>
-												);
-											})}
-										</Select>
-										<FormHelperText>
-											Related collection, if there is one
-										</FormHelperText>
-									</FormControl>
-								</>
-							)}
 
 							<S.Submit type="submit" />
 						</S.Form>

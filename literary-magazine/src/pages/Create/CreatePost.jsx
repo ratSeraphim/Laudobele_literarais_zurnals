@@ -3,9 +3,8 @@ import * as S from "./style";
 import Side from "../../components/Side/Side";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+
 import {
-	Button,
 	FormControl,
 	FormHelperText,
 	InputLabel,
@@ -83,7 +82,7 @@ const CreatePost = ({ accData }) => {
 	return (
 		<>
 			<S.Content>
-				{!accData && <Typography color="warning">Go back!!!</Typography>}
+				{!accData && <Typography>Go back!!!</Typography>}
 				{accData && (
 					<S.CusPaper>
 						<div>New post</div>
@@ -135,8 +134,8 @@ const CreatePost = ({ accData }) => {
 											{authored.collections.map((Collection) => {
 												return (
 													<MenuItem
-														key={Collection.story_id}
-														value={Collection.story_id}
+														key={Collection.collection_id}
+														value={Collection.collection_id}
 													>
 														{Collection.name}
 													</MenuItem>

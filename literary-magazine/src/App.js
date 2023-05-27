@@ -18,6 +18,12 @@ import CreatePost from "./pages/Create/CreatePost";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import CreateCollection from "./pages/Create/CreateCollection";
+import Collections from "./pages/Collections/Collections";
+import EditCollection from "./pages/Edit/EditCollection";
+import EditStory from "./pages/Edit/EditStory";
+import EditProfile from "./pages/Edit/EditProfile";
+import Collection from "./pages/Collections/Collection";
 
 function App() {
 	const [accData, setAccData] = useState();
@@ -62,6 +68,10 @@ function App() {
 									element={<CreateStory accData={accData} />}
 								></Route>
 								<Route
+									path="/stories/edit/:id"
+									element={<EditStory accData={accData} />}
+								></Route>
+								<Route
 									path="/posts"
 									element={<Posts accData={accData} />}
 								></Route>
@@ -70,8 +80,28 @@ function App() {
 									element={<CreatePost accData={accData} />}
 								></Route>
 								<Route
+									path="/collections/"
+									element={<Collections accData={accData} />}
+								></Route>
+								<Route
+									path="/collections/:id"
+									element={<Collection accData={accData} />}
+								></Route>
+								<Route
+									path="/collections/new"
+									element={<CreateCollection accData={accData} />}
+								></Route>
+								<Route
+									path="/collections/edit/:id"
+									element={<EditCollection accData={accData} />}
+								></Route>
+								<Route
 									path="/profile"
 									element={<Profile accData={accData} />}
+								></Route>
+								<Route
+									path="/profile/edit/"
+									element={<EditProfile accData={accData} />}
 								></Route>
 							</Route>
 

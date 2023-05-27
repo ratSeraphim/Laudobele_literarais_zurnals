@@ -5,7 +5,11 @@ const config = require("../config");
 async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
-		`SELECT title, story_id, summary, display_name FROM stories INNER JOIN userinfo ON stories.account_id = userinfo.account_id WHERE public=1 ORDER BY stories.date DESC LIMIT ${offset},${config.listPerPage}`
+		`SELECT title, story_id, summary, display_name 
+		FROM stories INNER JOIN userinfo 
+		ON stories.account_id = userinfo.account_id
+		 WHERE public=1 ORDER BY stories.date 
+		 DESC LIMIT ${offset},${config.listPerPage}`
 	);
 	const data = helper.emptyOrRows(rows);
 	const meta = { page };
@@ -18,17 +22,16 @@ async function getMultiple(page = 1) {
 
 async function getOne(id) {
 	const rows = await db.query(
-		`SELECT title, story_id, summary, display_name, date, content 
+		`SELECT title, story_id, summary, display_name, date, last_edited, content, public
 		FROM stories 
 		INNER JOIN userinfo 
 		ON stories.account_id = userinfo.account_id 
-		WHERE story_id=${id}`
+		WHERE story_id=?`,
+		[id]
 	);
 	const data = rows[0];
 
-	return {
-		data,
-	};
+	return data;
 }
 
 async function create(stories) {
@@ -58,8 +61,9 @@ async function create(stories) {
 async function update(id, stories) {
 	const result = await db.query(
 		`UPDATE stories
-      SET summary="${stories.summary}", date=${stories.password}, content=${stories.email}
-      WHERE story_id=${id}`
+      SET summary=?, content=?, public=?
+      WHERE story_id=?`,
+		[stories.summary, stories.content, stories.public, id]
 	);
 
 	let message = "Error in updating story";
@@ -68,11 +72,11 @@ async function update(id, stories) {
 		message = "Story updated successfully";
 	}
 
-	return { message };
+	return message;
 }
 
 async function remove(id) {
-	const result = await db.query(`DELETE FROM stories WHERE story_id=${id}`);
+	const result = await db.query(`DELETE FROM stories WHERE story_id=?`, [id]);
 
 	let message = "Error in deleting story";
 
@@ -80,7 +84,7 @@ async function remove(id) {
 		message = "Story deleted successfully";
 	}
 
-	return { message };
+	return message;
 }
 
 module.exports = {

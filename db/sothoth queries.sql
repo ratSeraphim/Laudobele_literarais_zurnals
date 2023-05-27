@@ -1,5 +1,11 @@
 use sothothpress;
 
+ALTER TABLE stories
+    CHANGE last_edited  
+        last_edited TIMESTAMP NOT NULL
+            DEFAULT CURRENT_TIMESTAMP
+            ON UPDATE CURRENT_TIMESTAMP;
+
 INSERT INTO accounts (username, email, password, role) VALUES ("coolname", "inbox@inbox.lv", "password", "owner");
 
 INSERT INTO userinfo (account_id, display_name) VALUES (1, "The Writer");
@@ -24,7 +30,7 @@ INSERT INTO stories (title, content, date, summary, public, account_id) VALUES (
  DELIMITER $$
  CREATE PROCEDURE collectionInfo (IN colid INT)
 BEGIN
-	SELECT title, display_name
+	SELECT title, display_name, stories.story_id, userinfo.account_id
 	FROM stories
 	INNER JOIN story_collection
 	ON stories.story_id = story_collection.story_id
@@ -33,15 +39,23 @@ BEGIN
 	WHERE story_collection.collection_id =  colid;
 
 
-	SELECT display_name
+	SELECT display_name, userinfo.account_id, account_collection.role
 	FROM userinfo
 	INNER JOIN account_collection
 	ON userinfo.account_id = account_collection.account_id
-	WHERE account_collection.collection_id =  colid;
+	WHERE account_collection.collection_id =  colid
+    ORDER BY account_collection.role ASC;
+    
+    
+    SELECT collection_id, name, description
+	FROM collections
+	WHERE collections.collection_id =  colid;
 END $$ 
  DELIMITER ;
 
 CALL collectionInfo(1);
+
+SELECT name, description, collections.collection_id, account_id FROM collections INNER JOIN account_collection ON account_collection.collection_id = collections.collection_id WHERE account_collection.role="owner";
 
  DELIMITER $$
  CREATE PROCEDURE accountCreations (IN acc_id INT)
@@ -61,10 +75,16 @@ BEGIN
 	FROM posts
 	WHERE account_id =  acc_id;
     
-    SELECT content, comment_id, story_id, date
-    FROM comments
-    WHERE account_id = acc_id;
+    SELECT comments.content, comment_id, title, comments.date, comments.story_id
+    FROM comments INNER JOIN stories
+    ON comments.story_id = stories.story_id
+    WHERE comments.account_id = acc_id;
 END $$ 
  DELIMITER ;
 
 CALL accountCreations(152);
+CALL accountCreations(1);
+
+
+SELECT LAST_INSERT_ID();
+

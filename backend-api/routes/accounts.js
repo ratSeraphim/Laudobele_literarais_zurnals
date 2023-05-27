@@ -21,11 +21,12 @@ router.get("/", async function (req, res) {
 	}
 });
 
+/* GET all creations associated with account */
 router.get("/created/:id", async function (req, res) {
 	try {
 		res.json(await accounts.getCreations(req.params.id));
 	} catch (err) {
-		console.error(`Error while getting accounts `, err.message);
+		console.error(`Error while getting account creations`, err.message);
 	}
 });
 
@@ -40,8 +41,10 @@ router.post("/", async function (req, res) {
 	}
 });
 
+/* LOG INTO account*/
 router.get("/login", async function (req, res) {
 	try {
+		console.log(req.query.inputs);
 		const response = await accounts.login(req.query.inputs);
 		if (response) {
 			console.log(response);
@@ -53,7 +56,15 @@ router.get("/login", async function (req, res) {
 			res.json(response.message);
 		}
 	} catch (err) {
-		console.error(`Error while updating account`, err.message);
+		console.error(`Error while logging in`, err.message);
+	}
+});
+
+router.get("/:id", async function (req, res) {
+	try {
+		res.json(await accounts.getOne(req.params.id));
+	} catch (err) {
+		console.error(`Error while getting accounts `, err.message);
 	}
 });
 
@@ -67,6 +78,7 @@ router.put("/:id", async function (req, res, next) {
 	}
 });
 
+/* DELETE account */
 router.delete("/:id", async function (req, res, next) {
 	try {
 		res.json(await accounts.remove(req.params.id));
