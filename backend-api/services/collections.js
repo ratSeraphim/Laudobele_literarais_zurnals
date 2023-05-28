@@ -28,6 +28,30 @@ async function getOne(id) {
 	return data;
 }
 
+async function getUsers(id) {
+	const rows = await db.query(
+		`SELECT display_name, account_id 
+		FROM userinfo 
+		WHERE account_id NOT IN(SELECT account_id FROM account_collection WHERE collection_id =?)`,
+		[id]
+	);
+	const data = rows;
+
+	return data;
+}
+
+async function getStories(id) {
+	const rows = await db.query(
+		`SELECT title, story_id 
+		FROM stories 
+		WHERE story_id NOT IN(SELECT story_id FROM story_collection WHERE collection_id = ?) AND public=true;`,
+		[id]
+	);
+	const data = rows;
+
+	return data;
+}
+
 async function create(collections) {
 	const result = await db.query(
 		`INSERT INTO collections 
@@ -75,11 +99,65 @@ async function createCollAcc(id, collections) {
 	return message;
 }
 
+async function create(collections) {
+	const result = await db.query(
+		`INSERT INTO collections 
+      (name, description) 
+      VALUES 
+      (?, ?);`,
+		[collections.name, collections.description]
+	);
+
+	let message = "Error in creating collection";
+
+	if (result.affectedRows) {
+		message = grabId(collections);
+	}
+
+	return message;
+}
+
+async function addStory(collections) {
+	const result = await db.query(
+		`INSERT INTO story_collection 
+      (story_id, collection_id) 
+      VALUES 
+      (?, ?);`,
+		[collections.story_id, collections.collection_id]
+	);
+
+	let message = "Error in creating collection";
+
+	if (result.affectedRows) {
+		message = "Story added successfully";
+	}
+
+	return message;
+}
+
+async function addUser(collections) {
+	const result = await db.query(
+		`INSERT INTO account_collection 
+      (account_id, collection_id) 
+      VALUES 
+      (?, ?);`,
+		[collections.account_id, collections.collection_id]
+	);
+
+	let message = "Error in creating collection";
+
+	if (result.affectedRows) {
+		message = "Story added successfully";
+	}
+
+	return message;
+}
+
 async function update(id, collections) {
 	const result = await db.query(
 		`UPDATE collections
       SET description=?
-      WHERE id=?`,
+      WHERE collection_id=?`,
 		[collections.description, id]
 	);
 
@@ -136,7 +214,11 @@ async function removeStory(id) {
 module.exports = {
 	getOne,
 	getMultiple,
+	getUsers,
+	getStories,
 	create,
+	addUser,
+	addStory,
 	update,
 	remove,
 	removeUser,

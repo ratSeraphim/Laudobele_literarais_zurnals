@@ -5,10 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./style";
 
 import Side from "../../components/Side/Side";
-import Parchment from "../../components/Parchment/Parchment";
 
 const Collection = ({ accData }) => {
-	const navigate = useNavigate();
 	const { id } = useParams();
 	const fetchURL = "http://localhost:3001/collections/" + id;
 

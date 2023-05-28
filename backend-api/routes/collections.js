@@ -20,11 +20,50 @@ router.get("/:id", async function (req, res) {
 	}
 });
 
+/*GET users NOT in collection*/
+router.get("/users/:id", async function (req, res) {
+	try {
+		res.json(await collections.getUsers(req.params.id));
+	} catch (err) {
+		console.error(`Error while getting users NOT in collection `, err.message);
+	}
+});
+
+/*GET stories NOT in collection*/
+router.get("/stories/:id", async function (req, res) {
+	try {
+		res.json(await collections.getStories(req.params.id));
+	} catch (err) {
+		console.error(
+			`Error while getting stories NOT in collection `,
+			err.message
+		);
+	}
+});
+
 /* POST collection */
 router.post("/", async function (req, res) {
 	console.log(req.body);
 	try {
 		res.json(await collections.create(req.body));
+	} catch (err) {
+		console.error(`Error while creating collections`, err.message);
+	}
+});
+
+router.post("/user", async function (req, res) {
+	console.log(req.body);
+	try {
+		res.json(await collections.addUser(req.body));
+	} catch (err) {
+		console.error(`Error while creating collections`, err.message);
+	}
+});
+
+router.post("/story", async function (req, res) {
+	console.log(req.body);
+	try {
+		res.json(await collections.addStory(req.body));
 	} catch (err) {
 		console.error(`Error while creating collections`, err.message);
 	}

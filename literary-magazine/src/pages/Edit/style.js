@@ -1,4 +1,11 @@
-import { Paper, TextField } from "@mui/material";
+import {
+	Button,
+	IconButton,
+	ListItem,
+	Paper,
+	Select,
+	TextField,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 export const Content = styled("div")`
 	margin: 1rem;
@@ -41,4 +48,21 @@ export const Submit = styled("input")`
 		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
 			0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
+`;
+
+export const Selector = styled("div")`
+	display: flex;
+	align-items: center;
+`;
+
+export const CusSelect = styled(Select)`
+	min-width: 10rem;
+`;
+
+export const CollectionListItem = styled(ListItem)`
+	border: 1px solid;
+	margin: 1rem;
+	border-radius: 1rem;
+	display: flex;
+	justify-content: space-between;
 `;

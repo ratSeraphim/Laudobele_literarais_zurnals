@@ -24,6 +24,7 @@ import EditCollection from "./pages/Edit/EditCollection";
 import EditStory from "./pages/Edit/EditStory";
 import EditProfile from "./pages/Edit/EditProfile";
 import Collection from "./pages/Collections/Collection";
+import Author from "./pages/Author/Author";
 
 function App() {
 	const [accData, setAccData] = useState();
@@ -95,6 +96,7 @@ function App() {
 									path="/collections/edit/:id"
 									element={<EditCollection accData={accData} />}
 								></Route>
+
 								<Route
 									path="/profile"
 									element={<Profile accData={accData} />}
@@ -102,6 +104,10 @@ function App() {
 								<Route
 									path="/profile/edit/"
 									element={<EditProfile accData={accData} />}
+								></Route>
+								<Route
+									path="/author/:id"
+									element={<Author accData={accData} />}
 								></Route>
 							</Route>
 

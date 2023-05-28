@@ -42,7 +42,7 @@ const Profile = ({ accData }) => {
 
 	return (
 		<>
-			<Paper>
+			<S.CusPaper>
 				<S.Content>
 					<Typography variant="h1">Profile</Typography>
 					{!accData && (
@@ -57,6 +57,9 @@ const Profile = ({ accData }) => {
 								<p>currently logged in as: {accData.displayName}</p>
 								<S.CusButton variant="contained" href="/profile/edit">
 									Edit Profile
+								</S.CusButton>
+								<S.CusButton href={"/author/" + accData.id}>
+									View public profile
 								</S.CusButton>
 							</S.Box>
 
@@ -174,7 +177,7 @@ const Profile = ({ accData }) => {
 					)}
 					<Outlet />
 				</S.Content>
-			</Paper>
+			</S.CusPaper>
 		</>
 	);
 };

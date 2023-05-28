@@ -1,5 +1,9 @@
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+export const CusPaper = styled(Paper)`
+	margin: 1rem;
+`;
 
 export const Content = styled("div")`
 	padding: 1rem;
