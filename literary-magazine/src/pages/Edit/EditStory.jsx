@@ -56,7 +56,7 @@ const EditStory = ({ accData }) => {
 				summary: response.data.summary,
 				content: response.data.content,
 			});
-			setChecked(response.data.public);
+			setChecked(false);
 		});
 	}, [fetchURL]);
 
