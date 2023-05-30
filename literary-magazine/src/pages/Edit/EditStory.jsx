@@ -139,7 +139,7 @@ const EditStory = ({ accData }) => {
 											color="success"
 										/>
 									}
-									label="Publicize?"
+									label="Public?"
 								/>
 								<S.Submit type="submit" />
 							</S.Form>
