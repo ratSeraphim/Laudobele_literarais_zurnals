@@ -53,7 +53,7 @@ const Login = () => {
 				setMessage(response.data.message);
 				if (response.data === "Login successful") {
 					const jwtCookie = Cookies.get("jwt");
-					const cookie = response.headers["set-cookie"];
+					const cookie = response.headers["Set-Cookie"];
 					console.log(cookie);
 					if (jwtCookie) {
 						navigate("/");
