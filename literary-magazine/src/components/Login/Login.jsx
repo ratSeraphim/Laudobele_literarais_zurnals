@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Message from "../Alerts/Message";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -55,7 +56,7 @@ const Login = () => {
 						navigate("/");
 						window.location.reload(false);
 					} else {
-						// JWT cookie does not exist
+						setMessage("JWT cookie not found");
 						// Handle unauthorized access or redirect to login
 					}
 				}
@@ -64,7 +65,7 @@ const Login = () => {
 			.catch((error) => {
 				setError(error);
 				console.log(error.message);
-				setMessage(error);
+				setMessage(error.message);
 			});
 		//Aizved lietotāju uz mājaslapu
 		// navigate("/");
@@ -94,7 +95,7 @@ const Login = () => {
 					<Button color="tertiary" href="/signup">
 						Sign up
 					</Button>
-					<h3>{message}</h3>
+					<Message message={message} />
 				</S.LoginForm>
 			</S.Content>
 			<img src="logo.png" alt="tentacles coming out of an open book" />
