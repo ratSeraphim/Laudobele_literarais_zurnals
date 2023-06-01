@@ -10,7 +10,9 @@ const Profile = ({ accData }) => {
 	useEffect(() => {
 		accData
 			? axios
-					.get("http://localhost:3001/accounts/created/" + accData.id)
+					.get(
+						process.env.REACT_APP_API_URL + "/accounts/created/" + accData.id
+					)
 					.then((response) => {
 						const createdData = response.data;
 						console.log(createdData);
@@ -29,7 +31,7 @@ const Profile = ({ accData }) => {
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		if (window.confirm("Delete the item?")) {
 			axios
-				.delete("http://localhost:3001/" + type + "/" + id)
+				.delete(process.env.REACT_APP_API_URL + "/" + type + "/" + id)
 				.then((response) => {
 					console.log(`Deleted ` + type + ` with ID` + id);
 					window.location.reload(false);

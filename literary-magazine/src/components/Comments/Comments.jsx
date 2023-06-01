@@ -8,7 +8,8 @@ import { Button } from "@mui/material";
 
 const Comment = ({ accData, story_id }) => {
 	const [comments, setComments] = useState(null);
-	const fetchURL = "http://localhost:3001/comments/story/" + story_id;
+	const fetchURL =
+		process.env.REACT_APP_API_URL + "/comments/story/" + story_id;
 	useEffect(() => {
 		console.log(fetchURL);
 		axios.get(fetchURL).then((response) => {
@@ -22,7 +23,7 @@ const Comment = ({ accData, story_id }) => {
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		if (window.confirm("Delete the item?")) {
 			axios
-				.delete("http://localhost:3001/comments/" + id)
+				.delete(process.env.REACT_APP_API_URL + "/comments/" + id)
 				.then((response) => {
 					console.log(`Deleted comment with ID ${id}`);
 					window.location.reload(false);

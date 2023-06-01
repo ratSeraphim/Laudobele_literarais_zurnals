@@ -8,7 +8,7 @@ import Side from "../../components/Side/Side";
 
 const Collection = ({ accData }) => {
 	const { id } = useParams();
-	const fetchURL = "http://localhost:3001/collections/" + id;
+	const fetchURL = process.env.REACT_APP_API_URL + "/collections/" + id;
 
 	const [data, setData] = useState(null);
 
@@ -18,7 +18,9 @@ const Collection = ({ accData }) => {
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		if (window.confirm("Delete the item?")) {
 			axios
-				.delete("http://localhost:3001/collections/" + type + "/" + id)
+				.delete(
+					process.env.REACT_APP_API_URL + "/collections/" + type + "/" + id
+				)
 				.then((response) => {
 					console.log(`Deleted ` + type + ` with ID ` + id);
 					window.location.reload(false);

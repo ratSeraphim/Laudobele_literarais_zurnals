@@ -34,7 +34,7 @@ function App() {
 
 		// Send the verification request to the backend
 		axios
-			.get("http://localhost:3001/accounts/verify", {
+			.get(process.env.REACT_APP_API_URL + "/accounts/verify", {
 				headers: {
 					Authorization: `${jwt}`,
 				},

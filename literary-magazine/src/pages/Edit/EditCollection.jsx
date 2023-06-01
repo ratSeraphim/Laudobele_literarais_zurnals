@@ -21,10 +21,10 @@ import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 
 const EditCollection = ({ accData }) => {
 	const { id } = useParams();
-	const fetchURL = "http://localhost:3001/collections/" + id;
+	const fetchURL = process.env.REACT_APP_API_URL + "/collections/" + id;
 	const endpoints = [
-		"http://localhost:3001/collections/stories/" + id,
-		"http://localhost:3001/collections/users/" + id,
+		process.env.REACT_APP_API_URL + "/collections/stories/" + id,
+		process.env.REACT_APP_API_URL + "/collections/users/" + id,
 	];
 	const [data, setData] = useState(null);
 	const [collection, setCollection] = useState(null);
@@ -49,7 +49,7 @@ const EditCollection = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.put("http://localhost:3001/collections/" + id, inputs)
+			.put(process.env.REACT_APP_API_URL + "/collections/" + id, inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
@@ -66,7 +66,7 @@ const EditCollection = ({ accData }) => {
 
 	const addToCollection = (type) => () => {
 		axios
-			.post("http://localhost:3001/collections/" + type, additions)
+			.post(process.env.REACT_APP_API_URL + "/collections/" + type, additions)
 			.then((response) => {
 				console.log(response.data);
 				setMessage(response.data);
@@ -121,7 +121,9 @@ const EditCollection = ({ accData }) => {
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		if (window.confirm("Delete the item?")) {
 			axios
-				.delete("http://localhost:3001/collections/" + type + "/" + id)
+				.delete(
+					process.env.REACT_APP_API_URL + "/collections/" + type + "/" + id
+				)
 				.then((response) => {
 					console.log(`Deleted ` + type + ` with ID ` + id);
 					window.location.reload(false);

@@ -22,11 +22,7 @@ const Landing = () => {
 						<br />
 						<br />
 					</Typography>
-					<Typography sx={{ fontWeight: "bold" }}>
-						At the moment, the site only has functionality if pulled from the
-						github page and started. I'm in the process of trying to figure out
-						database and API hosting.
-					</Typography>
+
 					<Typography variant="h1">Where to contact us</Typography>
 					<Typography>
 						You can get in touch with the site's creator on their github page{" "}

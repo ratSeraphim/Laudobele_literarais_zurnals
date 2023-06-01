@@ -26,7 +26,7 @@ const CreateStory = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.post("http://localhost:3001/stories", inputs)
+			.post(process.env.REACT_APP_API_URL + "/stories", inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);

@@ -33,7 +33,7 @@ const CreatePost = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.post("http://localhost:3001/posts", inputs)
+			.post(process.env.REACT_APP_API_URL + "/posts", inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
@@ -66,7 +66,9 @@ const CreatePost = ({ accData }) => {
 	useEffect(() => {
 		accData
 			? axios
-					.get("http://localhost:3001/accounts/created/" + accData.id)
+					.get(
+						process.env.REACT_APP_API_URL + "/accounts/created/" + accData.id
+					)
 					.then((response) => {
 						const createdData = response.data;
 						console.log(createdData);

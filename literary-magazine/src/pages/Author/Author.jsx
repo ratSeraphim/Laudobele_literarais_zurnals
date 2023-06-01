@@ -9,7 +9,7 @@ import Parchment from "../../components/Parchment/Parchment";
 
 const Author = ({ accData }) => {
 	const { id } = useParams();
-	const fetchURL = "http://localhost:3001/accounts/" + id;
+	const fetchURL = process.env.REACT_APP_API_URL + "/accounts/" + id;
 	const [author, setAuthor] = useState(null);
 
 	useEffect(() => {

@@ -7,7 +7,7 @@ const NavButton = (props) => {
 			to={props.link}
 			style={({ isActive }) => ({
 				color: isActive ? "#c7bca1" : "#fff",
-				background: isActive ? "#65647c" : "#854343",
+				background: isActive ? "#30563E" : "#854343",
 			})}
 		>
 			{props.name}

@@ -13,7 +13,7 @@ import CreateComment from "../../components/Comments/CreateComment";
 const Story = ({ accData }) => {
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const fetchURL = "http://localhost:3001/stories/" + id;
+	const fetchURL = process.env.REACT_APP_API_URL + "/stories/" + id;
 
 	const [shortDateFormat, setShortDateFormat] = useState(null);
 	const [story, setStory] = useState(null);

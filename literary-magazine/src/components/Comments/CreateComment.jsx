@@ -19,7 +19,7 @@ const CreateComment = ({ accData, story_id }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.post("http://localhost:3001/comments/" + story_id, inputs)
+			.post(process.env.REACT_APP_API_URL + "/comments/" + story_id, inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);

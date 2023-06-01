@@ -40,7 +40,7 @@ const Login = () => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.get("http://localhost:3001/accounts/login", {
+			.get(process.env.REACT_APP_API_URL + "/accounts/login", {
 				params: { inputs },
 				withCredentials: true,
 			})

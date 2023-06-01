@@ -26,7 +26,7 @@ const CreateCollection = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.post("http://localhost:3001/collections", inputs)
+			.post("/collections", inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);

@@ -24,7 +24,7 @@ const EditProfile = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.put("http://localhost:3001/accounts/" + accData.id, inputs)
+			.put(process.env.REACT_APP_API_URL + "/accounts/" + accData.id, inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
@@ -41,7 +41,8 @@ const EditProfile = ({ accData }) => {
 
 	useEffect(() => {
 		if (accData) {
-			const fetchURL = "http://localhost:3001/accounts/" + accData.id;
+			const fetchURL =
+				process.env.REACT_APP_API_URL + "/accounts/" + accData.id;
 			axios.get(fetchURL).then((response) => {
 				console.log(response.data);
 				setInputs({

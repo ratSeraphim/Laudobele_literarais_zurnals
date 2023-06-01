@@ -11,7 +11,7 @@ dayjs.extend(relativeTime);
 
 const Posts = ({ accData }) => {
 	const navigate = useNavigate();
-	const fetchURL = "http://localhost:3001/posts";
+	const fetchURL = process.env.REACT_APP_API_URL + "/posts";
 	const [post, setPost] = useState(null);
 
 	const handleDelete = (id) => () => {
@@ -20,7 +20,7 @@ const Posts = ({ accData }) => {
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		if (window.confirm("Delete the item?")) {
 			axios
-				.delete("http://localhost:3001/posts/" + id)
+				.delete(process.env.REACT_APP_API_URL + "/posts/" + id)
 				.then((response) => {
 					console.log(`Deleted post with ID ${id}`);
 					window.location.reload(false);

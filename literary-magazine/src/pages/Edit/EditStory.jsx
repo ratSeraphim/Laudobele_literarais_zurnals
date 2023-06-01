@@ -4,12 +4,13 @@ import Side from "../../components/Side/Side";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import Message from "../../components/Alerts/Message";
 
 const EditStory = ({ accData }) => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 
-	const fetchURL = "http://localhost:3001/stories/" + id;
+	const fetchURL = process.env.REACT_APP_API_URL + "/stories/" + id;
 	const [checked, setChecked] = useState(false);
 
 	const [inputs, setInputs] = useState({
@@ -28,7 +29,7 @@ const EditStory = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.put("http://localhost:3001/stories/" + id, inputs)
+			.put(process.env.REACT_APP_API_URL + "/stories/" + id, inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
@@ -95,7 +96,7 @@ const EditStory = ({ accData }) => {
 					accData.id !== undefined && (
 						<S.CusPaper>
 							<div>Edit story</div>
-							<h3>{message}</h3>
+							<Message message={message} />
 							<S.Form onSubmit={handleSubmit}>
 								<S.Title
 									disabled

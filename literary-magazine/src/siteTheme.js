@@ -14,7 +14,7 @@ export const siteTheme = createTheme({
 			contrastText: "#fff",
 		},
 		text: {
-			primary: "#65647c",
+			primary: "#533535",
 			secondary: "rgba(73,69,131,0.8)",
 			disabled: "rgba(101,100,124,0.43)",
 		},

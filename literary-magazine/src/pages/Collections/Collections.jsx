@@ -8,7 +8,7 @@ import Side from "../../components/Side/Side";
 import Parchment from "../../components/Parchment/Parchment";
 
 const Collections = () => {
-	const fetchURL = "http://localhost:3001/collections/";
+	const fetchURL = process.env.REACT_APP_API_URL + "/collections/";
 
 	const [collections, setCollections] = useState(null);
 

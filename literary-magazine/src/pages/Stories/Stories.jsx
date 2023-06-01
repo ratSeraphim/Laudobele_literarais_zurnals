@@ -7,7 +7,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Stories = () => {
-	const fetchURL = "http://localhost:3001/stories";
+	const fetchURL = process.env.REACT_APP_API_URL + "/stories";
 	const [stories, setStories] = useState(null);
 
 	useEffect(() => {

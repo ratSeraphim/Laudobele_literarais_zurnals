@@ -39,7 +39,7 @@ const Register = () => {
 		if (inputs.password === inputs.passwordconfirm) {
 			//Nosūta mainīgos uz API
 			axios
-				.post("http://localhost:3001/accounts", inputs)
+				.post(process.env.REACT_APP_API_URL + "/accounts", inputs)
 				//Saņem ziņu no API puses
 				.then((response) => {
 					console.log(response.data);

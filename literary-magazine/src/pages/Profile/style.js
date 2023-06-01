@@ -21,7 +21,7 @@ export const Box = styled("div")`
 `;
 
 export const Header = styled("div")`
-	background-color: #65647c;
+	background-color: #30563e;
 	border: 1px solid black;
 	color: #fff;
 	padding: 1rem;
