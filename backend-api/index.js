@@ -32,6 +32,11 @@ app.use("/posts", postsRouter);
 app.use("/collections", collectionsRouter);
 app.use("/comments", commentsRouter);
 /* Error handler middleware */
+
+app.get("/setcookie", (red, res) => {
+	res.cookie(`Cookie name`, `Cookie string`);
+	res.send(`Cookie saved successfully`);
+});
 app.use((err, req, res, next) => {
 	const statusCode = err.statusCode || 500;
 	console.error(err.message, err.stack);

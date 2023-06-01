@@ -6,7 +6,6 @@ export const Aside = styled(Paper)`
 	background-color: #c7bca1;
 	display: flex;
 	flex-direction: column;
-	height: 25rem;
 `;
 
 export const SideButton = styled(Button)`

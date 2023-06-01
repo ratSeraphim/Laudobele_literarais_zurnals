@@ -60,7 +60,11 @@ const Profile = ({ accData }) => {
 								<S.CusButton variant="contained" href="/profile/edit">
 									Edit Profile
 								</S.CusButton>
-								<S.CusButton href={"/author/" + accData.id}>
+								<S.CusButton
+									color="tertiary"
+									variant="outlined"
+									href={"/author/" + accData.id}
+								>
 									View public profile
 								</S.CusButton>
 							</S.Box>
@@ -84,7 +88,7 @@ const Profile = ({ accData }) => {
 															</S.CusButton>
 															<S.CusButton
 																variant="contained"
-																color="warning"
+																color="tertiary"
 																href={"/stories/edit/" + Story.story_id}
 															>
 																Edit
@@ -113,7 +117,7 @@ const Profile = ({ accData }) => {
 														<div>
 															<S.CusButton
 																variant="contained"
-																color="warning"
+																color="tertiary"
 																href={
 																	"/collections/" + Collection.collection_id
 																}
