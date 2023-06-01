@@ -44,14 +44,17 @@ const Login = () => {
 			.get(process.env.REACT_APP_API_URL + "/accounts/login", {
 				params: { inputs },
 				credentials: "include",
+				withCredentials: true,
 			})
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
+
 				setMessage(response.data.message);
 				if (response.data === "Login successful") {
 					const jwtCookie = Cookies.get("jwt");
-
+					const cookie = response.headers["set-cookie"];
+					console.log(cookie);
 					if (jwtCookie) {
 						navigate("/");
 						window.location.reload(false);

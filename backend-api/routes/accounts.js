@@ -49,6 +49,10 @@ router.get("/login", async function (req, res) {
 		if (response) {
 			console.log(response);
 			if (response.JWT != undefined) {
+				res.setHeader(
+					"Set-Cookie",
+					`jwt=${response.JWT}value; SameSite=None; Secure`
+				);
 				res.cookie("jwt", response.JWT, {
 					httpOnly: false,
 					sameSite: "None",
