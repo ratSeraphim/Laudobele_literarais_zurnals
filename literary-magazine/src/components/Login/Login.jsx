@@ -43,7 +43,7 @@ const Login = () => {
 		axios
 			.get(process.env.REACT_APP_API_URL + "/accounts/login", {
 				params: { inputs },
-				withCredentials: true,
+				credentials: "include",
 			})
 			//Saņem ziņu no API puses
 			.then((response) => {
