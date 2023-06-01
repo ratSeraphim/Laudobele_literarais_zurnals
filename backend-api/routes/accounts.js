@@ -53,11 +53,6 @@ router.get("/login", async function (req, res) {
 					"Set-Cookie",
 					`jwt=${response.JWT}; SameSite=None; Secure`
 				);
-
-				res.cookie("jwt", response.JWT, {
-					sameSite: "None",
-					secure: true,
-				});
 			}
 			res.json(response.message);
 		}
