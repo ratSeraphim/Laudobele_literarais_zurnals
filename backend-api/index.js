@@ -15,6 +15,7 @@ app.use(
 	cors({
 		origin: process.env.FRONTEND_URL, // Update with your frontend URL
 		credentials: true,
+		allowedHeaders: ["Content-Type", "Authorization"],
 	})
 );
 
