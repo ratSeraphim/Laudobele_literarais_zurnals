@@ -88,18 +88,19 @@ router.delete("/:id", async function (req, res, next) {
 	}
 });
 
-router.delete("/user/:id", async function (req, res, next) {
+router.delete("/user/removal", async function (req, res, next) {
 	try {
-		res.json(await collections.removeUser(req.params.id));
+		console.log(req.query);
+		res.json(await collections.removeUser(req.query));
 	} catch (err) {
 		console.error(`Error while removing user from collection`, err.message);
 		next(err);
 	}
 });
 
-router.delete("/story/:id", async function (req, res, next) {
+router.delete("/story/removal", async function (req, res, next) {
 	try {
-		res.json(await collections.removeStory(req.params.id));
+		res.json(await collections.removeStory(req.query));
 	} catch (err) {
 		console.error(`Error while removing story from collection`, err.message);
 		next(err);

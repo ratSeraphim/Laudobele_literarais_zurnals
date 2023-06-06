@@ -182,10 +182,11 @@ async function remove(id) {
 	return message;
 }
 
-async function removeUser(id) {
+async function removeUser(identifier) {
+	console.log(identifier);
 	const result = await db.query(
-		`DELETE FROM account_collection WHERE account_id=?`,
-		[id]
+		`DELETE FROM account_collection WHERE account_id=? AND collection_id=?`,
+		[identifier.item_id, identifier.id]
 	);
 
 	let message = "Error in removing user from collection";
@@ -196,10 +197,10 @@ async function removeUser(id) {
 
 	return message;
 }
-async function removeStory(id) {
+async function removeStory(identifier) {
 	const result = await db.query(
-		`DELETE FROM story_collection WHERE story_id=?`,
-		[id]
+		`DELETE FROM story_collection WHERE story_id=? AND collection_id=?`,
+		[identifier.item_id, identifier.id]
 	);
 
 	let message = "Error in removing story from collection";

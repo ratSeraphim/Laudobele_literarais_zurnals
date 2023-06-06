@@ -1,6 +1,5 @@
 import { styled } from "@mui/material/styles";
 import { Paper } from "@mui/material";
-import { Link } from "react-router-dom";
 
 export const Content = styled(Paper)`
 	padding: 1rem;

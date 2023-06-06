@@ -28,7 +28,7 @@ async function getMultiple(page = 1) {
 
 async function getOne(id) {
 	const rows = await db.query(
-		`SELECT role, display_email, display_name, description
+		`SELECT role, display_email, display_name, description, accounts.account_id AS account_id
 		FROM accounts 
 		INNER JOIN userinfo 
 		ON accounts.account_id = userinfo.account_id 

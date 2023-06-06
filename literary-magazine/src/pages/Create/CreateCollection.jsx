@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as S from "./style";
 import Side from "../../components/Side/Side";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { Typography } from "@mui/material";
 import Message from "../../components/Alerts/Message";
 
@@ -27,7 +26,7 @@ const CreateCollection = ({ accData }) => {
 
 		//Nosūta mainīgos uz API
 		axios
-			.post("/collections", inputs)
+			.post(process.env.REACT_APP_API_URL + "/collections", inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
 				console.log(response.data);
@@ -39,7 +38,7 @@ const CreateCollection = ({ accData }) => {
 			//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
 			.catch((error) => {
 				console.log(error.message);
-				setMessage(error);
+				setMessage(error.message);
 			});
 		//Aizved lietotāju uz mājaslapu
 		// navigate("/");

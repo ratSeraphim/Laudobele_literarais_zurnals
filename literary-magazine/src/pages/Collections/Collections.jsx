@@ -1,11 +1,8 @@
 import { Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./style";
-
 import Side from "../../components/Side/Side";
-import Parchment from "../../components/Parchment/Parchment";
 
 const Collections = () => {
 	const fetchURL = process.env.REACT_APP_API_URL + "/collections/";

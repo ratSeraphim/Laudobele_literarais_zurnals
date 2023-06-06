@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import Message from "../../components/Alerts/Message";
+import Error from "../../components/Alerts/Error";
 
 const EditProfile = ({ accData }) => {
 	const navigate = useNavigate();
@@ -17,6 +18,7 @@ const EditProfile = ({ accData }) => {
 	});
 
 	const [message, setMessage] = useState("");
+	const [error, setError] = useState("");
 	const handleSubmit = (event) => {
 		//Apstādina lapu no sevis atjaunošanas
 		event.preventDefault();
@@ -34,7 +36,7 @@ const EditProfile = ({ accData }) => {
 			//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
 			.catch((error) => {
 				console.log(error.message);
-				setMessage(error);
+				setError(error.message);
 			});
 		//Aizved lietotāju uz mājaslapu
 		// navigate("/");
@@ -46,19 +48,14 @@ const EditProfile = ({ accData }) => {
 				process.env.REACT_APP_API_URL + "/accounts/" + accData.id;
 			axios.get(fetchURL).then((response) => {
 				console.log(response.data);
+
 				setInputs({
-					display_name: response.data.display_name,
+					...inputs,
+					description: response.data.description,
+					display_email: response.data.display_email,
+					display_name: accData.displayName,
 				});
-				response.data.display_email
-					? setInputs({
-							display_email: response.data.display_email,
-					  })
-					: console.log("no email");
-				response.data.description
-					? setInputs({
-							description: response.data.description,
-					  })
-					: console.log("no description");
+				console.log(inputs);
 			});
 		}
 	}, [accData]);
@@ -85,11 +82,12 @@ const EditProfile = ({ accData }) => {
 						<S.CusPaper>
 							<div>Edit profile</div>
 							<Message message={message} />
+							<Error message={error} />
 							<S.Form onSubmit={handleSubmit}>
 								<S.Title
 									disabled
 									label="Display name"
-									name="title"
+									name="display_name"
 									value={inputs.display_name}
 									onChange={handleChange}
 								/>

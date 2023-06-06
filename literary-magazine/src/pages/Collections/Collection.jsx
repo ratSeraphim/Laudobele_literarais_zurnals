@@ -1,7 +1,7 @@
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as S from "./style";
 
 import Side from "../../components/Side/Side";
@@ -12,14 +12,19 @@ const Collection = ({ accData }) => {
 
 	const [data, setData] = useState(null);
 
-	const handleRemoval = (id, type) => () => {
+	const handleRemoval = (item_id, type) => () => {
 		//Saņem izmainītās vērtības
-		console.log(id);
+		console.log(item_id);
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		if (window.confirm("Delete the item?")) {
 			axios
 				.delete(
-					process.env.REACT_APP_API_URL + "/collections/" + type + "/" + id
+					process.env.REACT_APP_API_URL + "/collections/" + type + "/removal",
+					{
+						params: { id, item_id },
+						credentials: "include",
+						withCredentials: true,
+					}
 				)
 				.then((response) => {
 					console.log(`Deleted ` + type + ` with ID ` + id);

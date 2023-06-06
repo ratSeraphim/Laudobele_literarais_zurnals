@@ -30,7 +30,7 @@ END $$
  DELIMITER $$
  CREATE PROCEDURE accountCreations (IN acc_id INT)
 BEGIN
-	SELECT title, summary, date, story_id
+	SELECT title, summary, date, story_id, public
 	FROM stories
 	WHERE stories.account_id =  acc_id;
 
