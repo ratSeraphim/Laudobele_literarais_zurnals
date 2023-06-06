@@ -12,6 +12,7 @@ import {
 	Select,
 	Typography,
 } from "@mui/material";
+import Message from "../../components/Alerts/Message";
 
 const CreatePost = ({ accData }) => {
 	const navigate = useNavigate();
@@ -88,7 +89,7 @@ const CreatePost = ({ accData }) => {
 				{accData && (
 					<S.CusPaper>
 						<div>New post</div>
-						<h3>{message}</h3>
+						<Message message={message} />
 						<S.Form onSubmit={handleSubmit}>
 							<S.StoryInput
 								required

@@ -55,8 +55,6 @@ router.get("/login", async function (req, res) {
 				);
 				res.cookie("jwt", response.JWT, {
 					httpOnly: false,
-					sameSite: "None",
-					secure: true,
 				});
 			}
 			res.json(response.message);

@@ -8,11 +8,13 @@ body {
     font-size: 1.2em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+    
 }
 
 /*css reset*/
@@ -58,12 +60,17 @@ textarea {
   color: #fff;
   background-color: #65647C;
 }
+/* https://www.northlandscapes.com/files/images/portfolio/northlandscapes-norway-underwood-03.jpg */
 body {
+  background-image: url("https://www.northlandscapes.com/files/images/portfolio-2019/northlandscapes-norway-forces-of-nature-05.jpg");
+  background-size: cover;
   background-color: #8B7E74;
   color: #533535;
+
 }
-
-
-*[contentEditable] {user-select: auto !important;
-  -webkit-user-select: auto !important;
+.content {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

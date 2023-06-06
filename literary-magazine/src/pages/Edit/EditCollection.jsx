@@ -2,22 +2,20 @@ import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import Side from "../../components/Side/Side";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
-	Button,
 	FormControl,
 	FormHelperText,
 	IconButton,
 	InputLabel,
 	List,
-	ListItem,
 	MenuItem,
-	Select,
 	Typography,
 } from "@mui/material";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
+import Message from "../../components/Alerts/Message";
 
 const EditCollection = ({ accData }) => {
 	const { id } = useParams();
@@ -142,7 +140,7 @@ const EditCollection = ({ accData }) => {
 					accData.id !== undefined && (
 						<S.CusPaper>
 							<div>Edit profile</div>
-							<h3>{message}</h3>
+							<Message message={message}></Message>
 							<S.Form onSubmit={handleSubmit}>
 								{collection && (
 									<>
@@ -199,7 +197,7 @@ const EditCollection = ({ accData }) => {
 								)}
 
 								<List>
-									{collection.stories.map((Story) => {
+									{collection?.stories.map((Story) => {
 										return (
 											<S.CollectionListItem>
 												{Story.title}{" "}
@@ -215,7 +213,7 @@ const EditCollection = ({ accData }) => {
 									})}
 								</List>
 
-								{data.users && (
+								{data?.users && (
 									<S.Selector>
 										<FormControl>
 											<InputLabel>User</InputLabel>
@@ -246,7 +244,7 @@ const EditCollection = ({ accData }) => {
 								)}
 
 								<List>
-									{collection.users.map((User) => {
+									{collection?.users.map((User) => {
 										return (
 											<S.CollectionListItem>
 												{User.display_name}{" "}

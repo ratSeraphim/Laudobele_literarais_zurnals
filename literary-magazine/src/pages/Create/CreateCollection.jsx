@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Typography } from "@mui/material";
+import Message from "../../components/Alerts/Message";
 
 const CreateCollection = ({ accData }) => {
 	const navigate = useNavigate();
@@ -63,7 +64,7 @@ const CreateCollection = ({ accData }) => {
 				{accData && (
 					<S.CusPaper>
 						<div>New collection</div>
-						<h3>{message}</h3>
+						<Message message={message} />
 						<S.Form onSubmit={handleSubmit}>
 							<S.StoryTitle
 								required

@@ -7,7 +7,6 @@ const Home = ({ accData }) => {
 		<>
 			<Navbar {...(accData ? (accData = { accData }) : (accData = null))} />
 			<Outlet />
-			<Footer />
 		</>
 	);
 };

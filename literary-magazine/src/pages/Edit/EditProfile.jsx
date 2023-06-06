@@ -4,6 +4,7 @@ import Side from "../../components/Side/Side";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
+import Message from "../../components/Alerts/Message";
 
 const EditProfile = ({ accData }) => {
 	const navigate = useNavigate();
@@ -83,7 +84,7 @@ const EditProfile = ({ accData }) => {
 					accData.id !== undefined && (
 						<S.CusPaper>
 							<div>Edit profile</div>
-							<h3>{message}</h3>
+							<Message message={message} />
 							<S.Form onSubmit={handleSubmit}>
 								<S.Title
 									disabled

@@ -36,14 +36,14 @@ export const Title = styled("div")`
 export const CustomAccordionSummary = styled(AccordionSummary)`
 	background: #3c5222;
 
-	background: url(https://i.ibb.co/ZLHFwxW/img-noise-361x370-1.png);
+	background: url(https://i.ibb.co/yhzZKYg/img-noise-361x370-4.png);
 	color: white;
 	&:hover {
 		background: -webkit-linear-gradient(
 				rgba(29, 38, 113, 0.1),
 				rgba(195, 55, 100, 0.2)
 			),
-			url(https://i.ibb.co/ZLHFwxW/img-noise-361x370-1.png);
+			url(https://i.ibb.co/yhzZKYg/img-noise-361x370-4.png);
 	}
 `;
 

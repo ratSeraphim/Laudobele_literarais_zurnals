@@ -8,7 +8,7 @@ export const Content = styled("div")`
 `;
 
 export const BgPaper = styled(Paper)`
-	background-image: url(https://i.ibb.co/VHWGZsb/img-noise-361x370.png);
+	background-image: url(https://i.ibb.co/yhzZKYg/img-noise-361x370-4.png);
 	-webkit-box-shadow: inset -2px 9px 34px -15px rgba(0, 0, 0, 0.68);
 	-moz-box-shadow: inset -2px 9px 34px -15px rgba(0, 0, 0, 0.68);
 	box-shadow: inset -2px 9px 34px -15px rgba(0, 0, 0, 0.68);

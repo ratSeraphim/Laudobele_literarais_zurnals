@@ -25,6 +25,7 @@ import EditStory from "./pages/Edit/EditStory";
 import EditProfile from "./pages/Edit/EditProfile";
 import Collection from "./pages/Collections/Collection";
 import Author from "./pages/Author/Author";
+import Footer from "./components/Footer/Footer";
 
 function App() {
 	const [accData, setAccData] = useState();
@@ -49,78 +50,84 @@ function App() {
 			});
 	}, []);
 	return (
-		<div className="App">
-			<ThemeProvider theme={siteTheme}>
-				<div className="content">
-					<BrowserRouter>
-						<Routes>
-							<Route path="/" element={<Home accData={accData} />}>
-								<Route path="/" element={<Landing accData={accData} />}></Route>
-								<Route
-									path="/stories"
-									element={<Stories accData={accData} />}
-								></Route>
-								<Route
-									path="/stories/:id"
-									element={<Story accData={accData} />}
-								></Route>
-								<Route
-									path="/stories/new"
-									element={<CreateStory accData={accData} />}
-								></Route>
-								<Route
-									path="/stories/edit/:id"
-									element={<EditStory accData={accData} />}
-								></Route>
-								<Route
-									path="/posts"
-									element={<Posts accData={accData} />}
-								></Route>
-								<Route
-									path="/posts/new"
-									element={<CreatePost accData={accData} />}
-								></Route>
-								<Route
-									path="/collections/"
-									element={<Collections accData={accData} />}
-								></Route>
-								<Route
-									path="/collections/:id"
-									element={<Collection accData={accData} />}
-								></Route>
-								<Route
-									path="/collections/new"
-									element={<CreateCollection accData={accData} />}
-								></Route>
-								<Route
-									path="/collections/edit/:id"
-									element={<EditCollection accData={accData} />}
-								></Route>
+		<>
+			<div className="App">
+				<ThemeProvider theme={siteTheme}>
+					<div className="content">
+						<BrowserRouter>
+							<Routes>
+								<Route path="/" element={<Home accData={accData} />}>
+									<Route
+										path="/"
+										element={<Landing accData={accData} />}
+									></Route>
+									<Route
+										path="/stories"
+										element={<Stories accData={accData} />}
+									></Route>
+									<Route
+										path="/stories/:id"
+										element={<Story accData={accData} />}
+									></Route>
+									<Route
+										path="/stories/new"
+										element={<CreateStory accData={accData} />}
+									></Route>
+									<Route
+										path="/stories/edit/:id"
+										element={<EditStory accData={accData} />}
+									></Route>
+									<Route
+										path="/posts"
+										element={<Posts accData={accData} />}
+									></Route>
+									<Route
+										path="/posts/new"
+										element={<CreatePost accData={accData} />}
+									></Route>
+									<Route
+										path="/collections/"
+										element={<Collections accData={accData} />}
+									></Route>
+									<Route
+										path="/collections/:id"
+										element={<Collection accData={accData} />}
+									></Route>
+									<Route
+										path="/collections/new"
+										element={<CreateCollection accData={accData} />}
+									></Route>
+									<Route
+										path="/collections/edit/:id"
+										element={<EditCollection accData={accData} />}
+									></Route>
 
-								<Route
-									path="/profile"
-									element={<Profile accData={accData} />}
-								></Route>
-								<Route
-									path="/profile/edit/"
-									element={<EditProfile accData={accData} />}
-								></Route>
-								<Route
-									path="/author/:id"
-									element={<Author accData={accData} />}
-								></Route>
-							</Route>
+									<Route
+										path="/profile"
+										element={<Profile accData={accData} />}
+									></Route>
+									<Route
+										path="/profile/edit/"
+										element={<EditProfile accData={accData} />}
+									></Route>
+									<Route
+										path="/author/:id"
+										element={<Author accData={accData} />}
+									></Route>
+								</Route>
 
-							<Route path="/login" element={<Login />} />
-							<Route path="/signup" element={<Register />} />
+								<Route path="/login" element={<Login />} />
+								<Route path="/signup" element={<Register />} />
 
-							<Route path="/admin" element={<Admin />}></Route>
-							<Route path="*" element={<NoMatch />}></Route>
-						</Routes>
-					</BrowserRouter>
-				</div>
-			</ThemeProvider>
-		</div>
+								<Route path="/admin" element={<Admin />}></Route>
+								<Route path="*" element={<NoMatch />}></Route>
+							</Routes>
+						</BrowserRouter>
+						<Footer />
+					</div>
+				</ThemeProvider>
+			</div>
+		</>
 	);
 }
 

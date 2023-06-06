@@ -1,6 +1,6 @@
 import * as S from "./style";
 import React from "react";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import NavButton from "../NavButton/NavButton";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -41,14 +41,10 @@ const Navbar = ({ accData }) => {
 								<NavButton link="admin" name="Admin" />
 							)))}
 				</S.NavigateSite>
-				<S.LogButton
-					variant="contained"
-					color="secondary"
-					onClick={handleLogButton}
-				>
+				<Button variant="contained" color="success" onClick={handleLogButton}>
 					{!jwtCookie && <>Log in</>}
 					{jwtCookie && <>Sign Out</>}
-				</S.LogButton>
+				</Button>
 			</S.Navbar>
 		</>
 	);

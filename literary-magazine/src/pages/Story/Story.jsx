@@ -56,9 +56,11 @@ const Story = ({ accData }) => {
 						<Parchment>
 							<S.Info>
 								<Typography variant="title">{story.data.title}</Typography>
-								<Typography variant="subtitle">
-									written by {story.data.display_name}
-								</Typography>
+								<a href={"/author/" + story.data.account_id}>
+									<Typography variant="subtitle">
+										written by {story.data.display_name}
+									</Typography>
+								</a>
 							</S.Info>
 
 							<S.Text>{story.data.content}</S.Text>

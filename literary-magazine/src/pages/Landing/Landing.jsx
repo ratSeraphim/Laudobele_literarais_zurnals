@@ -26,7 +26,7 @@ const Landing = () => {
 					<Typography variant="h1">Where to contact us</Typography>
 					<Typography>
 						You can get in touch with the site's creator on their github page{" "}
-						<a href="https://github.com/ratSeraphim">here</a>
+						<S.Link href="https://github.com/ratSeraphim">here</S.Link>
 					</Typography>
 				</Parchment>
 				<Side />

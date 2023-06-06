@@ -2,6 +2,7 @@ import { Paper } from "@mui/material";
 import * as S from "./style";
 import axios from "axios";
 import React, { useState } from "react";
+import Message from "../Alerts/Message";
 
 const CreateComment = ({ accData, story_id }) => {
 	const [inputs, setInputs] = useState({
@@ -52,6 +53,7 @@ const CreateComment = ({ accData, story_id }) => {
 	return (
 		<Paper>
 			<S.Form onSubmit={handleSubmit}>
+				<Message message={message} />
 				<S.Input
 					required
 					multiline

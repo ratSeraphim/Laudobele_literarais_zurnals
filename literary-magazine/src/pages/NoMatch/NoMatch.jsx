@@ -1,10 +1,11 @@
-import { NomatchPaper, Return } from "./style";
+import Return from "../../components/Return/Return";
+import { NomatchPaper } from "./style";
 
 const NoMatch = () => {
 	return (
 		<NomatchPaper>
 			No page found
-			<Return to="/">Return to the sea</Return>
+			<Return />
 		</NomatchPaper>
 	);
 };

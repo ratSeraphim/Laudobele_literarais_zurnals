@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import Message from "../../components/Alerts/Message";
 
 const CreateStory = ({ accData }) => {
 	const navigate = useNavigate();
@@ -79,7 +80,7 @@ const CreateStory = ({ accData }) => {
 					accData.id !== undefined && (
 						<S.CusPaper>
 							<div>New story</div>
-							<h3>{message}</h3>
+							<Message message={message} />
 							<S.Form onSubmit={handleSubmit}>
 								<S.StoryTitle
 									required

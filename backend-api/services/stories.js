@@ -22,7 +22,7 @@ async function getMultiple(page = 1) {
 
 async function getOne(id) {
 	const rows = await db.query(
-		`SELECT title, story_id, summary, display_name, date, last_edited, content, public
+		`SELECT title, story_id, summary, display_name, date, last_edited, content, public, stories.account_id AS account_id
 		FROM stories 
 		INNER JOIN userinfo 
 		ON stories.account_id = userinfo.account_id 

@@ -6,11 +6,9 @@ import axios from "axios";
 import dayjs from "dayjs";
 // extend dayjs
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useNavigate } from "react-router-dom";
 dayjs.extend(relativeTime);
 
 const Posts = ({ accData }) => {
-	const navigate = useNavigate();
 	const fetchURL = process.env.REACT_APP_API_URL + "/posts";
 	const [post, setPost] = useState(null);
 
@@ -59,7 +57,11 @@ const Posts = ({ accData }) => {
 											<S.ItemContent>
 												{Post.content}
 												<S.Author key={Post.displayName}>
-													- {Post.display_name}, {postDate}
+													-{" "}
+													<S.AuthorLink href={"/author/" + Post.account_id}>
+														{Post.display_name}
+													</S.AuthorLink>
+													, {postDate}
 												</S.Author>
 											</S.ItemContent>
 

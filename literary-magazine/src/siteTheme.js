@@ -4,13 +4,13 @@ export const siteTheme = createTheme({
 	palette: {
 		mode: "light",
 		primary: {
-			main: "#c7bca1",
+			main: "#C7AFA1",
 		},
 		secondary: {
-			main: "#854343",
+			main: "#58342e",
 		},
 		tertiary: {
-			main: "#9A8248",
+			main: "#004931",
 			contrastText: "#fff",
 		},
 		text: {
@@ -19,20 +19,20 @@ export const siteTheme = createTheme({
 			disabled: "rgba(101,100,124,0.43)",
 		},
 		background: {
-			paper: "#efddce",
+			paper: "#EADDD8",
 			default: "#8B7E74",
 		},
 		error: {
 			main: "#c73939",
 		},
 		success: {
-			main: "#1b5e20",
+			main: "#29806a",
 		},
 		info: {
 			main: "#40c4ff",
 		},
 		warning: {
-			main: "#ffa726",
+			main: "#618C7C",
 		},
 	},
 	typography: {
@@ -51,7 +51,7 @@ export const siteTheme = createTheme({
 			fontSize: "2.5em",
 			fontWeight: 1000,
 			padding: "0 1rem",
-			color: "#854343",
+			color: "#58342e",
 		},
 		subtitle: {
 			fontSize: "1.5em",

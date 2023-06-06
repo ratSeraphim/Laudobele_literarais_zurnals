@@ -37,7 +37,7 @@ const Side = () => {
 						Sign up
 					</S.SideButton>
 					<p>If you already have an account:</p>
-					<S.SideButton color="success" variant="contained" href="/login">
+					<S.SideButton color="tertiary" variant="contained" href="/login">
 						Log in
 					</S.SideButton>
 					<p>

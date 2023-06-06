@@ -5,7 +5,7 @@ const config = require("../config");
 async function getMultiple(page = 1) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
-		`SELECT post_id, content, date, story_id, collection_id, display_name 
+		`SELECT post_id, content, date, story_id, collection_id, display_name, userinfo.account_id AS account_id 
 		FROM posts 
 		INNER JOIN userinfo 
 		ON userinfo.account_id = posts.account_id 
@@ -22,7 +22,7 @@ async function getMultiple(page = 1) {
 
 async function getOne(id) {
 	const rows = await db.query(
-		`SELECT title, post_id, summary, display_name, date, content 
+		`SELECT title, post_id, summary, display_name, date, content, userinfo.account_id AS account_id 
 		FROM posts 
 		INNER JOIN userinfo 
 		ON posts.account_id = userinfo.account_id 

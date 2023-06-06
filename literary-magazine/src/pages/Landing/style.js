@@ -9,9 +9,9 @@ export const Content = styled("div")`
 	min-height: 200px;
 `;
 
-export const Writing = styled(Paper)`
-	padding: 1rem;
-	&:a {
-		color: #fff;
+export const Link = styled("a")`
+	color: #29806a;
+	&:hover {
+		text-decoration: underline;
 	}
 `;

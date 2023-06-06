@@ -4,7 +4,9 @@ import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Return from "../Return/Return";
 import Message from "../Alerts/Message";
+import Error from "../Alerts/Error";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -22,7 +24,7 @@ const Login = () => {
 		password: "",
 	});
 	const [message, setMessage] = useState("");
-	const [error, setError] = useState();
+	const [error, setError] = useState("");
 	const handleChange = (event) => {
 		//Saņem izmainītās vērtības
 		const { name, value } = event.target;
@@ -50,8 +52,8 @@ const Login = () => {
 			.then((response) => {
 				console.log(response.data);
 
-				setMessage(response.data.message);
 				if (response.data === "Login successful") {
+					setMessage(response.data);
 					const jwtCookie = Cookies.get("jwt");
 					const cookie = response.headers["Set-Cookie"];
 					console.log(cookie);
@@ -59,25 +61,29 @@ const Login = () => {
 						navigate("/");
 						window.location.reload(false);
 					} else {
-						setMessage("JWT cookie not found");
+						setError("JWT cookie not found");
 						// Handle unauthorized access or redirect to login
 					}
+				} else {
+					setError(response.data);
 				}
 			})
 			//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
 			.catch((error) => {
-				setError(error);
+				setError(error.message);
 				console.log(error.message);
-				setMessage(error.message);
+				setMessage("Error: " + error.message);
 			});
 		//Aizved lietotāju uz mājaslapu
 		// navigate("/");
 	};
 	return (
 		<>
-			<S.Return to="/">Return to the sea</S.Return>
+			<Return></Return>
 			<S.Content>
 				<h1>Log in</h1>
+				<Error message={error} />
+				<Message message={message} />
 				<S.LoginForm onSubmit={handleSubmit}>
 					<TextField
 						required
@@ -98,10 +104,9 @@ const Login = () => {
 					<Button color="tertiary" href="/signup">
 						Sign up
 					</Button>
-					<Message message={message} />
 				</S.LoginForm>
 			</S.Content>
-			<img src="logo.png" alt="tentacles coming out of an open book" />
+			<S.LogoImage src="logo.png" alt="tentacles coming out of an open book" />
 		</>
 	);
 };

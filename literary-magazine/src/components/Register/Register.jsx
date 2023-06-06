@@ -3,6 +3,9 @@ import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import * as S from "./style";
 import axios from "axios";
+import Return from "../Return/Return";
+import Message from "../Alerts/Message";
+import Error from "../Alerts/Error";
 
 const Register = () => {
 	//Definē router-dom navigācijas rīku
@@ -17,6 +20,7 @@ const Register = () => {
 		displayname: "",
 	});
 	const [message, setMessage] = useState("");
+	const [error, setError] = useState("");
 
 	//Kad tekstā notiek izmaiņas,
 
@@ -43,28 +47,36 @@ const Register = () => {
 				//Saņem ziņu no API puses
 				.then((response) => {
 					console.log(response.data);
-					setMessage(response.data);
+
 					if (response.data === "Account created successfully") {
-						navigate("/login");
+						setMessage(response.data);
+						setError(null);
+						setTimeout(() => {
+							navigate("/login");
+						}, 2000);
+					} else {
+						setError(response.data.message);
 					}
 				})
 				//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
 				.catch((error) => {
 					console.log(error.message);
-					setMessage(error);
+					setError(error.message);
 				});
 			//Aizved lietotāju uz mājaslapu
 			// navigate("/");
 		} else {
-			setMessage("Passwords do not match!");
+			setError("Passwords do not match!");
 		}
 	};
 
 	return (
 		<>
-			<S.Return to="/">Return to the sea</S.Return>
+			<Return />
 			<S.Content>
 				<h1>Sign up</h1>
+				<Message message={message} />
+				<Error message={error} />
 				<S.RegisterForm onSubmit={handleSubmit}>
 					<TextField
 						required={true}
@@ -108,10 +120,9 @@ const Register = () => {
 					<Button color="tertiary" href="/login">
 						Log in
 					</Button>
-					<h3>{message}</h3>
 				</S.RegisterForm>
 			</S.Content>
-			<img src="logo.png" alt="tentacles coming out of an open book" />
+			<S.LogoImage src="logo.png" alt="tentacles coming out of an open book" />
 		</>
 	);
 };

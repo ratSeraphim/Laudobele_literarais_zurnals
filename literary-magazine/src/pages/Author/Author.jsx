@@ -1,4 +1,4 @@
-import { Button, Card, Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import Side from "../../components/Side/Side";
 import * as S from "./style";

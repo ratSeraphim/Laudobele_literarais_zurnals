@@ -28,17 +28,15 @@ export const Form = styled("form")`
 	align-items: center;
 	height: 100%;
 `;
-
 export const Submit = styled("input")`
 	border-radius: 30px;
 	margin: 4px;
 	padding: 10px;
 	width: 10rem;
-	background-color: #ffa726;
+	background-color: #acc7a1;
 	&:hover {
-		background-color: #9a8248;
+		background-color: #13b491;
 		color: #fff;
-		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-			0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2);
 	}
 `;
