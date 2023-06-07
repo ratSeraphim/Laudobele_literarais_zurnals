@@ -3,9 +3,10 @@ import * as S from "./style";
 import Side from "../../components/Side/Side";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { ButtonGroup, Typography } from "@mui/material";
 import Message from "../../components/Alerts/Message";
 import Error from "../../components/Alerts/Error";
+import Return from "../../components/Return/Return";
 
 const EditProfile = ({ accData }) => {
 	const navigate = useNavigate();
@@ -80,7 +81,7 @@ const EditProfile = ({ accData }) => {
 				{accData ? (
 					accData.id !== undefined && (
 						<S.CusPaper>
-							<div>Edit profile</div>
+							<Typography variant="h5">Edit profile</Typography>
 							<Message message={message} />
 							<Error message={error} />
 							<S.Form onSubmit={handleSubmit}>
@@ -91,7 +92,6 @@ const EditProfile = ({ accData }) => {
 									value={inputs.display_name}
 									onChange={handleChange}
 								/>
-
 								<S.Title
 									label="Email"
 									type="email"
@@ -100,7 +100,6 @@ const EditProfile = ({ accData }) => {
 									value={inputs.display_email}
 									onChange={handleChange}
 								/>
-
 								<S.Input
 									multiline
 									label="Content"
@@ -111,8 +110,10 @@ const EditProfile = ({ accData }) => {
 									value={inputs.description}
 									onChange={handleChange}
 								/>
-
-								<S.Submit type="submit" />
+								<ButtonGroup>
+									<S.Submit type="submit" />
+									<S.Back onClick={() => navigate(-1)}>Back</S.Back>
+								</ButtonGroup>
 							</S.Form>
 						</S.CusPaper>
 					)

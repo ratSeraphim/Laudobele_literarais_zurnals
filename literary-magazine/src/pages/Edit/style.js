@@ -58,3 +58,17 @@ export const CollectionListItem = styled(ListItem)`
 	display: flex;
 	justify-content: space-between;
 `;
+
+export const Back = styled("div")`
+	border-radius: 30px;
+	margin: 4px;
+	padding: 10px;
+	width: 10rem;
+	background-color: #58342e;
+	color: #fff;
+	&:hover {
+		background-color: #c73939;
+		color: #fff;
+		box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2);
+	}
+`;

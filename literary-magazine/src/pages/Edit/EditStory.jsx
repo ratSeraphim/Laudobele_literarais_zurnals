@@ -3,7 +3,12 @@ import * as S from "./style";
 import Side from "../../components/Side/Side";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import {
+	ButtonGroup,
+	Checkbox,
+	FormControlLabel,
+	Typography,
+} from "@mui/material";
 import Message from "../../components/Alerts/Message";
 
 const EditStory = ({ accData }) => {
@@ -142,7 +147,10 @@ const EditStory = ({ accData }) => {
 									}
 									label="Public?"
 								/>
-								<S.Submit type="submit" />
+								<ButtonGroup>
+									<S.Submit type="submit" />
+									<S.Back onClick={() => navigate(-1)}>Back</S.Back>
+								</ButtonGroup>
 							</S.Form>
 						</S.CusPaper>
 					)

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import Side from "../../components/Side/Side";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
+	ButtonGroup,
 	FormControl,
 	FormHelperText,
 	IconButton,
@@ -18,6 +19,7 @@ import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import Message from "../../components/Alerts/Message";
 
 const EditCollection = ({ accData }) => {
+	const navigate = useNavigate();
 	const { id } = useParams();
 	const fetchURL = process.env.REACT_APP_API_URL + "/collections/" + id;
 	const endpoints = [
@@ -113,14 +115,19 @@ const EditCollection = ({ accData }) => {
 		});
 	};
 
-	const handleRemoval = (id, type) => () => {
+	const handleRemoval = (item_id, type) => () => {
 		//Saņem izmainītās vērtības
-		console.log(id);
+		console.log(item_id);
 		//Izmainītās vērtības ieliek mainīgajā vērtībā
 		if (window.confirm("Delete the item?")) {
 			axios
 				.delete(
-					process.env.REACT_APP_API_URL + "/collections/" + type + "/" + id
+					process.env.REACT_APP_API_URL + "/collections/" + type + "/removal",
+					{
+						params: { id, item_id },
+						credentials: "include",
+						withCredentials: true,
+					}
 				)
 				.then((response) => {
 					console.log(`Deleted ` + type + ` with ID ` + id);
@@ -139,7 +146,7 @@ const EditCollection = ({ accData }) => {
 				{accData ? (
 					accData.id !== undefined && (
 						<S.CusPaper>
-							<div>Edit profile</div>
+							<Typography variant="h5">Edit collection</Typography>
 							<Message message={message}></Message>
 							<S.Form onSubmit={handleSubmit}>
 								{collection && (
@@ -259,7 +266,10 @@ const EditCollection = ({ accData }) => {
 										);
 									})}
 								</List>
-								<S.Submit type="submit" />
+								<ButtonGroup>
+									<S.Submit type="submit" />
+									<S.Back onClick={() => navigate(-1)}>Back</S.Back>
+								</ButtonGroup>
 							</S.Form>
 						</S.CusPaper>
 					)
