@@ -8,19 +8,31 @@ import React, { useEffect, useState } from "react";
 
 const Stories = () => {
 	const fetchURL = process.env.REACT_APP_API_URL + "/stories";
+	const [page, setPage] = useState(1);
 	const [stories, setStories] = useState(null);
 
+	const handleChange = (event, value) => {
+		setPage(value);
+	};
+
 	useEffect(() => {
-		axios.get(fetchURL).then((response) => {
-			setStories(response.data);
-		});
-	}, [fetchURL]);
+		axios
+			.get(fetchURL, {
+				params: { page },
+				credentials: "include",
+				withCredentials: true,
+			})
+			.then((response) => {
+				setStories(response.data);
+			});
+	}, [page]);
 
 	return (
 		<>
 			<S.Content>
 				<Paper>
 					<Typography variant="title">Recent Stories</Typography>
+
 					{!stories && (
 						<>
 							<S.PlaceHolder variant="rectangular"></S.PlaceHolder>
@@ -53,6 +65,12 @@ const Stories = () => {
 									</>
 								);
 							})}
+							<S.PageSelection
+								count={stories.meta.totalPages.page_count}
+								color="secondary"
+								page={page}
+								onChange={handleChange}
+							/>
 						</S.Holder>
 					)}
 				</Paper>

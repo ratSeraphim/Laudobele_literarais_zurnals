@@ -8,7 +8,7 @@ const {
 } = require("../encrypt");
 const { generateJWT } = require("./verify");
 
-async function getMultiple(page = 1) {
+async function getMultiple(page) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
 		`SELECT accounts.account_id, display_name 
@@ -17,8 +17,13 @@ async function getMultiple(page = 1) {
 		ON accounts.account_id = userinfo.account_id 
 		LIMIT ${offset},${config.listPerPage}`
 	);
+	const pageCount = await db.query(
+		`	SELECT CEIL(COUNT(account_id)/6) AS page_count FROM accounts LIMIT 1;`
+	);
+
+	const totalPages = pageCount[0];
 	const data = helper.emptyOrRows(rows);
-	const meta = { page };
+	const meta = { page, totalPages };
 
 	return {
 		data,

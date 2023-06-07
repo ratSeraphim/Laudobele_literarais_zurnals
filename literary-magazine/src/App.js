@@ -26,6 +26,8 @@ import EditProfile from "./pages/Edit/EditProfile";
 import Collection from "./pages/Collections/Collection";
 import Author from "./pages/Author/Author";
 import Footer from "./components/Footer/Footer";
+import AdminUser from "./components/Admin/AdminUser/AdminUser";
+import AdminStats from "./components/Admin/AdminStats/AdminStats";
 
 function App() {
 	const [accData, setAccData] = useState();

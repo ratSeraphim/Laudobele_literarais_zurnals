@@ -21,6 +21,14 @@ router.get("/", async function (req, res) {
 	}
 });
 
+router.get("/stats", async function (req, res) {
+	try {
+		res.json(await accounts.getStatistics());
+	} catch (err) {
+		console.error(`Error while getting statistics`, err.message);
+	}
+});
+
 /* GET all creations associated with account */
 router.get("/created/:id", async function (req, res) {
 	try {

@@ -2,14 +2,18 @@ const db = require("./db");
 const helper = require("../helper");
 const config = require("../config");
 
-async function getMultiple(page = 1) {
+async function getMultiple(page) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
 		`SELECT name, description, collection_id FROM collections
         LIMIT ${offset},${config.listPerPage}`
 	);
+	const pageCount = await db.query(
+		`	SELECT CEIL(COUNT(collection_id)/6) AS page_count FROM collections LIMIT 1;`
+	);
+	const totalPages = pageCount[0];
 	const data = helper.emptyOrRows(rows);
-	const meta = { page };
+	const meta = { page, totalPages };
 
 	return {
 		data,

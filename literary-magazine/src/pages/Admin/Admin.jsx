@@ -1,9 +1,14 @@
-import { Card, Paper } from "@mui/material";
+import { Card, Divider, Paper } from "@mui/material";
 import * as S from "./style";
 import Parchment from "../../components/Parchment/Parchment";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+
+import Return from "../../components/Return/Return";
+import { Outlet } from "react-router-dom";
+import AdminStats from "../../components/Admin/AdminStats/AdminStats";
+import AdminUsers from "../../components/Admin/AdminUsers/AdminUsers";
 
 const Admin = () => {
 	const [role, setRole] = useState(null);
@@ -21,7 +26,6 @@ const Admin = () => {
 				// Handle the response from the backend
 				console.log("Verification response:", response.data);
 				setRole(response.data.role);
-				console.log(role);
 			})
 			.catch((error) => {
 				// Handle errors
@@ -30,14 +34,20 @@ const Admin = () => {
 	}, [role]);
 	return (
 		<>
-			<S.Return to="/">Return to the sea</S.Return>
+			<Return></Return>
 			{role !== "admin" && role !== "owner" && (
 				<Parchment>You don't have access. Git.</Parchment>
 			)}
 			{(role === "admin" || role === "owner") && (
-				<>
-					<Parchment>Admin</Parchment>
-				</>
+				<Parchment>
+					<S.AdminCards>
+						<AdminStats />
+						<Divider orientation="vertical" gridItem>
+							statistics
+						</Divider>
+						<AdminUsers />
+					</S.AdminCards>
+				</Parchment>
 			)}
 		</>
 	);

@@ -13,7 +13,6 @@ const Author = ({ accData }) => {
 	const { id } = useParams();
 	const fetchURL = process.env.REACT_APP_API_URL + "/accounts/" + id;
 	const [author, setAuthor] = useState(null);
-
 	const [authored, setAuthored] = useState();
 
 	useEffect(() => {

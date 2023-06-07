@@ -6,6 +6,7 @@ const storiesRouter = require("./routes/stories");
 const postsRouter = require("./routes/posts");
 const collectionsRouter = require("./routes/collections");
 const commentsRouter = require("./routes/comments");
+const admininfoRouter = require("./routes/admininfo");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -32,6 +33,7 @@ app.use("/stories", storiesRouter);
 app.use("/posts", postsRouter);
 app.use("/collections", collectionsRouter);
 app.use("/comments", commentsRouter);
+app.use("/admin", admininfoRouter);
 /* Error handler middleware */
 
 app.get("/setcookie", (red, res) => {

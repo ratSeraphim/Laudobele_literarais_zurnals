@@ -7,15 +7,27 @@ import dayjs from "dayjs";
 import { Button } from "@mui/material";
 
 const Comment = ({ accData, story_id }) => {
+	const [page, setPage] = useState(1);
 	const [comments, setComments] = useState(null);
+
 	const fetchURL =
 		process.env.REACT_APP_API_URL + "/comments/story/" + story_id;
 	useEffect(() => {
 		console.log(fetchURL);
-		axios.get(fetchURL).then((response) => {
-			setComments(response.data);
-		});
-	}, [fetchURL]);
+		axios
+			.get(fetchURL, {
+				params: { page },
+				credentials: "include",
+				withCredentials: true,
+			})
+			.then((response) => {
+				setComments(response.data);
+			});
+	}, [page]);
+
+	const handleChange = (event, value) => {
+		setPage(value);
+	};
 
 	const handleDelete = (id) => () => {
 		//Saņem izmainītās vērtības
@@ -43,6 +55,12 @@ const Comment = ({ accData, story_id }) => {
 			)}
 			{comments && comments.data.length !== 0 && (
 				<S.BgPaper>
+					<S.PageSelection
+						count={comments.meta.totalPages.page_count}
+						color="secondary"
+						page={page}
+						onChange={handleChange}
+					/>
 					{comments.data.map((Comment) => {
 						const shortDateFormat = dayjs(Comment.date).format("MM/DD/YYYY");
 						return (

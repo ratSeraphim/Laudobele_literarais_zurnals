@@ -2,7 +2,7 @@ const db = require("./db");
 const helper = require("../helper");
 const config = require("../config");
 
-async function getMultiple(page = 1) {
+async function getMultiple(page) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
 		`SELECT post_id, content, date, story_id, collection_id, display_name, userinfo.account_id AS account_id 
@@ -11,8 +11,13 @@ async function getMultiple(page = 1) {
 		ON userinfo.account_id = posts.account_id 
 		ORDER BY date DESC LIMIT ${offset},${config.listPerPage}`
 	);
+	const pageCount = await db.query(
+		`	SELECT CEIL(COUNT(post_id)/6) AS page_count FROM posts LIMIT 1;`
+	);
+
+	const totalPages = pageCount[0];
 	const data = helper.emptyOrRows(rows);
-	const meta = { page };
+	const meta = { page, totalPages };
 
 	return {
 		data,

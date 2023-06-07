@@ -1,4 +1,4 @@
-import { Paper, TextField } from "@mui/material";
+import { Paper, Pagination, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const BgPaper = styled(Paper)`
@@ -55,4 +55,9 @@ export const Submit = styled("input")`
 		color: #fff;
 		box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2);
 	}
+`;
+export const PageSelection = styled(Pagination)`
+	display: inline-block;
+	margin: 0 auto;
+	padding-top: 1rem;
 `;

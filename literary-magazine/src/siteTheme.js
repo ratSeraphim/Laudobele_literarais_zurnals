@@ -60,6 +60,9 @@ export const siteTheme = createTheme({
 			color: "#854343",
 			textDecoration: "underline dotted rgba(0,0,0,0.2)",
 		},
+		statistic: {
+			color: "#004931",
+		},
 	},
 });
 

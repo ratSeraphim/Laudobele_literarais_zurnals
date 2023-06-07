@@ -11,6 +11,11 @@ dayjs.extend(relativeTime);
 const Posts = ({ accData }) => {
 	const fetchURL = process.env.REACT_APP_API_URL + "/posts";
 	const [post, setPost] = useState(null);
+	const [page, setPage] = useState(1);
+
+	const handleChange = (event, value) => {
+		setPage(value);
+	};
 
 	const handleDelete = (id) => () => {
 		//Saņem izmainītās vērtības
@@ -29,9 +34,15 @@ const Posts = ({ accData }) => {
 		}
 	};
 	useEffect(() => {
-		axios.get(fetchURL).then((response) => {
-			setPost(response.data);
-		});
+		axios
+			.get(fetchURL, {
+				params: { page },
+				credentials: "include",
+				withCredentials: true,
+			})
+			.then((response) => {
+				setPost(response.data);
+			});
 	}, [fetchURL]);
 	return (
 		<>
@@ -95,6 +106,12 @@ const Posts = ({ accData }) => {
 									</>
 								);
 							})}
+							<S.PageSelection
+								count={post.meta.totalPages.page_count}
+								color="secondary"
+								page={page}
+								onChange={handleChange}
+							/>
 						</S.Holder>
 					)}
 				</Paper>

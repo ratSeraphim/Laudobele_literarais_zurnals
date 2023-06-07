@@ -2,7 +2,7 @@ const db = require("./db");
 const helper = require("../helper");
 const config = require("../config");
 
-async function getStoryComms(id, page = 1) {
+async function getStoryComms(id, page) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
 		`SELECT comment_id, content, display_name, story_id, date 
@@ -11,8 +11,14 @@ async function getStoryComms(id, page = 1) {
         WHERE story_id = ? ORDER BY date DESC LIMIT ${offset},${config.listPerPage}`,
 		[id]
 	);
+	const pageCount = await db.query(
+		`	SELECT CEIL(COUNT(comment_id)/6) AS page_count FROM comments INNER JOIN stories ON stories.story_id = comments.story_id WHERE stories.story_id = ? LIMIT 1`,
+		[id]
+	);
+
+	const totalPages = pageCount[0];
 	const data = helper.emptyOrRows(rows);
-	const meta = { page };
+	const meta = { page, totalPages };
 
 	return {
 		data,

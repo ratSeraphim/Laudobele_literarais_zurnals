@@ -1,5 +1,5 @@
 import Masonry from "@mui/lab/Masonry/Masonry";
-import { Button, Skeleton } from "@mui/material";
+import { Button, Pagination, Skeleton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Content = styled("div")`
@@ -52,4 +52,9 @@ export const AuthorLink = styled("a")`
 	&:hover {
 		text-decoration: underline;
 	}
+`;
+
+export const PageSelection = styled(Pagination)`
+	display: inline-block;
+	margin: 0 auto;
 `;

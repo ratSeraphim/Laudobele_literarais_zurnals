@@ -2,6 +2,7 @@ import {
 	Accordion,
 	AccordionDetails,
 	AccordionSummary,
+	Pagination,
 	Skeleton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -72,4 +73,9 @@ export const Summary = styled("div")`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+`;
+
+export const PageSelection = styled(Pagination)`
+	display: inline-block;
+	margin: 0 auto;
 `;

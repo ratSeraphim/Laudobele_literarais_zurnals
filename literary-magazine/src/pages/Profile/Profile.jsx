@@ -1,4 +1,4 @@
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -15,7 +15,6 @@ const Profile = ({ accData }) => {
 					)
 					.then((response) => {
 						const createdData = response.data;
-						console.log(createdData);
 
 						setAuthored(createdData);
 					})

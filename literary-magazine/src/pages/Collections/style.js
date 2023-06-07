@@ -1,4 +1,4 @@
-import { Button, Paper } from "@mui/material";
+import { Button, Pagination, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 export const Content = styled("div")`
 	margin: 1rem;
@@ -34,4 +34,10 @@ export const Collection = styled("div")`
 
 export const CusButton = styled(Button)`
 	margin: 0.5rem;
+`;
+
+export const PageSelection = styled(Pagination)`
+	display: inline-block;
+	margin: 0 auto;
+	padding-bottom: 1rem;
 `;

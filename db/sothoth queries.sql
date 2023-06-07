@@ -51,6 +51,71 @@ BEGIN
     WHERE comments.account_id = acc_id;
 END $$ 
  DELIMITER ;
+ 
+ DELIMITER $$
+ CREATE PROCEDURE siteStatistics()
+BEGIN
+	SELECT COUNT(*) AS user_amount FROM accounts;
+    SELECT COUNT(*) AS story_amount FROM stories;
+    SELECT COUNT(*) AS comment_amount FROM comments;
+    SELECT COUNT(*) AS coll_amount FROM collections;
+    SELECT COUNT(*) AS post_amount FROM posts;
+END $$ 
+ DELIMITER ;
+
+CALL siteStatistics();
+
+ DELIMITER $$
+ CREATE PROCEDURE userStatistics()
+BEGIN
+SELECT
+    userinfo.account_id, userinfo.display_name, accounts.role,
+    COUNT(DISTINCT stories.story_id) AS story_count,
+    COUNT(DISTINCT comments.comment_id) AS comment_count,
+    COUNT(DISTINCT posts.post_id) AS post_count, 
+    COUNT(DISTINCT account_collection.collection_id) AS collection_count
+FROM userinfo
+INNER JOIN accounts 
+ON userinfo.account_id = accounts.account_id
+LEFT JOIN stories
+ON userinfo.account_id = stories.account_id
+LEFT JOIN comments
+ON userinfo.account_id = comments.account_id
+LEFT JOIN posts
+ON userinfo.account_id = posts.account_id
+LEFT JOIN account_collection
+ON userinfo.account_id = account_collection.account_id
+GROUP BY userinfo.account_id, userinfo.display_name;
+END $$ 
+ DELIMITER ;
+ 
+ call userStatistics();
+
+SELECT
+    userinfo.account_id, userinfo.display_name,
+    COUNT(DISTINCT stories.story_id) AS story_count,
+    COUNT(DISTINCT comments.comment_id) AS comment_count,
+    COUNT(DISTINCT posts.post_id) AS post_count, 
+    COUNT(DISTINCT account_collection.collection_id) AS collection_count
+FROM userinfo
+LEFT JOIN stories
+ON userinfo.account_id = stories.account_id
+LEFT JOIN comments
+ON userinfo.account_id = comments.account_id
+LEFT JOIN posts
+ON userinfo.account_id = posts.account_id
+LEFT JOIN account_collection
+ON userinfo.account_id = account_collection.account_id
+GROUP BY userinfo.account_id, userinfo.display_name;
+
+	SELECT account_id, display_name, (SELECT COUNT(*) FROM stories INNER JOIN userinfo ON stories.account_id = userinfo.account_id) AS stories_written
+    FROM userinfo 
+    GROUP BY userinfo.display_name;
+
+SELECT CEIL(COUNT(story_id)/6) AS page_count FROM stories WHERE public=1 LIMIT 1;
+SELECT CEIL(COUNT(comment_id)/6) AS page_count FROM comments INNER JOIN stories ON stories.story_id = comments.story_id WHERE stories.story_id = 18 LIMIT 1;
+
+
 
 INSERT INTO accounts (username, email, password, role, salt) VALUES ("testuser", "test@email.com", "76c768f7c9cf2bfde5bb50d6d5e2a61d4e303465269b120e9f5c9b5e458c2cd8", "user", "abafabe8c2f722ef");
 

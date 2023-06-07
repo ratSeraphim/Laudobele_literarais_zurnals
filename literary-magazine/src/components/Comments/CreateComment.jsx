@@ -50,24 +50,26 @@ const CreateComment = ({ accData, story_id }) => {
 		});
 	};
 
-	return (
-		<Paper>
-			<S.Form onSubmit={handleSubmit}>
-				<Message message={message} />
-				<S.Input
-					required
-					multiline
-					label="Comment"
-					name="content"
-					minRows={2}
-					variant="filled"
-					onChange={handleChange}
-				/>
+	if (accData) {
+		return (
+			<Paper>
+				<S.Form onSubmit={handleSubmit}>
+					<Message message={message} />
+					<S.Input
+						required
+						multiline
+						label="Comment"
+						name="content"
+						minRows={2}
+						variant="filled"
+						onChange={handleChange}
+					/>
 
-				<S.Submit type="submit" />
-			</S.Form>
-		</Paper>
-	);
+					<S.Submit type="submit" />
+				</S.Form>
+			</Paper>
+		);
+	}
 };
 
 export default CreateComment;
