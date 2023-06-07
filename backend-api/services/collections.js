@@ -175,7 +175,10 @@ async function update(id, collections) {
 }
 
 async function remove(id) {
-	const result = await db.query(`DELETE FROM collections WHERE id=?`, [id]);
+	const result = await db.query(
+		`DELETE FROM collections WHERE collection_id=?`,
+		[id]
+	);
 
 	let message = "Error in deleting collection";
 

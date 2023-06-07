@@ -1,16 +1,32 @@
 import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./style";
 
 import Side from "../../components/Side/Side";
 
 const Collection = ({ accData }) => {
+	const navigate = useNavigate();
 	const { id } = useParams();
 	const fetchURL = process.env.REACT_APP_API_URL + "/collections/" + id;
 
 	const [data, setData] = useState(null);
+
+	const handleDelete = () => {
+		if (window.confirm("Delete the item?")) {
+			axios
+				.delete(process.env.REACT_APP_API_URL + "/collections/" + id)
+				.then((response) => {
+					console.log(`Deleted collection with ID ` + id);
+					navigate("/collections");
+					window.location.reload(false);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		}
+	};
 
 	const handleRemoval = (item_id, type) => () => {
 		//Saņem izmainītās vērtības
@@ -27,7 +43,7 @@ const Collection = ({ accData }) => {
 					}
 				)
 				.then((response) => {
-					console.log(`Deleted ` + type + ` with ID ` + id);
+					console.log(`Deleted ` + type + ` with ID ` + item_id);
 					window.location.reload(false);
 				})
 				.catch((error) => {
@@ -55,13 +71,22 @@ const Collection = ({ accData }) => {
 								data.users.some((element) => {
 									return element.account_id === accData.id;
 								}) && (
-									<S.CusButton
-										variant="contained"
-										color="warning"
-										href={"/collections/edit/" + id}
-									>
-										Edit
-									</S.CusButton>
+									<>
+										<S.CusButton
+											variant="contained"
+											color="warning"
+											href={"/collections/edit/" + id}
+										>
+											Edit
+										</S.CusButton>
+										<S.CusButton
+											variant="contained"
+											color="error"
+											onClick={handleDelete}
+										>
+											Delete
+										</S.CusButton>
+									</>
 								)}
 						</S.Collection>
 						<S.BgPaperOne>
