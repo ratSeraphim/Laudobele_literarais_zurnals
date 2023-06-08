@@ -145,7 +145,7 @@ const EditStory = ({ accData }) => {
 											color="success"
 										/>
 									}
-									label="Public?"
+									label="Public"
 								/>
 								<ButtonGroup>
 									<S.Submit type="submit" />

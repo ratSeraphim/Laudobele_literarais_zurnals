@@ -12,6 +12,7 @@ const Navbar = ({ accData }) => {
 		// Remove the JWT cookie
 		if (jwtCookie) {
 			Cookies.remove("jwt");
+			document.cookie = `jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=sothothpress.vercel.app; path=/;`;
 			navigate("/login");
 			window.location.reload(false);
 		} else if (!jwtCookie) {

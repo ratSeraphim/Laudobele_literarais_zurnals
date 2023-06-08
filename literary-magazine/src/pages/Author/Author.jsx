@@ -20,11 +20,7 @@ const Author = ({ accData }) => {
 			setAuthor(response.data);
 			console.log(response.data);
 			axios
-				.get(
-					process.env.REACT_APP_API_URL +
-						"/accounts/created/" +
-						response.data.account_id
-				)
+				.get(process.env.REACT_APP_API_URL + "/accounts/created/" + id)
 				.then((response) => {
 					const createdData = response.data;
 					console.log(createdData);
@@ -46,14 +42,13 @@ const Author = ({ accData }) => {
 							<>
 								<Parchment>
 									<Typography variant="h1">{author.display_name}</Typography>
-									<S.AuthorCard>
-										<Typography>{author.description}</Typography>
-										{author.display_email && (
-											<Typography variant="subtitle">
-												Email me -- {author.display_email}
-											</Typography>
-										)}
-									</S.AuthorCard>
+
+									<Typography>{author.description}</Typography>
+									{author.display_email && (
+										<Typography variant="subtitle">
+											Email me -- {author.display_email}
+										</Typography>
+									)}
 								</Parchment>
 							</>
 						)}
@@ -61,7 +56,7 @@ const Author = ({ accData }) => {
 					<S.BgPaperTwo>
 						{authored && (
 							<S.Holder>
-								{authored.stories.map((Story) => {
+								{authored?.stories?.map((Story) => {
 									if (Story.public === 1) {
 										return (
 											<>

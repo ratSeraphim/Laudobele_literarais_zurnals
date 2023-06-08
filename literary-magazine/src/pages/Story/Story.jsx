@@ -52,7 +52,7 @@ const Story = ({ accData }) => {
 							<S.PlaceHolder variant="rectangular"></S.PlaceHolder>
 						</>
 					)}
-					{story && (
+					{story?.data && (
 						<Parchment>
 							<S.Info>
 								<Typography variant="title">{story.data.title}</Typography>
