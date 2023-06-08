@@ -68,7 +68,7 @@ const Story = ({ accData }) => {
 						</Parchment>
 					)}{" "}
 					{accData
-						? accData.displayName === story.data.display_name && (
+						? accData.displayName === story?.data?.display_name && (
 								<>
 									<Button
 										variant="outlined"
