@@ -57,9 +57,11 @@ const Login = () => {
 				console.log(response.data);
 
 				if (response.data === "Login successful") {
-					setMessage(response.data);
+					setMessage(response.data.message);
+					console.log(response.data.jwt);
 					const jwtCookie = Cookies.get("jwt");
 					const cookie = response.headers["Set-Cookie"];
+					Cookies.set("jwt", response.data.jwt, { domain: ".onrender.com" });
 					console.log(cookie);
 					if (jwtCookie) {
 						navigate("/");

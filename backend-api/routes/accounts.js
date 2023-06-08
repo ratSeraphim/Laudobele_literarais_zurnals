@@ -59,15 +59,15 @@ router.get("/login", async function (req, res) {
 			if (response.JWT != undefined) {
 				res.cookie("jwt", response.JWT, {
 					domain: ".onrender.app",
-					// other cookie options...
+					path: "/",
 				});
 			}
 			res.setHeader(
 				"Set-Cookie",
 				`jwt=${response.JWT}; SameSite=None; Secure;`,
-				`domain=onrender.app`
+				`domain=.onrender.app`
 			);
-			res.json(response.message);
+			res.json({ message: response.message, jwt: response.JWT });
 		}
 	} catch (err) {
 		console.error(`Error while logging in`, err.message);
