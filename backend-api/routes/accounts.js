@@ -59,7 +59,8 @@ router.get("/login", async function (req, res) {
 			if (response.JWT != undefined) {
 				res.setHeader(
 					"Set-Cookie",
-					`jwt=${response.JWT}value; SameSite=None; Secure`
+					`jwt=${response.JWT}value; SameSite=None; Secure``Access-Control-Allow-Origin`,
+					`*`
 				);
 				res.cookie("jwt", response.JWT, {
 					httpOnly: false,
