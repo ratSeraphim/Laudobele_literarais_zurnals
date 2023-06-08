@@ -58,13 +58,14 @@ router.get("/login", async function (req, res) {
 			console.log(response);
 			if (response.JWT != undefined) {
 				res.cookie("jwt", response.JWT, {
-					domain: ".vercel.app",
+					domain: ".onrender.app",
 					// other cookie options...
 				});
 			}
 			res.setHeader(
 				"Set-Cookie",
-				`jwt=${response.JWT}; SameSite=None; Secure;`
+				`jwt=${response.JWT}; SameSite=None; Secure;`,
+				`domain=onrender.app`
 			);
 			res.json(response.message);
 		}
