@@ -58,11 +58,16 @@ const Login = () => {
 
 				if (response.data.message === "Login successful") {
 					setMessage(response.data.message);
-					console.log(response.data.jwt);
-					const jwtCookie = Cookies.get("jwt");
+
 					const cookie = response.headers["Set-Cookie"];
-					Cookies.set("jwt", response.data.jwt, { domain: ".onrender.com" });
+					Cookies.set("jwt", response.data.jwt, {
+						domain: ".localhost:3000",
+					});
+					document.cookie = `jwt=${response.data.jwt}; domain=localhost; path=/`;
+					document.cookie = `jwt=${response.data.jwt}; domain=sothoth-press.onrender.com; path=/`;
 					console.log(cookie);
+					const jwtCookie = Cookies.get("jwt");
+
 					if (jwtCookie) {
 						navigate("/");
 						window.location.reload(false);
