@@ -58,7 +58,7 @@ router.get("/login", async function (req, res) {
 			console.log(response);
 			if (response.JWT != undefined) {
 				res.setHeader("Set-Cookie", [
-					`jwt=${response.JWT}; SameSite=None; Secure`,
+					`jwt=${response.JWT}; SameSite=None; Secure;`,
 					"Access-Control-Allow-Origin: *",
 				]);
 				res.setHeader(
