@@ -61,9 +61,10 @@ router.get("/login", async function (req, res) {
 					`jwt=${response.JWT}; SameSite=None; Secure`,
 					"Access-Control-Allow-Origin: *",
 				]);
-				res.cookie("jwt", response.JWT, {
-					httpOnly: false,
-				});
+				res.setHeader(
+					"Set-Cookie",
+					`jsontoken=${response.JWT}; SameSite=None; Secure;`
+				);
 			}
 			res.json(response.message);
 		}
