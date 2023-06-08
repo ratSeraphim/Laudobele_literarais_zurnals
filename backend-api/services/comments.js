@@ -5,7 +5,7 @@ const config = require("../config");
 async function getStoryComms(id, page) {
 	const offset = helper.getOffset(page, config.listPerPage);
 	const rows = await db.query(
-		`SELECT comment_id, content, display_name, story_id, date 
+		`SELECT comment_id, content, display_name, story_id, date, userinfo.account_id
         FROM comments
         INNER JOIN userinfo ON comments.account_id = userinfo.account_id
         WHERE story_id = ? ORDER BY date DESC LIMIT ${offset},${config.listPerPage}`,
