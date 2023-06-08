@@ -1,10 +1,12 @@
 import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import * as S from "./style";
+import Cookies from "js-cookie";
 
 const Profile = ({ accData }) => {
+	const navigate = useNavigate();
 	const [authored, setAuthored] = useState();
 
 	useEffect(() => {
@@ -41,6 +43,26 @@ const Profile = ({ accData }) => {
 		}
 	};
 
+	const handleAccountDelete = () => {
+		//Saņem izmainītās vērtības
+		console.log(accData.id);
+		//Izmainītās vērtības ieliek mainīgajā vērtībā
+		if (window.confirm("Delete the item?")) {
+			axios
+				.delete(process.env.REACT_APP_API_URL + "/accounts/" + accData.id)
+				.then((response) => {
+					console.log(response.data);
+					Cookies.remove("jwt");
+					document.cookie = `jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=sothothpress.vercel.app; path=/;`;
+					navigate("/login");
+					window.location.reload(false);
+				})
+				.catch((error) => {
+					console.error(error.data);
+				});
+		}
+	};
+
 	return (
 		<>
 			<S.CusPaper>
@@ -54,6 +76,13 @@ const Profile = ({ accData }) => {
 					{accData && (
 						<>
 							<S.Header>Profile info:</S.Header>
+							<S.CusButton
+								color="error"
+								variant="contained"
+								onClick={handleAccountDelete}
+							>
+								DELETE ACCOUNT
+							</S.CusButton>
 							<S.Box>
 								<p>currently logged in as: {accData.displayName}</p>
 								<S.CusButton variant="contained" href="/profile/edit">
@@ -165,7 +194,7 @@ const Profile = ({ accData }) => {
 																color="error"
 																onClick={handleDelete(
 																	Comment.comment_id,
-																	"stories"
+																	"comments"
 																)}
 															>
 																Delete

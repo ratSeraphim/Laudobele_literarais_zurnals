@@ -91,29 +91,9 @@ END $$
  
  call userStatistics();
 
-SELECT
-    userinfo.account_id, userinfo.display_name,
-    COUNT(DISTINCT stories.story_id) AS story_count,
-    COUNT(DISTINCT comments.comment_id) AS comment_count,
-    COUNT(DISTINCT posts.post_id) AS post_count, 
-    COUNT(DISTINCT account_collection.collection_id) AS collection_count
-FROM userinfo
-LEFT JOIN stories
-ON userinfo.account_id = stories.account_id
-LEFT JOIN comments
-ON userinfo.account_id = comments.account_id
-LEFT JOIN posts
-ON userinfo.account_id = posts.account_id
-LEFT JOIN account_collection
-ON userinfo.account_id = account_collection.account_id
-GROUP BY userinfo.account_id, userinfo.display_name;
-
-	SELECT account_id, display_name, (SELECT COUNT(*) FROM stories INNER JOIN userinfo ON stories.account_id = userinfo.account_id) AS stories_written
-    FROM userinfo 
-    GROUP BY userinfo.display_name;
-
-SELECT CEIL(COUNT(story_id)/6) AS page_count FROM stories WHERE public=1 LIMIT 1;
-SELECT CEIL(COUNT(comment_id)/6) AS page_count FROM comments INNER JOIN stories ON stories.story_id = comments.story_id WHERE stories.story_id = 18 LIMIT 1;
+UPDATE accounts
+SET role = "admin"
+WHERE account_id=1;
 
 
 

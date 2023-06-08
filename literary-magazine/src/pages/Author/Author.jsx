@@ -12,6 +12,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const Author = ({ accData }) => {
 	const { id } = useParams();
 	const fetchURL = process.env.REACT_APP_API_URL + "/accounts/" + id;
+	const fetchStoriesURL =
+		process.env.REACT_APP_API_URL + "/accounts/created/" + id;
 	const [author, setAuthor] = useState(null);
 	const [authored, setAuthored] = useState();
 
@@ -20,7 +22,7 @@ const Author = ({ accData }) => {
 			setAuthor(response.data);
 			console.log(response.data);
 			axios
-				.get(process.env.REACT_APP_API_URL + "/accounts/created/" + id)
+				.get(fetchStoriesURL)
 				.then((response) => {
 					const createdData = response.data;
 					console.log(createdData);
@@ -31,7 +33,7 @@ const Author = ({ accData }) => {
 					console.error("Error:", error);
 				});
 		});
-	}, [fetchURL]);
+	}, [fetchURL, fetchStoriesURL]);
 
 	return (
 		<>
@@ -53,8 +55,8 @@ const Author = ({ accData }) => {
 							</>
 						)}
 					</S.BgPaper>
-					<S.BgPaperTwo>
-						{authored && (
+					{authored && (
+						<S.BgPaperTwo>
 							<S.Holder>
 								{authored?.stories?.map((Story) => {
 									if (Story.public === 1) {
@@ -80,8 +82,8 @@ const Author = ({ accData }) => {
 									}
 								})}
 							</S.Holder>
-						)}
-					</S.BgPaperTwo>
+						</S.BgPaperTwo>
+					)}
 				</div>
 				<Side></Side>
 			</S.Content>

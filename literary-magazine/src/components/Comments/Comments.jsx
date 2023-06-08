@@ -67,7 +67,10 @@ const Comment = ({ accData, story_id }) => {
 							<S.Letter key={Comment.comment_id}>
 								<S.CommentContent>{Comment.content}</S.CommentContent>
 								<S.Meta>
-									by {Comment.display_name} on {shortDateFormat}
+									<S.AuthorLink href={"/author/" + Comment.account_id}>
+										{Comment.display_name}{" "}
+									</S.AuthorLink>
+									on {shortDateFormat}
 									{accData &&
 										(accData.displayName === Comment.display_name ? (
 											<Button

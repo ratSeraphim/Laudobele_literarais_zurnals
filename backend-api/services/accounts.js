@@ -168,7 +168,9 @@ async function update(id, accounts) {
 }
 
 async function remove(id) {
-	const result = await db.query(`DELETE FROM accounts WHERE id=?`, [id]);
+	const result = await db.query(`DELETE FROM accounts WHERE account_id=?`, [
+		id,
+	]);
 
 	let message = "Error in deleting account";
 

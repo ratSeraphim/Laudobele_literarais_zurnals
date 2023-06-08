@@ -33,6 +33,7 @@ const Posts = ({ accData }) => {
 				});
 		}
 	};
+
 	useEffect(() => {
 		axios
 			.get(fetchURL, {
@@ -43,7 +44,7 @@ const Posts = ({ accData }) => {
 			.then((response) => {
 				setPost(response.data);
 			});
-	}, [fetchURL]);
+	}, [page]);
 	return (
 		<>
 			<S.Content>

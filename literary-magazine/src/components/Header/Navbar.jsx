@@ -44,7 +44,7 @@ const Navbar = ({ accData }) => {
 				</S.NavigateSite>
 				<Button variant="contained" color="success" onClick={handleLogButton}>
 					{!jwtCookie && <>Log in</>}
-					{jwtCookie && <>Sign Out</>}
+					{jwtCookie && <>Log out</>}
 				</Button>
 			</S.Navbar>
 		</>

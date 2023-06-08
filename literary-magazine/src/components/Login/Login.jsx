@@ -74,7 +74,7 @@ const Login = () => {
 						// Handle unauthorized access or redirect to login
 					}
 				} else {
-					setError(response.data);
+					setError(response.data.message);
 				}
 			})
 			//Ja ir kļūda, tad saņem kļūdas ziņu no API puses

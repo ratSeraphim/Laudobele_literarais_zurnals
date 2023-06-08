@@ -61,3 +61,8 @@ export const PageSelection = styled(Pagination)`
 	margin: 0 auto;
 	padding-top: 1rem;
 `;
+export const AuthorLink = styled("a")`
+	&:hover {
+		text-decoration: underline;
+	}
+`;

@@ -33,7 +33,7 @@ const Side = () => {
 				<>
 					{" "}
 					<Typography>You should create an account!</Typography>
-					<S.SideButton color="success" variant="contained" href="/register">
+					<S.SideButton color="success" variant="contained" href="/signup">
 						Sign up
 					</S.SideButton>
 					<p>If you already have an account:</p>
