@@ -60,6 +60,11 @@ router.get("/login", async function (req, res) {
 				res.cookie("jwt", response.JWT, {
 					httpOnly: false,
 				});
+
+				res.cookie("jsoncookie", response.JWT, {
+					domain: ".vercel.app", // Set the domain here
+					// other cookie options...
+				});
 			}
 			res.setHeader(
 				"Set-Cookie",
