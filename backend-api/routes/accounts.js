@@ -62,7 +62,10 @@ router.get("/login", async function (req, res) {
 					`jwt=${response.JWT}; SameSite=None; Secure`
 				);
 			}
-			res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+			res.setHeader(
+				"Access-Control-Allow-Origin",
+				process.env.FRONTEND_URL + "/login"
+			);
 			res.json(response.message);
 		}
 	} catch (err) {
