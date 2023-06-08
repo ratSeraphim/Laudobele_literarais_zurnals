@@ -59,13 +59,12 @@ router.get("/login", async function (req, res) {
 			if (response.JWT != undefined) {
 				res.setHeader(
 					"Set-Cookie",
-					`jwt=${response.JWT}; SameSite=None; Secure`
+					`jwt=${response.JWT}; SameSite=None; Secure;`
 				);
+				res.cookie("jwt", response.JWT, {
+					httpOnly: false,
+				});
 			}
-			res.setHeader(
-				"Access-Control-Allow-Origin",
-				process.env.FRONTEND_URL + "/login"
-			);
 			res.json(response.message);
 		}
 	} catch (err) {
