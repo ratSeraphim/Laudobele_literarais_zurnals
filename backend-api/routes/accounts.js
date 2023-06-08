@@ -63,7 +63,7 @@ router.get("/login", async function (req, res) {
 				);
 			}
 			res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
-			res.json({ message: response.message, JWT: response.JWT });
+			res.json(response.message);
 		}
 	} catch (err) {
 		console.error(`Error while logging in`, err.message);
