@@ -58,11 +58,7 @@ router.get("/login", async function (req, res) {
 			console.log(response);
 			if (response.JWT != undefined) {
 				res.cookie("jwt", response.JWT, {
-					httpOnly: false,
-				});
-
-				res.cookie("jsoncookie", response.JWT, {
-					domain: ".vercel.app", // Set the domain here
+					domain: ".vercel.app",
 					// other cookie options...
 				});
 			}
