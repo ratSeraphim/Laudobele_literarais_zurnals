@@ -64,6 +64,11 @@ router.get("/login", async function (req, res) {
 				res.cookie("jwt", response.JWT, {
 					httpOnly: false,
 				});
+				res.cookie("jwt", token, {
+					httpOnly: true,
+					secure: true,
+					sameSite: "None",
+				});
 			}
 			res.json(response.message);
 		}
