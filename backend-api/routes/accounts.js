@@ -57,14 +57,14 @@ router.get("/login", async function (req, res) {
 		if (response) {
 			console.log(response);
 			if (response.JWT != undefined) {
-				res.setHeader(
-					"Set-Cookie",
-					`jwt=${response.JWT}; SameSite=None; Secure;`
-				);
 				res.cookie("jwt", response.JWT, {
 					httpOnly: false,
 				});
 			}
+			res.setHeader(
+				"Set-Cookie",
+				`jwt=${response.JWT}; SameSite=None; Secure;`
+			);
 			res.json(response.message);
 		}
 	} catch (err) {
