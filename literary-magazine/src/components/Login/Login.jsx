@@ -56,7 +56,7 @@ const Login = () => {
 			.then((response) => {
 				console.log(response.data);
 
-				if (response.data === "Login successful") {
+				if (response.data.message === "Login successful") {
 					setMessage(response.data.message);
 					console.log(response.data.jwt);
 					const jwtCookie = Cookies.get("jwt");
