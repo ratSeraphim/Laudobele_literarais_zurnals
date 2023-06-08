@@ -9,6 +9,11 @@ import Message from "../Alerts/Message";
 import Error from "../Alerts/Error";
 
 const Login = () => {
+	const api = axios.create({
+		baseURL: process.env.REACT_APP_API_URL,
+		withCredentials: true,
+	});
+
 	const navigate = useNavigate();
 	useEffect(() => {
 		// Access the JWT cookie
@@ -42,11 +47,10 @@ const Login = () => {
 		console.log(inputs);
 
 		//Nosūta mainīgos uz API
-		axios
+
+		api
 			.get(process.env.REACT_APP_API_URL + "/accounts/login", {
 				params: { inputs },
-				credentials: "include",
-				withCredentials: true,
 			})
 			//Saņem ziņu no API puses
 			.then((response) => {
@@ -74,8 +78,6 @@ const Login = () => {
 				console.log(error.message);
 				setMessage("Error: " + error.message);
 			});
-		//Aizved lietotāju uz mājaslapu
-		// navigate("/");
 	};
 	return (
 		<>
