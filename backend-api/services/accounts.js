@@ -109,7 +109,8 @@ async function createUser(id, accounts) {
 
 async function login(accounts) {
 	console.log(accounts);
-	//Receive all the required data for checking login data
+	let message, JWT;
+
 	const rows = await db.query(
 		`SELECT password, salt, role, accounts.account_id, display_name
 		FROM accounts INNER JOIN userinfo ON accounts.account_id = userinfo.account_id
@@ -117,9 +118,7 @@ async function login(accounts) {
 		[accounts.name, accounts.name]
 	);
 
-	//If there is a matching record for entered email/username
 	if (rows[0]) {
-		//Encrypt entered password with same salt and see if they match
 		if (comparePasswords(accounts.password, rows[0].password, rows[0].salt)) {
 			const payload = {
 				id: rows[0].account_id,
@@ -130,13 +129,12 @@ async function login(accounts) {
 
 			message = "Login successful";
 		} else {
-			JWT = undefined;
 			message = "E-mail/Username or Password incorrect";
 		}
 	} else {
-		JWT = undefined;
 		message = "E-mail/Username or Password incorrect";
 	}
+
 	return { message, JWT };
 }
 

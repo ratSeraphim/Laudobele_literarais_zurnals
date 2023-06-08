@@ -57,16 +57,13 @@ router.get("/login", async function (req, res) {
 		if (response) {
 			console.log(response);
 			if (response.JWT != undefined) {
-				res.setHeader("Set-Cookie", [
-					`jwt=${response.JWT}; SameSite=None; Secure;`,
-					"Access-Control-Allow-Origin: *",
-				]);
 				res.setHeader(
 					"Set-Cookie",
-					`jsontoken=${response.JWT}; SameSite=None; Secure;`
+					`jwt=${response.JWT}; SameSite=None; Secure`
 				);
 			}
-			res.json(response.message);
+			res.setHeader("Access-Control-Allow-Origin", "*");
+			res.json({ message: response.message, JWT: response.JWT });
 		}
 	} catch (err) {
 		console.error(`Error while logging in`, err.message);
