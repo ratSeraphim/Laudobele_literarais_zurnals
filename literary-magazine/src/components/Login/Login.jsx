@@ -60,11 +60,9 @@ const Login = () => {
 					setMessage(response.data.message);
 
 					const cookie = response.headers["Set-Cookie"];
-					Cookies.set("jwt", response.data.jwt, {
-						domain: ".localhost:3000",
-					});
+
 					document.cookie = `jwt=${response.data.jwt}; domain=localhost; path=/`;
-					document.cookie = `jwt=${response.data.jwt}; domain=sothoth-press.onrender.com; path=/`;
+					document.cookie = `jwt=${response.data.jwt}; domain=sothothpress.vercel.app; path=/`;
 					console.log(cookie);
 					const jwtCookie = Cookies.get("jwt");
 
