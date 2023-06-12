@@ -8,7 +8,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `cd backend-api` -> `node index.js`
+### `cd backend-api` -> `npm run start`
 
 Runs the express.js API in development mode.\
 Runs on http://localhost:3001 
+
+Access the current production build here!
+https://sothothpress.vercel.app
