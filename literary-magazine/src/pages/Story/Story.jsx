@@ -16,22 +16,28 @@ const Story = ({ accData }) => {
 	const fetchURL = process.env.REACT_APP_API_URL + "/stories/" + id;
 
 	const [shortDateFormat, setShortDateFormat] = useState(null);
+	const [shortEditDateFormat, setShortEditDateFormat] = useState(null);
 	const [story, setStory] = useState(null);
+	const [error, setError] = useState(null);
 
 	const handleDelete = () => {
-		//Saņem izmainītās vērtības
+		//Saņemšanai un izdzēšanai izmanto vienādu URL
 		console.log(fetchURL);
-		//Izmainītās vērtības ieliek mainīgajā vērtībā
+		//Lietotājam uznirstošs logs pārprasa akceptēt izdzēšanu
 		if (window.confirm("Delete the item?")) {
 			axios
 				.delete(fetchURL)
 				.then((response) => {
+					//Kad izdzēsts, konsolē paziņots par izdzēstā darba ID
 					console.log(`Deleted story with ID ${id}`);
+					//Aizved uz iepriekšējo lapu
 					navigate("/stories");
 					window.location.reload(false);
 				})
 				.catch((error) => {
+					//Ja ir kļūme, par to paziņo
 					console.error(error);
+					setError(error);
 				});
 		}
 	};
@@ -39,7 +45,10 @@ const Story = ({ accData }) => {
 	useEffect(() => {
 		axios.get(fetchURL).then((response) => {
 			setStory(response);
-			setShortDateFormat(dayjs(response.date).format("MM/DD/YYYY"));
+			setShortDateFormat(dayjs(response.data.date).format("MM/DD/YYYY"));
+			setShortEditDateFormat(
+				dayjs(response.data.last_edited).format("MM/DD/YYYY")
+			);
 		});
 	}, [fetchURL]);
 	return (
@@ -64,29 +73,39 @@ const Story = ({ accData }) => {
 							</S.Info>
 
 							<S.Text>{story.data.content}</S.Text>
-							<S.StoryDate>written on {shortDateFormat}</S.StoryDate>
+
+							<S.StoryDate>
+								written on {shortDateFormat}
+								{story.data.last_edited && (
+									<p>last edited on {shortEditDateFormat}</p>
+								)}
+							</S.StoryDate>
 						</Parchment>
 					)}{" "}
-					{accData
-						? accData.displayName === story?.data?.display_name && (
-								<>
-									<Button
-										variant="outlined"
-										color="warning"
-										href={"/stories/edit/" + id}
-									>
-										Edit
-									</Button>
-									<Button
-										variant="contained"
-										color="error"
-										onClick={handleDelete}
-									>
-										Delete
-									</Button>
-								</>
-						  )
-						: null}
+					{(accData && accData.displayName === story?.data?.display_name && (
+						<>
+							<Button
+								variant="outlined"
+								color="warning"
+								href={"/stories/edit/" + id}
+							>
+								Edit
+							</Button>
+							<Button variant="contained" color="error" onClick={handleDelete}>
+								Delete
+							</Button>
+						</>
+					)) ||
+						(accData &&
+							(accData.role === "admin" || accData.role === "owner") && (
+								<Button
+									variant="contained"
+									color="error"
+									onClick={handleDelete}
+								>
+									Delete
+								</Button>
+							))}
 				</S.BgPaper>
 
 				<Side></Side>

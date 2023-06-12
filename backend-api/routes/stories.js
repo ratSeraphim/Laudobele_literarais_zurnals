@@ -42,8 +42,10 @@ router.put("/:id", async function (req, res, next) {
 
 router.delete("/:id", async function (req, res, next) {
 	try {
+		//Saņem ID no parametriem (URL)
 		res.json(await stories.remove(req.params.id));
 	} catch (err) {
+		//Ja ir kļūda, paziņojums konsolē
 		console.error(`Error while deleting story`, err.message);
 		next(err);
 	}

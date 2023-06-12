@@ -110,31 +110,35 @@ async function createUser(id, accounts) {
 async function login(accounts) {
 	console.log(accounts);
 	let message, JWT;
-
+	//Sameklē datus, kurus lietotājs ievadījis, salīdzinot ar datubāzi
 	const rows = await db.query(
 		`SELECT password, salt, role, accounts.account_id, display_name
 		FROM accounts INNER JOIN userinfo ON accounts.account_id = userinfo.account_id
 		WHERE (username=?) OR (email=?)`,
-		[accounts.name, accounts.name]
+		[accounts.name, accounts.name] //"Escape variables"
 	);
 
 	if (rows[0]) {
+		//Lietotāja ievadīto paroli šifrē ar vienādo salt vērtību, lai droši salīdzinātu paroles
 		if (comparePasswords(accounts.password, rows[0].password, rows[0].salt)) {
+			//JWT saglabātās vērtības
 			const payload = {
 				id: rows[0].account_id,
 				displayName: rows[0].display_name,
 				role: rows[0].role,
 			};
+			//Ievieto vērtības
 			JWT = generateJWT(payload, "1d");
-
 			message = "Login successful";
 		} else {
+			//Ja parole nesakrīt
 			message = "E-mail/Username or Password incorrect";
 		}
 	} else {
+		//Ja ievadītais lietotājvārds/e-pasts nav atrasts
 		message = "E-mail/Username or Password incorrect";
 	}
-
+	//Atgriež lietotājam datus
 	return { message, JWT };
 }
 

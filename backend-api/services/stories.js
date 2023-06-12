@@ -81,14 +81,16 @@ async function update(id, stories) {
 }
 
 async function remove(id) {
+	//Izdzēst no stāstiem, kur ID ir vienāds ar padoto parametru
 	const result = await db.query(`DELETE FROM stories WHERE story_id=?`, [id]);
-
+	//Ja ir kļūme
 	let message = "Error in deleting story";
 
+	//Ja ir ietekmēts ieraksts stāstu tabulā
 	if (result.affectedRows) {
 		message = "Story deleted successfully";
 	}
-
+	//Atgriež lietotājam ziņu
 	return message;
 }
 

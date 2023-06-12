@@ -1,6 +1,7 @@
 const mysql = require("mysql2/promise");
 const config = require("../config");
 
+//Izveido savienojuma kopu
 const pool = mysql.createPool(config.db);
 
 async function query(sql, params) {
@@ -9,7 +10,7 @@ async function query(sql, params) {
 		const [results] = await connection.query(sql, params);
 		return results;
 	} finally {
-		connection.release(); // Release the connection back to the pool
+		connection.release(); // Atgriež savienojumu
 	}
 }
 

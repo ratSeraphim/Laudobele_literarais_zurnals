@@ -36,12 +36,14 @@ const Posts = ({ accData }) => {
 
 	useEffect(() => {
 		axios
+			//API nosūta vaicājumu ar lappuses parametru
 			.get(fetchURL, {
 				params: { page },
 				credentials: "include",
 				withCredentials: true,
 			})
 			.then((response) => {
+				//Saņemtos datus ievieto mainīgajā
 				setPost(response.data);
 			});
 	}, [page]);

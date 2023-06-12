@@ -9,11 +9,11 @@ import { Button } from "@mui/material";
 const Comment = ({ accData, story_id }) => {
 	const [page, setPage] = useState(1);
 	const [comments, setComments] = useState(null);
+	const [pageCount, setPageCount] = useState(null);
 
 	const fetchURL =
 		process.env.REACT_APP_API_URL + "/comments/story/" + story_id;
 	useEffect(() => {
-		console.log(fetchURL);
 		axios
 			.get(fetchURL, {
 				params: { page },
@@ -22,6 +22,7 @@ const Comment = ({ accData, story_id }) => {
 			})
 			.then((response) => {
 				setComments(response.data);
+				setPageCount(Number(response.data.meta.totalPages.page_count));
 			});
 	}, [page]);
 
@@ -56,7 +57,7 @@ const Comment = ({ accData, story_id }) => {
 			{comments && comments.data.length !== 0 && (
 				<S.BgPaper>
 					<S.PageSelection
-						count={comments.meta.totalPages.page_count}
+						count={pageCount}
 						color="secondary"
 						page={page}
 						onChange={handleChange}
@@ -71,7 +72,7 @@ const Comment = ({ accData, story_id }) => {
 										{Comment.display_name}{" "}
 									</S.AuthorLink>
 									on {shortDateFormat}
-									{accData &&
+									{(accData &&
 										(accData.displayName === Comment.display_name ? (
 											<Button
 												color="error"
@@ -79,7 +80,15 @@ const Comment = ({ accData, story_id }) => {
 											>
 												Delete
 											</Button>
-										) : null)}
+										) : null)) ||
+										(accData && accData.role === "admin" && (
+											<Button
+												color="error"
+												onClick={handleDelete(Comment.comment_id)}
+											>
+												Delete
+											</Button>
+										))}
 								</S.Meta>
 							</S.Letter>
 						);

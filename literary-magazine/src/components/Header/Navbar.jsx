@@ -8,13 +8,20 @@ import { useNavigate } from "react-router-dom";
 const Navbar = ({ accData }) => {
 	const navigate = useNavigate();
 	const jwtCookie = Cookies.get("jwt");
+
+	//Ielogošanās / izlogošanās
 	const handleLogButton = () => {
-		// Remove the JWT cookie
+		// Ja pastāv sīkdatne
 		if (jwtCookie) {
+			//Sīkdatni noņem
 			Cookies.remove("jwt");
+			//Noņem sīkdatni tās derīguma termiņu ieliekot pagātnē
 			document.cookie = `jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=sothothpress.vercel.app; path=/;`;
+			//Lietotāju pārved uz ielogošanās lap
 			navigate("/login");
+			//Pārlādē lapu, lai attēlotu jaunos datus
 			window.location.reload(false);
+			//Ja nav sīkdatne, vienkārši aizved uz ielogošanos lapu
 		} else if (!jwtCookie) {
 			navigate("/login");
 		}

@@ -44,21 +44,23 @@ const EditCollection = ({ accData }) => {
 	const handleSubmit = (event) => {
 		//Apstādina lapu no sevis atjaunošanas
 		event.preventDefault();
-
+		//Paziņo par iesūtītajiem datiem
 		console.log(inputs);
-
 		//Nosūta mainīgos uz API
 		axios
 			.put(process.env.REACT_APP_API_URL + "/collections/" + id, inputs)
 			//Saņem ziņu no API puses
 			.then((response) => {
+				//Konsolē redzami atgrieztie dati
 				console.log(response.data);
+				//Uzstāda paziņojumu lietotājam
 				setMessage(response.data);
 			})
 			//Ja ir kļūda, tad saņem kļūdas ziņu no API puses
 			.catch((error) => {
 				console.log(error.message);
-				setMessage(error);
+				//Uzstāda paziņojumu lietotājam
+				setMessage(error.message);
 			});
 		//Aizved lietotāju uz mājaslapu
 		// navigate("/");

@@ -67,9 +67,13 @@ const Collection = ({ accData }) => {
 							<Typography>{data.collection.name}</Typography>
 							<Typography>{data.collection.description}</Typography>
 
-							{accData &&
+							{(accData &&
+								accData.id &&
 								data.users.some((element) => {
-									return element.account_id === accData.id;
+									return (
+										element.account_id === accData.id &&
+										element.role === "owner"
+									);
 								}) && (
 									<>
 										<S.CusButton
@@ -87,7 +91,31 @@ const Collection = ({ accData }) => {
 											Delete
 										</S.CusButton>
 									</>
-								)}
+								)) ||
+								(accData &&
+									accData.id &&
+									data.users.some((element) => {
+										return element.account_id === accData.id;
+									}) && (
+										<>
+											<S.CusButton
+												variant="contained"
+												color="warning"
+												href={"/collections/edit/" + id}
+											>
+												Edit
+											</S.CusButton>
+										</>
+									)) ||
+								(accData && accData.role === "admin" && (
+									<S.CusButton
+										variant="contained"
+										color="error"
+										onClick={handleDelete}
+									>
+										Delete
+									</S.CusButton>
+								))}
 						</S.Collection>
 						<S.BgPaperOne>
 							{data.stories.map((Story) => {
